@@ -1,0 +1,18 @@
+{
+  "name": "CyberPehra",
+  "short_name": "CyberPehra",
+  "description": "India’s free scam and fraud checker with VirusTotal-backed link and file analysis.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#04060A",
+  "theme_color": "#22C55E",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
