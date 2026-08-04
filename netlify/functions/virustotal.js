@@ -11,6 +11,14 @@ function buildJsonResponse(statusCode, body) {
   };
 }
 
+function buildVirusTotalUrlId(url) {
+  return Buffer.from(url)
+    .toString("base64")
+    .replace(/=+$/, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return buildJsonResponse(405, { error: "Method Not Allowed" });
@@ -87,30 +95,9 @@ exports.handler = async (event) => {
       return buildJsonResponse(400, { error: "Only http and https URLs are supported" });
     }
 
-    const submitResponse = await fetch("https://www.virustotal.com/api/v3/urls", {
-      method: "POST",
-      headers: {
-        "x-apikey": apiKey,
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `url=${encodeURIComponent(url)}`
-    });
+    const encodedUrlId = buildVirusTotalUrlId(url);
 
-    const submitData = await submitResponse.json().catch(() => ({}));
-
-    if (!submitResponse.ok) {
-      return buildJsonResponse(submitResponse.status, {
-        error: submitData.error?.message || "VirusTotal request failed",
-        details: submitData
-      });
-    }
-
-    const resourceId = submitData?.data?.id;
-    if (!resourceId) {
-      return buildJsonResponse(502, { error: "VirusTotal did not return a resource id" });
-    }
-
-    const reportResponse = await fetch(`https://www.virustotal.com/api/v3/urls/${resourceId}`, {
+    const reportResponse = await fetch(`https://www.virustotal.com/api/v3/urls/${encodedUrlId}`, {
       headers: {
         "x-apikey": apiKey
       }
