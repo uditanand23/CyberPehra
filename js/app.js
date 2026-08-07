@@ -189,18 +189,25 @@ export const renderEncyclopediaCards = () => {
 
 // Application Boot
 document.addEventListener('DOMContentLoaded', () => {
-    bindEvents();
-    applyLanguage(State.currentLang);
-    switchScanMode(State.currentMode);
-    initCanvasAnimation();
-    initShield3DEffect();
-    initThreatGlobe();
-    initCyberAlerts();
-    fetchCyberIntelligence();
-    renderScamEncyclopedia();
-    renderSafetyDashboard();
-    renderEmergencyCenter();
-    renderStateThreatDetails('BR'); // Default Bihar state threat info
-    initServiceWorker();
-    bootSequence();
+    // 1. Initiate boot sequence preloader immediately
+    try { bootSequence(); } catch(e) { console.error('Boot sequence init error:', e); }
+
+    // 2. Safe modular initializations - no single error can halt application startup
+    const safeInit = (fn, name) => {
+        try { fn(); } catch(e) { console.warn(`Module init warning [${name}]:`, e); }
+    };
+
+    safeInit(bindEvents, 'bindEvents');
+    safeInit(() => applyLanguage(State.currentLang), 'applyLanguage');
+    safeInit(() => switchScanMode(State.currentMode), 'switchScanMode');
+    safeInit(initCanvasAnimation, 'initCanvasAnimation');
+    safeInit(initShield3DEffect, 'initShield3DEffect');
+    safeInit(initThreatGlobe, 'initThreatGlobe');
+    safeInit(initCyberAlerts, 'initCyberAlerts');
+    safeInit(fetchCyberIntelligence, 'fetchCyberIntelligence');
+    safeInit(renderScamEncyclopedia, 'renderScamEncyclopedia');
+    safeInit(renderSafetyDashboard, 'renderSafetyDashboard');
+    safeInit(renderEmergencyCenter, 'renderEmergencyCenter');
+    safeInit(() => renderStateThreatDetails('BR'), 'renderStateThreatDetails');
+    safeInit(initServiceWorker, 'initServiceWorker');
 });

@@ -453,38 +453,52 @@ export const bootSequence = () => {
     const l = document.getElementById('bootLog');
     const b = document.getElementById('bootBar');
     const screen = document.getElementById('bootScreen');
-    if(!l || !b || !screen) return;
+    if (!screen) return;
     
-    let isSkipped = false;
+    let isHidden = false;
+
     const hideScreen = () => {
+        if (isHidden) return;
+        isHidden = true;
         screen.style.opacity = '0';
         screen.style.visibility = 'hidden';
-        setTimeout(() => { screen.style.display = 'none'; }, 600);
+        screen.style.pointerEvents = 'none';
+        setTimeout(() => { 
+            screen.style.display = 'none'; 
+        }, 500);
     };
-    
+
+    // Hard fallback timer: GUARANTEE boot screen hides after max 5 seconds under all circumstances
+    const fallbackTimer = setTimeout(hideScreen, 5000);
+
     const skipBtn = document.getElementById('skipBootBtn');
     if (skipBtn) {
         skipBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (!isSkipped) {
-                isSkipped = true;
-                hideScreen();
-            }
+            e.preventDefault();
+            clearTimeout(fallbackTimer);
+            hideScreen();
         });
     }
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !isSkipped) {
-            isSkipped = true;
+    const handleKeydown = (e) => {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            clearTimeout(fallbackTimer);
             hideScreen();
+            document.removeEventListener('keydown', handleKeydown);
         }
-    });
+    };
+    document.addEventListener('keydown', handleKeydown);
 
     screen.addEventListener('click', () => {
-        if (isSkipped) return;
-        isSkipped = true;
+        clearTimeout(fallbackTimer);
         hideScreen();
     });
+
+    if (!l || !b) {
+        hideScreen();
+        return;
+    }
 
     let i = 0;
     const lines = [
@@ -496,18 +510,18 @@ export const bootSequence = () => {
     ]; 
     
     const nextLine = () => {
-        if (isSkipped) return;
+        if (isHidden) return;
         if (i < lines.length) {
             const d = document.createElement('div');
             d.className = 'text-emerald-400 font-mono text-xs py-0.5 tracking-wider';
             d.textContent = '> ' + lines[i++]; 
             l.appendChild(d); 
             b.style.width = (i / lines.length * 100) + '%'; 
-            setTimeout(nextLine, 300);
+            setTimeout(nextLine, 350);
         } else {
             setTimeout(() => {
-                if (!isSkipped) hideScreen();
-            }, 500);
+                hideScreen();
+            }, 400);
         }
     };
     nextLine();

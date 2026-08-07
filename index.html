@@ -36,6 +36,17 @@
 <script type="module" src="/js/app.js"></script>
 
 <script>
+// Fail-safe: Guarantee boot screen hides after max 5 seconds under all circumstances
+setTimeout(function() {
+    var screen = document.getElementById('bootScreen');
+    if (screen && screen.style.display !== 'none') {
+        screen.style.opacity = '0';
+        screen.style.visibility = 'hidden';
+        screen.style.pointerEvents = 'none';
+        setTimeout(function() { screen.style.display = 'none'; }, 500);
+    }
+}, 5000);
+
 tailwind.config = {
     darkMode: 'class',
     theme: {
