@@ -29,9 +29,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="/jsQR.min.js"></script>
+<script src="/vendor/jsQR.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script type="module" src="/js/app.js"></script>
 
 <script>
 tailwind.config = {
@@ -116,6 +117,8 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
         </div>
         <nav class="hidden lg:flex items-center space-x-5 text-sm font-medium text-slate-400" aria-label="Main Navigation">
             <a href="#scanner" class="hover:text-green-400 transition" data-i18n="nav_scanner">Scanner</a>
+            <a href="#emergency-center" class="hover:text-rose-400 transition font-bold text-rose-400 flex items-center gap-1">🚨 Emergency</a>
+            <a href="#safety-dashboard" class="hover:text-emerald-400 transition font-semibold text-emerald-400 flex items-center gap-1">🛡️ Safety Dashboard</a>
             <a href="#how-it-works" class="hover:text-green-400 transition" data-i18n="nav_how">How it Works</a>
             <a href="#cyber-tools" class="hover:text-green-400 transition" data-i18n="nav_tools">Tools</a>
             <a href="#law-hub" class="hover:text-green-400 transition text-green-400" data-i18n="nav_law">⚖️ Law Hub</a>
@@ -148,6 +151,8 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
     <div id="mobileMenu" class="hidden lg:hidden border-t border-slate-800 bg-[#04060A]/98 backdrop-blur-xl">
         <div class="px-4 py-4 flex flex-col space-y-1 text-sm font-medium text-slate-300">
             <a href="#scanner" onclick="toggleMobileMenu()" class="py-2.5 px-2 rounded-lg hover:bg-slate-900 hover:text-green-400" data-i18n="nav_scanner">Scanner</a>
+            <a href="#emergency-center" onclick="toggleMobileMenu()" class="py-2.5 px-2 rounded-lg hover:bg-slate-900 text-rose-400 font-bold flex items-center gap-1.5">🚨 Emergency Response</a>
+            <a href="#safety-dashboard" onclick="toggleMobileMenu()" class="py-2.5 px-2 rounded-lg hover:bg-slate-900 text-emerald-400 font-semibold flex items-center gap-1.5">🛡️ Safety Dashboard</a>
             <a href="#how-it-works" onclick="toggleMobileMenu()" class="py-2.5 px-2 rounded-lg hover:bg-slate-900 hover:text-green-400" data-i18n="nav_how">How it Works</a>
             <a href="#cyber-tools" onclick="toggleMobileMenu()" class="py-2.5 px-2 rounded-lg hover:bg-slate-900 hover:text-green-400" data-i18n="nav_tools">Tools</a>
             <a href="#law-hub" onclick="toggleMobileMenu()" class="py-2.5 px-2 rounded-lg hover:bg-slate-900 hover:text-green-400 text-green-400" data-i18n="nav_law">⚖️ Law Hub</a>
@@ -199,9 +204,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
                 <button class="tab-btn active min-w-[100px] text-[10px] sm:text-xs font-semibold py-2.5 px-3 rounded-xl text-slate-300 font-mono flex-shrink-0" data-mode="url" onclick="switchMode('url')" role="tab" data-i18n="tab_url">🔗 URL Scan</button>
                 <button class="tab-btn min-w-[100px] text-[10px] sm:text-xs font-semibold py-2.5 px-3 rounded-xl text-slate-300 font-mono flex-shrink-0" data-mode="file" onclick="switchMode('file')" role="tab" data-i18n="tab_file">📁 File/APK (VT)</button>
                 <button class="tab-btn min-w-[100px] text-[10px] sm:text-xs font-semibold py-2.5 px-3 rounded-xl text-slate-300 font-mono flex-shrink-0" data-mode="chat" onclick="switchMode('chat')" role="tab" data-i18n="tab_chat">💬 Chat Scan</button>
-                <button class="tab-btn min-w-[100px] text-[10px] sm:text-xs font-semibold py-2.5 px-3 rounded-xl text-slate-300 font-mono flex-shrink-0" data-mode="upi" onclick="switchMode('upi')" role="tab" data-i18n="tab_upi">💳 UPI ID</button>
                 <button class="tab-btn min-w-[100px] text-[10px] sm:text-xs font-semibold py-2.5 px-3 rounded-xl text-slate-300 font-mono flex-shrink-0" data-mode="qr" onclick="switchMode('qr')" role="tab" data-i18n="tab_qr">▦ QR</button>
-                <button class="tab-btn min-w-[100px] text-[10px] sm:text-xs font-semibold py-2.5 px-3 rounded-xl text-slate-300 font-mono flex-shrink-0" data-mode="phone" onclick="switchMode('phone')" role="tab" data-i18n="tab_phone">📞 Phone</button>
             </div>
 
             <!-- TAB: URL Analyzer -->
@@ -227,36 +230,6 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
             <div class="scan-panel" id="panel-chat" role="tabpanel">
                 <label for="chatInputArea" class="text-xs font-semibold text-green-400 uppercase tracking-wider font-mono block mb-2" data-i18n="lbl_chat">Scam Conversation Analyzer</label>
                 <textarea id="chatInputArea" rows="4" class="w-full bg-slate-950/90 border border-slate-800 rounded-2xl p-4 text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-green-500 transition text-sm resize-none shadow-inner" data-i18n-placeholder="ph_chat_scan" placeholder="WhatsApp chat ya SMS yahan paste karein..."></textarea>
-            </div>
-
-            <!-- TAB: UPI ID (DISABLED / COMING SOON) -->
-            <div class="scan-panel" id="panel-upi" role="tabpanel">
-                <div class="p-5 bg-slate-950 border border-slate-800 rounded-2xl space-y-3">
-                    <div class="flex items-center space-x-2 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">
-                        <span>🚧 Verified Crowdsourced Database in Development</span>
-                    </div>
-                    <p class="text-slate-300 text-sm leading-relaxed" data-i18n="msg_upi_dev">
-                        Filhal Indian UPI VPAs verify karne ke liye koi official public API nahi hai. False accusations aur legal risk se bachne ke liye, <strong>CyberPehra UPI IDs par fake ya simulated risk score generate nahi karta.</strong>
-                    </p>
-                    <p class="text-slate-500 text-xs font-mono" data-i18n="msg_upi_dev2">
-                        Status: Community reporting portal development mein hai. Real data aane tak koi score nahi dikhaya jayega.
-                    </p>
-                </div>
-            </div>
-
-            <!-- TAB: PHONE (DISABLED / COMING SOON) -->
-            <div class="scan-panel" id="panel-phone" role="tabpanel">
-                <div class="p-5 bg-slate-950 border border-slate-800 rounded-2xl space-y-3">
-                    <div class="flex items-center space-x-2 text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">
-                        <span>🚧 Verified Crowdsourced Database in Development</span>
-                    </div>
-                    <p class="text-slate-300 text-sm leading-relaxed" data-i18n="msg_ph_dev">
-                        Innocent phone numbers ki badnami se bachne aur 100% accuracy maintain karne ke liye, <strong>phone inputs par koi automated fallback score generate nahi hota.</strong>
-                    </p>
-                    <p class="text-slate-500 text-xs font-mono" data-i18n="msg_ph_dev2">
-                        Agar aapko scam call aayi hai, toh kripya National Cyber Crime Helpline <strong class="text-green-400">1930</strong> par turant report karein.
-                    </p>
-                </div>
             </div>
 
             <!-- TAB: QR Scanner -->
@@ -285,7 +258,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
                 <div id="scanBeamEl" class="scan-beam hidden"></div>
                 
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-3">
-                    <h3 class="text-green-400 font-bold text-xs sm:text-sm tracking-wide font-mono" data-i18n="res_prob">🛡️ Threat Assessment Result</h3>
+                    <h3 class="text-green-400 font-bold text-xs sm:text-sm tracking-wide font-mono" data-i18n="res_prob">🛡️ Executive Threat Assessment Summary</h3>
                     <span id="badgeStatus" class="text-xs font-bold px-3 py-1 rounded-full border tracking-widest uppercase font-mono bg-slate-800 text-slate-400 border-slate-700">UNVERIFIED</span>
                 </div>
                 
@@ -304,19 +277,240 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
                     <div class="flex-1 w-full space-y-3">
                         <div id="resultText" class="text-slate-300 text-sm leading-relaxed space-y-2">Analysis pending...</div>
                         
-                        <!-- Breakdown List -->
+                        <!-- WHY THIS RESULT CONTAINER -->
+                        <div id="whyResultContainer" class="hidden p-3.5 bg-slate-900/90 border border-slate-800 rounded-xl space-y-1.5 text-xs text-slate-300">
+                            <span class="text-green-400 font-mono font-bold block uppercase text-[11px]">💡 Why This Result?</span>
+                            <p id="whyResultText" class="text-slate-300 leading-relaxed"></p>
+                        </div>
+
+                        <!-- Technical Breakdown List -->
                         <div id="breakdownContainer" class="hidden p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-1.5 font-mono text-xs text-slate-300"></div>
 
-                        <!-- Legal Disclaimer -->
-                        <div class="p-3 bg-slate-900/50 border border-slate-800/80 rounded-lg text-[10px] text-slate-500 italic" data-i18n="res_disclaimer">
-                            ⚠️ <strong>Verification Notice:</strong> Yeh result VirusTotal, Safe Browsing aur public WHOIS se liya gaya ek automated assessment hai. Koi bhi action lene se pehle khud zaroor check karein.
+                        <!-- CITIZEN ACTION CHECKLIST CONTAINER -->
+                        <div id="actionChecklistContainer" class="hidden p-3.5 bg-slate-900/90 border border-slate-800 rounded-xl space-y-2 text-xs">
+                            <span class="text-green-400 font-mono font-bold block uppercase text-[11px]">📋 Citizen Action Checklist</span>
+                            <ul id="actionChecklistItems" class="space-y-1 text-slate-300 font-mono"></ul>
                         </div>
                     </div>
                 </div>
 
+                <!-- 🤖 AI INCIDENT ASSISTANT SECTION -->
+                <div id="aiIncidentAssistantSection" class="mt-5 p-5 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-teal-500/30 rounded-2xl space-y-4 text-xs shadow-2xl relative overflow-hidden transition-all duration-300">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
+                        <h4 class="font-mono font-bold text-teal-400 uppercase tracking-wider text-sm flex items-center gap-2">
+                            <span class="text-base">🤖</span> <span>AI Incident Assistant</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-teal-950 text-teal-300 border border-teal-800 font-normal">Automated Incident Telemetry</span>
+                        </h4>
+                        <span id="aiIncidentVerdictBadge" class="text-[10px] font-mono px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase tracking-wider">VERDICT: PENDING</span>
+                    </div>
+
+                    <!-- 9 CORE INCIDENT SECTIONS GRID -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                        <!-- 1. What happened? -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-teal-400">❓</span> What happened?</span>
+                            <p id="aiIncidentWhatHappened" class="text-slate-300 leading-relaxed text-xs">Scan pending...</p>
+                        </div>
+
+                        <!-- 2. Overall Verdict -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-amber-400">⚖️</span> Overall Verdict</span>
+                            <div id="aiIncidentVerdictText" class="text-slate-300 leading-relaxed text-xs">Verdict pending...</div>
+                        </div>
+
+                        <!-- 3. Why this result? -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-sky-400">💡</span> Why this result?</span>
+                            <p id="aiIncidentWhyResult" class="text-slate-300 leading-relaxed text-xs">Scan evidence pending...</p>
+                        </div>
+
+                        <!-- 4. Immediate Action Checklist -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-rose-400">📋</span> Immediate Action Checklist</span>
+                            <ul id="aiIncidentActionChecklist" class="space-y-1 text-slate-300 font-mono text-[11px]"></ul>
+                        </div>
+
+                        <!-- 5. Should I call 1930? -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-2 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-rose-400">📞</span> Should I call 1930?</span>
+                            <p id="aiIncidentShouldCall1930" class="text-slate-300 leading-relaxed text-xs">Guidance pending...</p>
+                            <div class="pt-1">
+                                <a href="tel:1930" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-mono font-bold text-[11px] transition shadow-md">
+                                    <span>📞</span> Call 1930 Helpline Now
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 6. Evidence to Save -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-purple-400">📸</span> Evidence to Save</span>
+                            <div id="aiIncidentEvidenceToSave" class="text-slate-300 leading-relaxed text-xs font-mono"></div>
+                        </div>
+
+                        <!-- 7. Official Reporting Links -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-2 hover:border-slate-700 transition md:col-span-2">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-emerald-400">🏛️</span> Official Reporting Links</span>
+                            <div id="aiIncidentOfficialLinks" class="flex flex-wrap items-center gap-2 pt-1">
+                                <a href="tel:1930" class="px-3.5 py-2 rounded-lg bg-rose-950 border border-rose-800 text-rose-300 hover:bg-rose-900 font-mono font-bold text-[11px] transition flex items-center gap-1.5">
+                                    <span>📞</span> Call 1930 Helpline
+                                </a>
+                                <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-700 text-teal-300 hover:bg-slate-800 font-mono font-bold text-[11px] transition flex items-center gap-1.5">
+                                    <span>🌐</span> cybercrime.gov.in ↗
+                                </a>
+                                <a href="https://www.cert-in.org.in" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-700 text-sky-300 hover:bg-slate-800 font-mono font-bold text-[11px] transition flex items-center gap-1.5">
+                                    <span>🛡️</span> CERT-In Portal ↗
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 8. Privacy Promise -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-teal-400">🔒</span> Privacy Promise</span>
+                            <p id="aiIncidentPrivacyPromise" class="text-slate-300 leading-relaxed text-[11px]">Strict 0-Day Data Retention Policy. Local browser SHA-256 computation. Zero scan queries, IP addresses, or personal info stored on CyberPehra servers.</p>
+                        </div>
+
+                        <!-- 9. Can I trust this result? -->
+                        <div class="p-3.5 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 hover:border-slate-700 transition">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-amber-400">🎯</span> Can I trust this result?</span>
+                            <p id="aiIncidentCanITrust" class="text-slate-300 leading-relaxed text-xs">Trust evaluation pending...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WHY SHOULD I TRUST THIS RESULT? SECTION -->
+                <div id="trustSection" class="mt-5 p-4 bg-slate-900/90 border border-slate-800 rounded-xl space-y-3 text-xs">
+                    <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                        <h4 class="font-mono font-bold text-slate-200 uppercase tracking-wide flex items-center gap-2">
+                            <span>🛡️</span> <span>Why Should I Trust This Result?</span>
+                        </h4>
+                        <span id="trustConfidence" class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400 border border-sky-800">Not Available</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-[11px]">
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-500 block text-[10px] uppercase">Scan Source</span>
+                            <span id="trustSource" class="text-slate-200 font-bold">Not Available</span>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-500 block text-[10px] uppercase">Engines Checked</span>
+                            <span id="trustEngines" class="text-slate-200 font-bold">Not Available</span>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-500 block text-[10px] uppercase">Last Analysis Time</span>
+                            <span id="trustTime" class="text-slate-200 font-bold">Not Available</span>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-500 block text-[10px] uppercase">File Uploaded?</span>
+                            <span id="trustUploaded" class="text-slate-200 font-bold">No (0-Day Retention)</span>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-500 block text-[10px] uppercase">Local SHA-256 Used?</span>
+                            <span id="trustSha256" class="text-slate-200 font-bold">Not Available</span>
+                        </div>
+                        <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-500 block text-[10px] uppercase">Data Stored by CyberPehra?</span>
+                            <span id="trustStored" class="text-emerald-400 font-bold">No (Privacy First)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🧠 SCAM EXPLAIN AI SECTION -->
+                <div id="scamExplainAiSection" class="mt-5 p-5 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-green-500/30 rounded-2xl space-y-4 text-xs shadow-2xl relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
+                        <h4 class="font-mono font-bold text-green-400 uppercase tracking-wider text-sm flex items-center gap-2">
+                            <span>🧠</span> <span>Scam Explain AI</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-green-950 text-green-300 border border-green-800 font-normal">Evidence Explanation Engine</span>
+                        </h4>
+                        <span id="aiConfidenceBadge" class="text-[10px] font-mono px-2.5 py-1 rounded-full font-bold bg-slate-800 text-sky-400 border border-sky-800">Confidence: Not Available</span>
+                    </div>
+
+                    <!-- 11 EXPLANATION CARDS -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-green-400">❓</span> What happened?</span>
+                            <p id="aiWhatHappened" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-amber-400">⚠️</span> Why is this suspicious?</span>
+                            <p id="aiWhySuspicious" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-sky-400">🔍</span> What evidence supports this result?</span>
+                            <p id="aiEvidenceSupports" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-rose-400">⚡</span> What could happen if warning is ignored?</span>
+                            <p id="aiIgnoredImpact" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-purple-400">🎯</span> How confident can CyberPehra be?</span>
+                            <p id="aiConfidenceText" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-teal-400">✅</span> What should the user do next?</span>
+                            <p id="aiNextSteps" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-amber-400">🚫</span> Common victim mistakes</span>
+                            <p id="aiVictimMistakes" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-purple-400">🎭</span> Why scammers use this trick</span>
+                            <p id="aiScammerTrick" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-rose-400">💰</span> What scammers want</span>
+                            <p id="aiScammerGoal" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-emerald-400">🛡️</span> Real prevention tips</span>
+                            <p id="aiPreventionTips" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+
+                        <div class="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1 md:col-span-2">
+                            <span class="text-slate-400 font-mono text-[11px] font-semibold flex items-center gap-1.5"><span class="text-sky-400">🏷️</span> Related scam categories</span>
+                            <p id="aiRelatedScams" class="text-slate-300 leading-relaxed text-xs">Analysis pending...</p>
+                        </div>
+                    </div>
+
+                    <!-- EDUCATIONAL "LEARN MORE" COLLAPSIBLE ACCORDION -->
+                    <div class="pt-2 border-t border-slate-800/80">
+                        <button onclick="toggleAiLearnMore()" class="w-full flex items-center justify-between py-2 px-3 bg-slate-950 hover:bg-slate-900 border border-slate-800 rounded-xl text-slate-300 font-mono text-xs font-semibold transition">
+                            <span class="flex items-center gap-2">📖 <span>Learn Cybersecurity Terms (Educational Guide)</span></span>
+                            <span id="aiLearnIcon" class="text-slate-400 text-sm">+</span>
+                        </button>
+
+                        <div id="aiLearnMoreContent" class="hidden mt-3 p-4 bg-slate-950 border border-slate-800 rounded-xl space-y-3 font-mono text-xs text-slate-300">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px]">
+                                <div><strong class="text-green-400">Phishing:</strong> Fake websites or messages impersonating banks or apps to steal credentials.</div>
+                                <div><strong class="text-green-400">Malware:</strong> Malicious software designed to compromise or spy on mobile/desktop devices.</div>
+                                <div><strong class="text-green-400">Credential Theft:</strong> Unauthorized capture of login passwords, PINs, or OTP codes.</div>
+                                <div><strong class="text-green-400">Social Engineering:</strong> Manipulating victims using urgency, fear, or fake lottery prizes.</div>
+                                <div><strong class="text-green-400">Trojan:</strong> Harmful software disguised as a legitimate application (e.g. fake APKs).</div>
+                                <div><strong class="text-green-400">APK:</strong> Android Package File used to install applications on Android devices.</div>
+                                <div><strong class="text-green-400">Cryptographic Hash:</strong> Unique digital fingerprint (SHA-256) identifying file contents.</div>
+                                <div><strong class="text-green-400">VirusTotal:</strong> Global threat intelligence aggregator analyzing links across 70+ antivirus engines.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OFFICIAL HELP & REPORTING HUB -->
                 <div id="govGuide" class="p-4 bg-rose-950/40 border border-rose-500/50 rounded-xl space-y-3 hidden">
-                    <h4 class="font-display text-base text-rose-400 tracking-wide" data-i18n="res_guide_title">🚨 Official Action Guide</h4>
-                    <p class="text-slate-300 text-xs leading-relaxed" data-i18n="res_guide_desc">Agar financial fraud ya extortion hua hai, toh account turant freeze karwayein:</p>
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-display text-base text-rose-400 tracking-wide">🚨 Official Action & Reporting Help</h4>
+                        <span class="font-mono text-xs text-rose-300 font-bold">Helpline: 1930</span>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed">Agar financial fraud ya extortion hua hai, toh National Cyber Helpline <strong>1930</strong> par turant call karein aur account freeze karwayein:</p>
                     <div class="flex flex-wrap items-center gap-3 pt-1">
                         <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition">Report on cybercrime.gov.in ↗</a>
                         <button onclick="downloadPDFReport()" class="bg-slate-800 hover:bg-slate-700 text-green-400 border border-green-500/40 text-xs font-bold px-3.5 py-2 rounded-lg transition" data-i18n="btn_dl_pdf">📄 Evidence PDF Download Karein</button>
@@ -350,6 +544,329 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
                 <p class="text-slate-400 text-sm leading-relaxed" data-i18n="how_step3_desc">Turant pata lagayein ki ye safe hai ya scam. Koi fake fallback score nahi.</p>
             </div>
         </div>
+    <!-- SPRINT 10: EMERGENCY RESPONSE CENTER (PRODUCTION GRADE) -->
+    <section id="emergency-center" class="max-w-5xl mx-auto space-y-8 pt-10">
+        <!-- HEADER -->
+        <div class="space-y-3 text-center">
+            <div class="inline-flex items-center space-x-2 bg-rose-500/10 text-rose-400 border border-rose-500/30 px-3.5 py-1 rounded-full text-[10px] font-bold uppercase font-mono tracking-wider animate-pulse">
+                <span>🚨 Citizen Incident Response Unit</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl tracking-wide text-white">Emergency Response Center</h2>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto font-mono">
+                Victim of cyber fraud or extortion? Take immediate recourse within the Golden Hour window using official Indian helpline nodes and verified emergency playbooks.
+            </p>
+        </div>
+
+        <!-- FEATURE 1: EMERGENCY DASHBOARD CARDS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <!-- 📞 Call 1930 -->
+            <a href="tel:1930" class="p-5 bg-rose-950/60 hover:bg-rose-900/80 border border-rose-500/60 rounded-2xl space-y-2 text-center transition-all duration-300 shadow-xl hover:scale-105 group">
+                <span class="text-3xl block">📞</span>
+                <h4 class="font-display font-bold text-white text-base group-hover:text-rose-300">Call 1930</h4>
+                <p class="text-[11px] font-mono text-rose-200">National Cyber Crime Helpline (24x7 Golden Hour)</p>
+            </a>
+
+            <!-- 🌐 cybercrime.gov.in -->
+            <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="p-5 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-emerald-500/50 rounded-2xl space-y-2 text-center transition-all duration-300 shadow-xl hover:scale-105 group">
+                <span class="text-3xl block">🌐</span>
+                <h4 class="font-display font-bold text-white text-base group-hover:text-emerald-400">cybercrime.gov.in</h4>
+                <p class="text-[11px] font-mono text-slate-400">Official Govt Incident Reporting Portal ↗</p>
+            </a>
+
+            <!-- 🛡 CERT-In -->
+            <a href="https://www.cert-in.org.in" target="_blank" rel="noopener" class="p-5 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-sky-500/50 rounded-2xl space-y-2 text-center transition-all duration-300 shadow-xl hover:scale-105 group">
+                <span class="text-3xl block">🛡️</span>
+                <h4 class="font-display font-bold text-white text-base group-hover:text-sky-400">CERT-In</h4>
+                <p class="text-[11px] font-mono text-slate-400">Indian Computer Emergency Response Team ↗</p>
+            </a>
+
+            <!-- 🏦 RBI -->
+            <a href="https://cms.rbi.org.in" target="_blank" rel="noopener" class="p-5 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/50 rounded-2xl space-y-2 text-center transition-all duration-300 shadow-xl hover:scale-105 group">
+                <span class="text-3xl block">🏦</span>
+                <h4 class="font-display font-bold text-white text-base group-hover:text-amber-400">RBI CMS Portal</h4>
+                <p class="text-[11px] font-mono text-slate-400">Reserve Bank Ombudsman & Banking Support ↗</p>
+            </a>
+
+            <!-- 📱 NPCI UPI Help -->
+            <a href="https://www.npci.org.in/what-we-do/upi/dispute-redressal-mechanism" target="_blank" rel="noopener" class="p-5 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-teal-500/50 rounded-2xl space-y-2 text-center transition-all duration-300 shadow-xl hover:scale-105 group">
+                <span class="text-3xl block">📱</span>
+                <h4 class="font-display font-bold text-white text-base group-hover:text-teal-400">NPCI UPI Support</h4>
+                <p class="text-[11px] font-mono text-slate-400">Official UPI Dispute Redressal Portal ↗</p>
+            </a>
+        </div>
+
+        <!-- FEATURE 2 & FEATURE 3: DYNAMIC FIRST 30-MIN PLAYBOOK & EVIDENCE ASSISTANT -->
+        <div class="bg-slate-900/90 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-6 cyber-card-glow">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                <div class="space-y-1">
+                    <span class="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <span>⏱️</span> <span>First 30 Minutes Action Plan</span>
+                    </span>
+                    <h3 class="font-display font-bold text-white text-xl">Select Incident Type for Instant Playbook & Evidence Checklist</h3>
+                </div>
+                <!-- Selector Dropdown -->
+                <div class="w-full md:w-auto">
+                    <select id="emergencyIncidentSelect" onchange="switchEmergencyIncident(this.value)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 font-mono text-xs sm:text-sm focus:border-rose-500 focus:outline-none transition shadow-inner">
+                        <option value="upi_fraud">💳 UPI Fraud / Collect Request</option>
+                        <option value="banking_fraud">🏦 Banking Phishing / NetBanking Fraud</option>
+                        <option value="qr_scam">▦ Malicious QR Code Drain</option>
+                        <option value="whatsapp_scam">💬 WhatsApp Hijack / Friend Emergency</option>
+                        <option value="telegram_scam">✈️ Telegram Task / Prepaid Job Scam</option>
+                        <option value="digital_arrest">⚖️ Digital Arrest / Fake CBI Video Call</option>
+                        <option value="fake_police">🚔 Fake Police Call / Bail Money Scam</option>
+                        <option value="fake_courier">📦 Fake FedEx / Customs Illegal Parcel</option>
+                        <option value="loan_app">📱 Instant Loan App Extortion</option>
+                        <option value="screen_sharing">🖥️ Remote Screen Sharing App Fraud</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- DYNAMIC PLAYBOOK & EVIDENCE GRID -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Playbook Steps (7 Cols) -->
+                <div class="lg:col-span-7 space-y-4">
+                    <h4 id="emergencyPlaybookTitle" class="font-display font-bold text-rose-400 text-base flex items-center gap-2">
+                        <span>⚡</span> <span>Immediate Action Playbook</span>
+                    </h4>
+                    <div id="emergencyPlaybookSteps" class="space-y-3 font-mono text-xs text-slate-300">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Dynamic Evidence Checklist (5 Cols) -->
+                <div class="lg:col-span-5 bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
+                            <h4 class="font-display font-bold text-sky-400 text-sm flex items-center gap-1.5">
+                                <span>📸</span> <span>Required Evidence Checklist</span>
+                            </h4>
+                            <span id="evidenceItemCount" class="text-[10px] font-mono text-slate-500">Auto-Generated</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 font-mono">Gather these exact proof items before filing 1930 / cybercrime.gov.in report:</p>
+                        <div id="emergencyEvidenceChecklist" class="space-y-2 font-mono text-xs">
+                            <!-- Loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- PDF Export Action -->
+                    <div class="pt-4 border-t border-slate-800/80 space-y-2">
+                        <button onclick="downloadEmergencyActionPDF()" id="downloadEmergencyPdfBtn" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-400 hover:text-emerald-300 font-mono font-bold text-xs transition flex items-center justify-center gap-2 shadow-md">
+                            <span>📄</span> <span>Export Emergency Action PDF</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 4: FIR ASSISTANT -->
+        <div class="bg-slate-900/90 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-5 cyber-card-glow">
+            <div class="border-b border-slate-800 pb-4 space-y-1">
+                <span class="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <span>📑</span> <span>Official Legal Process Guide</span>
+                </span>
+                <h3 class="font-display font-bold text-white text-xl">FIR & Legal Recourse Assistant</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+                <!-- 1930 Helpline -->
+                <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <strong class="text-rose-400 text-xs uppercase">1. Call 1930 Helpline</strong>
+                        <span class="text-[10px] text-slate-500">First 2-24 Hours</span>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">Financial fraud hotline managed by Citizen Financial Cyber Fraud Reporting System (CFCFRMS). Directly alerts banks to freeze defrauded money in destination accounts.</p>
+                </div>
+
+                <!-- cybercrime.gov.in -->
+                <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <strong class="text-sky-400 text-xs uppercase">2. cybercrime.gov.in Portal</strong>
+                        <span class="text-[10px] text-slate-500">Official Record</span>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">National Cyber Crime Reporting Portal. Generates an official Acknowledgement Number required by police and banks for formal tracking.</p>
+                </div>
+
+                <!-- Police Station FIR -->
+                <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <strong class="text-emerald-400 text-xs uppercase">3. Local Police Station FIR</strong>
+                        <span class="text-[10px] text-slate-500">Formal Investigation</span>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">Physical legal notice under IT Act / IPC (BNSS). Police issue formal notices under Sec 91/94 to banks & telecom operators to recover funds and trace culprits.</p>
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-2xl font-mono text-xs space-y-2">
+                <strong class="text-amber-400 text-xs uppercase block">📂 Required Documents for Filing FIR / Cyber Complaint:</strong>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-slate-300 text-[11px]">
+                    <div>• Bank Statement (highlighted)</div>
+                    <div>• Government ID Proof (Aadhaar/PAN)</div>
+                    <div>• Fraudulent Transaction UTR Numbers</div>
+                    <div>• Mobile Call Logs & Chat Export</div>
+                    <div>• Cyber Crime Portal Ack Slip</div>
+                    <div>• Screenshots of Phishing Link/App</div>
+                    <div>• Suspect Phone / UPI VPA Details</div>
+                    <div>• Written Incident Timeline Narrative</div>
+                </div>
+                <p class="text-slate-500 text-[10px] pt-1">Disclaimer: Educational guide based strictly on MHA & State Police guidelines. Does not constitute formal legal advice.</p>
+            </div>
+        </div>
+
+        <!-- FEATURE 5 & 6: BANK EMERGENCY HUB & UPI EMERGENCY HUB -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- FEATURE 5: BANK EMERGENCY HUB -->
+            <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-4 cyber-card-glow">
+                <div class="border-b border-slate-800 pb-3 flex items-center justify-between flex-wrap gap-2">
+                    <h3 class="font-display font-bold text-white text-lg flex items-center gap-2">
+                        <span>🏦</span> <span>Major Bank Emergency Helplines</span>
+                    </h3>
+                    <span class="text-[10px] font-mono text-emerald-400">12 Official Indian Banks</span>
+                </div>
+                <div id="bankEmergencyGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-72 overflow-y-auto custom-scrollbar font-mono text-xs">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- FEATURE 6: UPI EMERGENCY HUB -->
+            <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-4 cyber-card-glow">
+                <div class="border-b border-slate-800 pb-3 flex items-center justify-between flex-wrap gap-2">
+                    <h3 class="font-display font-bold text-white text-lg flex items-center gap-2">
+                        <span>📱</span> <span>UPI Apps Dispute & Fraud Blocking</span>
+                    </h3>
+                    <span class="text-[10px] font-mono text-emerald-400">5 Top UPI Apps</span>
+                </div>
+                <div id="upiEmergencyGrid" class="space-y-2.5 max-h-72 overflow-y-auto custom-scrollbar font-mono text-xs">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 7 & 8: TELECOM SIM PROTECTION & OFFICIAL RESOURCES DIRECTORY -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- FEATURE 7: TELECOM SIM PROTECTION -->
+            <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-4 cyber-card-glow">
+                <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+                    <h3 class="font-display font-bold text-white text-lg flex items-center gap-2">
+                        <span>📲</span> <span>Telecom SIM Block & Protection</span>
+                    </h3>
+                    <span class="text-[10px] font-mono text-emerald-400">Jio / Airtel / Vi / BSNL</span>
+                </div>
+                <div id="telecomEmergencyGrid" class="space-y-2.5 font-mono text-xs">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- FEATURE 8: OFFICIAL RESOURCES DIRECTORY -->
+            <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-3xl shadow-2xl space-y-4 cyber-card-glow">
+                <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+                    <h3 class="font-display font-bold text-white text-lg flex items-center gap-2">
+                        <span>🏛️</span> <span>Official Cyber Authorities Directory</span>
+                    </h3>
+                    <span class="text-[10px] font-mono text-sky-400">Verified Govt Bodies</span>
+                </div>
+                <div id="officialResourcesGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-72 overflow-y-auto custom-scrollbar font-mono text-xs">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURE 10: PRIVACY PROMISE -->
+        <div class="p-5 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-950 border border-emerald-500/30 rounded-2xl font-mono text-xs space-y-2 shadow-xl">
+            <strong class="text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-2">
+                <span>🔒</span> <span>CyberPehra Emergency Privacy Promise</span>
+            </strong>
+            <p class="text-slate-300 leading-relaxed">
+                Zero account required. Zero file uploads. Zero analytics or session tracking. Zero cloud storage. Everything in this Emergency Response Center runs 100% locally inside client browser memory. Your incident details and generated PDFs remain strictly on your device.
+            </p>
+        </div>
+    </section>
+
+    <!-- SPRINT 9: CYBER SAFETY DASHBOARD (PERSONAL CYBER HEALTH CHECK) -->
+    <section id="safety-dashboard" class="max-w-5xl mx-auto space-y-8 pt-12">
+        <!-- HEADER -->
+        <div class="space-y-3 text-center">
+            <div class="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3.5 py-1 rounded-full text-[10px] font-bold uppercase font-mono tracking-wider">
+                <span>🛡️ Personal Cyber Hygiene & Self-Audit</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl tracking-wide text-white">Cyber Safety Dashboard</h2>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto font-mono">
+                Assess and strengthen your personal digital security posture. 100% Client-Side Evaluation inside your browser — zero data transmitted.
+            </p>
+        </div>
+
+        <!-- SUMMARY CARD -->
+        <div class="bg-slate-900/90 border border-slate-800 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-6 cyber-card-glow relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-6 border-b border-slate-800">
+                <!-- Status Verdict Box -->
+                <div class="space-y-2">
+                    <span class="text-[10px] font-mono uppercase text-slate-500 tracking-wider">Current Cyber Hygiene Status</span>
+                    <div class="flex items-center gap-3">
+                        <div id="dashboardStatusBadge" class="px-4 py-1.5 rounded-full font-mono text-sm font-extrabold uppercase border bg-slate-950 text-slate-400 border-slate-800 flex items-center gap-2">
+                            <span>🔴</span> <span>Critical</span>
+                        </div>
+                        <span id="dashboardCompletedCount" class="text-xs font-mono text-emerald-400 font-bold">0 / 16 Completed</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar & Next Step -->
+                <div class="w-full lg:w-1/2 space-y-2">
+                    <div class="flex items-center justify-between text-xs font-mono">
+                        <span class="text-slate-400">Security Completion</span>
+                        <span id="dashboardPercentText" class="text-slate-200 font-bold">0%</span>
+                    </div>
+                    <div class="w-full h-3 bg-slate-950 rounded-full border border-slate-800 overflow-hidden p-0.5">
+                        <div id="dashboardProgressBar" class="h-full bg-rose-500 rounded-full transition-all duration-500 w-0"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pt-1">
+                        <span id="dashboardRemainingCount">16 Action Items Remaining</span>
+                        <span id="dashboardLastUpdated">Last Checked: Just Now</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommended Next Step Banner -->
+            <div class="p-4 bg-slate-950/90 border border-slate-800 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <span class="text-[10px] font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
+                        <span>⚡</span> <span>Recommended Next Action:</span>
+                    </span>
+                    <p id="dashboardNextStepText" class="text-xs sm:text-sm text-slate-200 font-mono font-medium">
+                        Enable Two-Factor Authentication on your primary Google/email account immediately.
+                    </p>
+                </div>
+                <div class="flex items-center gap-2.5 flex-shrink-0 w-full sm:w-auto">
+                    <button onclick="downloadCyberHygienePDFReport()" id="dashboardExportPdfBtn" class="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-400 hover:text-emerald-300 font-mono font-bold text-xs transition flex items-center justify-center gap-2 shadow-md">
+                        <span>📄</span> <span>Export PDF Report</span>
+                    </button>
+                    <button onclick="resetSafetyDashboard()" id="dashboardResetBtn" class="px-3.5 py-2.5 rounded-xl bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 font-mono text-xs transition flex items-center justify-center gap-1" title="Reset Checklist">
+                        <span>🔄</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHECKLIST TAB FILTERS & ACTIONS -->
+        <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 font-mono text-xs">
+                <!-- Filter Tabs -->
+                <div class="flex items-center gap-2 p-1 bg-slate-900/90 border border-slate-800 rounded-xl">
+                    <button onclick="filterChecklistCategory('all')" id="btnFilterAll" class="px-3.5 py-1.5 rounded-lg font-bold transition bg-emerald-500 text-slate-950 shadow">All Items (16)</button>
+                    <button onclick="filterChecklistCategory('incomplete')" id="btnFilterIncomplete" class="px-3.5 py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition">Incomplete</button>
+                    <button onclick="filterChecklistCategory('completed')" id="btnFilterCompleted" class="px-3.5 py-1.5 rounded-lg font-bold text-slate-400 hover:text-white transition">Completed</button>
+                </div>
+
+                <!-- Select All / Unselect All -->
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleSelectAllChecklist(true)" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-xl transition">Select All</button>
+                    <button onclick="toggleSelectAllChecklist(false)" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-xl transition">Unselect All</button>
+                </div>
+            </div>
+
+            <!-- CHECKLIST ITEMS GRID -->
+            <div id="dashboardChecklistContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- 16 Checklist item cards rendered dynamically via JS -->
+            </div>
+        </div>
     </section>
 
     <!-- MINI CYBER TOOLS -->
@@ -358,7 +875,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
             <h2 class="font-display text-3xl sm:text-4xl tracking-wide text-white" data-i18n="tools_title">🛠️ Mini Cyber Tools</h2>
             <p class="text-slate-400 text-sm" data-i18n="tools_desc">Free local tools aapki digital safety ke liye.</p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             
             <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-4 cyber-card-glow flex flex-col justify-between">
                 <div class="space-y-3">
@@ -369,7 +886,10 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
                     </div>
                     <p id="pwdFeedback" class="text-[11px] text-slate-400 font-mono"></p>
                 </div>
-                <button onclick="generatePassword()" class="w-full mt-4 py-2.5 rounded-lg bg-slate-800 hover:bg-green-600 text-green-400 hover:text-white font-bold text-xs transition" data-i18n="btn_gen_pwd">Strong Password Banao ⚡</button>
+                <div class="flex gap-2 mt-4">
+                    <button onclick="generatePassword()" class="flex-1 py-2.5 rounded-lg bg-slate-800 hover:bg-green-600 text-green-400 hover:text-white font-bold text-xs transition" data-i18n="btn_gen_pwd">Strong Password Banao ⚡</button>
+                    <button onclick="copyPassword()" class="px-3 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition" title="Copy Password">📋</button>
+                </div>
             </div>
 
             <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-4 cyber-card-glow flex flex-col justify-between">
@@ -378,10 +898,21 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
                     <input type="text" id="qrGenInput" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-green-500 font-mono" data-i18n-placeholder="ph_qr_gen" placeholder="Link ya text daalein...">
                     <div id="qrOutput" class="w-full flex justify-center bg-white p-2 rounded-lg hidden"></div>
                 </div>
-                <button onclick="generateQR()" class="w-full mt-4 py-2.5 rounded-lg bg-slate-800 hover:bg-green-600 text-green-400 hover:text-white font-bold text-xs transition" data-i18n="btn_gen_qr">QR Code Banao ▦</button>
+                <div class="flex gap-2 mt-4">
+                    <button onclick="generateQR()" class="flex-1 py-2.5 rounded-lg bg-slate-800 hover:bg-green-600 text-green-400 hover:text-white font-bold text-xs transition" data-i18n="btn_gen_qr">QR Code Banao ▦</button>
+                    <button onclick="copyQRText()" class="px-3 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition" title="Copy Link">📋</button>
+                </div>
             </div>
 
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-4 cyber-card-glow flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-4 cyber-card-glow flex flex-col justify-between">
+                <div class="space-y-3">
+                    <h3 class="font-bold text-white text-lg font-display">Browser Security Check</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">Run a 100% local audit of 22 browser security & privacy settings.</p>
+                </div>
+                <button onclick="openBrowserCheckModal()" class="w-full mt-4 py-2.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold text-xs transition">Run Audit 🌐</button>
+            </div>
+
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-4 cyber-card-glow flex flex-col justify-between">
                 <div class="space-y-3">
                     <h3 class="font-bold text-white text-lg font-display" data-i18n="tool_quiz">Cyber Security Quiz</h3>
                     <p class="text-xs text-slate-400 leading-relaxed" data-i18n="tool_quiz_d">Apni knowledge test karein is mini quiz se.</p>
@@ -424,22 +955,114 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
                 <p class="text-slate-400 text-[11px] mt-1">Critical mistakes to avoid</p>
             </button>
         </div>
+    <!-- CYBER INTELLIGENCE CENTER (REAL-TIME TRUSTED THREAT FEED) -->
+    <section id="cyber-intelligence-center" class="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-green-500/30 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden cyber-card-glow mt-16">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4 flex-wrap gap-3">
+            <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    <h2 class="font-display text-2xl sm:text-3xl tracking-wide text-white flex items-center gap-2"><span>🛡️</span> <span>Cyber Intelligence Center</span></h2>
+                </div>
+                <p class="text-xs text-slate-400 font-mono">Real-time threat advisories from CERT-In, CISA & official security response centers.</p>
+            </div>
+            <div class="flex items-center gap-3 font-mono text-xs">
+                <span id="intelLastUpdated" class="text-slate-400 text-[11px]">Last Updated: Fetching...</span>
+                <button onclick="refreshCyberIntel()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-emerald-400 rounded-xl font-bold transition flex items-center gap-1">
+                    <span>🔄</span> <span>Refresh</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 5: SCAM AWARENESS TIP -->
+        <div class="p-3.5 bg-gradient-to-r from-emerald-950/60 to-slate-950 border border-emerald-800/60 rounded-2xl flex items-start gap-3">
+            <span class="text-xl">💡</span>
+            <div class="space-y-0.5 text-xs font-mono">
+                <strong class="text-emerald-400 font-bold uppercase tracking-wider text-[11px] block">Derived Awareness Tip:</strong>
+                <p id="intelAwarenessTip" class="text-slate-300 leading-relaxed">No awareness tip available.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 2: TRENDING SCAM TYPES -->
+        <div class="space-y-2">
+            <span class="text-xs font-mono text-slate-400 font-semibold uppercase tracking-wider block">🔥 Active Threat Categories (Article Evidence):</span>
+            <div id="intelScamTrends" class="flex flex-wrap gap-2">
+                <span class="text-xs font-mono text-slate-500">Checking active threat categories...</span>
+            </div>
+        </div>
+
+        <!-- GRID FOR SECTION 1, 3, & 4 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
+            <!-- SECTION 1: TODAY'S THREAT ALERTS -->
+            <div class="lg:col-span-2 space-y-3">
+                <h3 class="font-mono text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <span class="text-emerald-400">📢</span> <span>Today's Threat Alerts</span>
+                </h3>
+                <div id="intelAlertsList" class="space-y-3">
+                    <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 font-mono text-xs">Connecting to official threat intelligence feeds...</div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: SECTION 3 (CYBER NEWS) & SECTION 4 (CRITICAL SECURITY UPDATES) -->
+            <div class="space-y-6">
+                <!-- SECTION 4: CRITICAL SECURITY UPDATES -->
+                <div class="space-y-3">
+                    <h3 class="font-mono text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                        <span>⚡</span> <span>Critical Security Updates</span>
+                    </h3>
+                    <div id="intelSecurityUpdates" class="space-y-2.5">
+                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 font-mono text-xs">Checking system updates...</div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: CYBER NEWS -->
+                <div class="space-y-3">
+                    <h3 class="font-mono text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                        <span>📰</span> <span>Cyber Security News</span>
+                    </h3>
+                    <div id="intelNewsList" class="space-y-2.5">
+                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl text-slate-400 font-mono text-xs">Checking security news...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- LIVE METER -->
-    <section id="live-meter" class="bg-gradient-to-r from-slate-900 via-slate-950 to-green-950/40 border border-green-500/40 rounded-3xl p-6 sm:p-10 space-y-6 shadow-2xl relative overflow-hidden cyber-card-glow mt-16">
-        <div class="space-y-1 relative z-10 text-center">
-            <h2 class="font-display text-3xl tracking-wide text-white" data-i18n="lm_title">Live Cyber Fraud Loss Meter</h2>
+    <!-- SEARCHABLE SCAM ENCYCLOPEDIA (SPRINT 8 PRODUCTION GRADE) -->
+    <section id="scam-encyclopedia" class="max-w-5xl mx-auto space-y-6 pt-16">
+        <div class="space-y-3 text-center">
+            <div class="inline-flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3.5 py-1 rounded-full text-[10px] font-bold uppercase font-mono tracking-wider">
+                <span>📖 India's Cyber Scam Knowledge Base</span>
+            </div>
+            <h2 class="font-display text-3xl sm:text-4xl tracking-wide text-white">Scam Encyclopedia</h2>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto font-mono">
+                Explore verified cyber scam tactics, step-by-step threat workflows, warning signs, and official recourse guides based strictly on public threat advisories.
+            </p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 relative z-10">
-            <div class="bg-slate-950/80 border border-slate-800 p-6 rounded-2xl text-center shadow-inner">
-                <div class="text-xs font-mono text-slate-400 uppercase tracking-wider" data-i18n="lm_ind">India Daily Loss Est.</div>
-                <div id="indiaLossCounter" class="text-4xl font-display font-extrabold text-rose-400 mt-2">₹142.80 Crores</div>
+
+        <!-- SEARCH BAR & FILTERS -->
+        <div class="space-y-4 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+            <!-- SEARCH INPUT -->
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-500 font-mono text-sm">🔍</span>
+                <input type="text" id="scamSearch" oninput="filterScams()" placeholder="Search 18 scam categories (e.g. UPI, Digital Arrest, Loan App, Telegram, OTP)..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-11 pr-10 py-3.5 text-slate-100 text-xs sm:text-sm focus:border-emerald-500 focus:outline-none font-mono transition shadow-inner placeholder:text-slate-600">
+                <button onclick="clearScamSearch()" id="clearScamSearchBtn" class="hidden absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 hover:text-white font-mono text-xs">✕ Clear</button>
             </div>
-            <div class="bg-slate-950/80 border border-slate-800 p-6 rounded-2xl text-center shadow-inner">
-                <div class="text-xs font-mono text-slate-400 uppercase tracking-wider" data-i18n="lm_glb">Global Scams Active</div>
-                <div class="text-4xl font-display font-extrabold text-green-400 mt-2" id="globalScamsCounter">48,219</div>
+
+            <!-- CATEGORY FILTER CHIPS -->
+            <div class="space-y-2">
+                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span class="font-semibold text-emerald-400 uppercase tracking-wider">🏷️ Filter by Category:</span>
+                    <span id="scamCountIndicator" class="text-slate-400 font-bold">Showing 18 Cyber Scams</span>
+                </div>
+                <div id="categoryFilterChips" class="flex flex-wrap gap-2 pt-1 max-h-40 overflow-y-auto custom-scrollbar">
+                    <!-- Filter chips rendered dynamically -->
+                </div>
             </div>
+        </div>
+
+        <!-- SCAM CARDS GRID -->
+        <div id="scamListContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Scam cards rendered dynamically via JS -->
         </div>
     </section>
 
@@ -631,6 +1254,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Space Grotesk', sans-serif; }
 </footer>
 
 
+<script>
 // ==========================================
 // CONFIGURATION
 // ==========================================
@@ -1082,6 +1706,23 @@ function downloadPDFReport() {
 (function boot(){ const l = document.getElementById('bootLog'), b = document.getElementById('bootBar'); let i=0, lines=['Initializing Engine...','Hooking VirusTotal API...','Loading heuristics...','Systems online.']; function nx(){ if(i<lines.length){ const d=document.createElement('div'); d.textContent='> '+lines[i++]; l.appendChild(d); b.style.width=(i/lines.length*100)+'%'; setTimeout(nx, 250); } else setTimeout(()=>document.getElementById('bootScreen').style.display='none', 500); } nx(); })();
 (function initCanvas(){ const c = document.getElementById('netCanvas'), ctx = c.getContext('2d'); let w = c.width = window.innerWidth, h = c.height = window.innerHeight; let nodes = Array.from({length: 40}, () => ({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3 })); function frame(){ ctx.clearRect(0,0,w,h); nodes.forEach(n => { n.x+=n.vx; n.y+=n.vy; if(n.x<0||n.x>w) n.vx*=-1; if(n.y<0||n.y>h) n.vy*=-1; ctx.beginPath(); ctx.arc(n.x,n.y,1.2,0,Math.PI*2); ctx.fillStyle='rgba(34,197,94,0.4)'; ctx.fill(); }); requestAnimationFrame(frame); } frame(); })();
 
+    <!-- BROWSER SECURITY AUDIT MODAL -->
+    <div id="browserModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-4 shadow-2xl relative">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h3 class="font-display text-xl text-white flex items-center gap-2"><span>🌐</span> <span>Browser Security Audit</span></h3>
+                <button onclick="closeSimpleModal()" class="text-slate-400 hover:text-white text-xl font-bold px-2 py-1">✕</button>
+            </div>
+            <div id="browserReportContainer">
+                <div class="text-slate-400 font-mono text-xs animate-pulse p-4">Click below to start local browser security check...</div>
+            </div>
+            <div class="pt-3 border-t border-slate-800 flex justify-end">
+                <button onclick="closeSimpleModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+<script>
 const startOfDay = new Date().setHours(0,0,0,0); setInterval(() => { const s = (Date.now() - startOfDay)/1000; document.getElementById('indiaLossCounter').innerText = `₹${(142.80 + (s * 0.0008)).toFixed(2)} Crores`; document.getElementById('globalScamsCounter').innerText = (48219 + Math.floor(s * 0.05)).toLocaleString('en-IN'); }, 1000);
 </script>
 </body>

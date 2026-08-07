@@ -3,5 +3,6 @@ export const State = {
     currentLang: localStorage.getItem('cyberpehra_lang') || 'en',
     pendingHash: null,
     isScanning: false,
-    deferredPrompt: null
+    deferredPrompt: null,
+    lastScanResult: null
 };

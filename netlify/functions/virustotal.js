@@ -35,19 +35,39 @@ exports.handler = async (event) => {
     return buildJsonResponse(400, { error: "Invalid JSON body" });
   }
 
+  const isFileScan = payload.type === "file";
+  let targetHash = "";
+  let targetUrl = "";
+  let parsedUrl = null;
+
+  if (isFileScan) {
+    targetHash = typeof payload.hash === "string" ? payload.hash.trim().toLowerCase() : "";
+    if (!targetHash || !/^[a-f0-9]{64}$/i.test(targetHash)) {
+      return buildJsonResponse(400, { error: "Valid SHA-256 hash is required" });
+    }
+  } else {
+    targetUrl = typeof payload.url === "string" ? payload.url.trim() : "";
+    if (!targetUrl) {
+      return buildJsonResponse(400, { error: "URL is required" });
+    }
+    try {
+      parsedUrl = new URL(targetUrl);
+    } catch (err) {
+      return buildJsonResponse(400, { error: "Invalid URL format" });
+    }
+    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+      return buildJsonResponse(400, { error: "Only http and https URLs are supported" });
+    }
+  }
+
   const apiKey = process.env.VT_API_KEY;
   if (!apiKey) {
     return buildJsonResponse(500, { error: "VirusTotal API key is not configured" });
   }
 
   try {
-    if (payload.type === "file") {
-      const hash = typeof payload.hash === "string" ? payload.hash.trim().toLowerCase() : "";
-      if (!hash || !/^[a-f0-9]{64}$/i.test(hash)) {
-        return buildJsonResponse(400, { error: "Valid SHA-256 hash is required" });
-      }
-
-      const response = await fetch(`https://www.virustotal.com/api/v3/files/${hash}`, {
+    if (isFileScan) {
+      const response = await fetch(`https://www.virustotal.com/api/v3/files/${targetHash}`, {
         headers: {
           "x-apikey": apiKey
         }
@@ -67,7 +87,7 @@ exports.handler = async (event) => {
       return buildJsonResponse(200, {
         ok: true,
         type: "file",
-        hash,
+        hash: targetHash,
         stats: {
           malicious: Number(stats.malicious || 0),
           suspicious: Number(stats.suspicious || 0),
@@ -79,23 +99,7 @@ exports.handler = async (event) => {
       });
     }
 
-    const url = typeof payload.url === "string" ? payload.url.trim() : "";
-    if (!url) {
-      return buildJsonResponse(400, { error: "URL is required" });
-    }
-
-    let parsedUrl;
-    try {
-      parsedUrl = new URL(url);
-    } catch (err) {
-      return buildJsonResponse(400, { error: "Invalid URL format" });
-    }
-
-    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      return buildJsonResponse(400, { error: "Only http and https URLs are supported" });
-    }
-
-    const encodedUrlId = buildVirusTotalUrlId(url);
+    const encodedUrlId = buildVirusTotalUrlId(targetUrl);
 
     const reportResponse = await fetch(`https://www.virustotal.com/api/v3/urls/${encodedUrlId}`, {
       headers: {
@@ -118,7 +122,7 @@ exports.handler = async (event) => {
     return buildJsonResponse(200, {
       ok: true,
       type: "url",
-      url,
+      url: targetUrl,
       domain: parsedUrl.hostname,
       status: attributes.status || "completed",
       stats: {

@@ -1,9 +1,89 @@
 import { State } from './state.js';
-import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, initLiveMeters, bootSequence } from './ui.js';
+import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, initLiveMeters, bootSequence, showToast } from './ui.js';
 import { applyLanguage, toggleLangMenu } from './language.js';
 import { switchScanMode, handleFileHash, executeScan, handleQrUpload } from './scanner.js';
-import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport } from './tools.js';
+import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, runBrowserSecurityCheck, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF } from './tools.js';
 import { initServiceWorker } from './utils.js';
+
+// Expose global window methods for inline HTML onclick attributes
+window.toggleLangMenu = toggleLangMenu;
+window.setLanguage = (lang) => applyLanguage(lang);
+window.toggleMobileMenu = toggleMobileMenu;
+window.switchMode = (mode) => switchScanMode(mode);
+window.handleFileHash = handleFileHash;
+window.handleQrUpload = handleQrUpload;
+window.executeScan = executeScan;
+window.downloadPDFReport = downloadPDFReport;
+window.runBrowserSecurityCheck = runBrowserSecurityCheck;
+window.refreshCyberIntel = () => fetchCyberIntelligence(true);
+window.openBrowserCheckModal = () => {
+    openModal('browser');
+    runBrowserSecurityCheck();
+};
+window.checkPasswordStrength = checkPasswordStrength;
+window.generatePassword = generatePassword;
+window.generateQR = generateQR;
+window.copyToClipboard = copyToClipboard;
+window.updateSafetyChecklist = updateSafetyChecklist;
+window.renderScamEncyclopedia = renderScamEncyclopedia;
+window.filterScams = filterScams;
+window.filterScamsCategory = filterScamsCategory;
+window.clearScamSearch = clearScamSearch;
+window.openScamDetails = openScamDetails;
+window.executeRelatedScamTool = executeRelatedScamTool;
+window.renderSafetyDashboard = renderSafetyDashboard;
+window.toggleChecklistItem = toggleChecklistItem;
+window.toggleSelectAllChecklist = toggleSelectAllChecklist;
+window.filterChecklistCategory = filterChecklistCategory;
+window.resetSafetyDashboard = resetSafetyDashboard;
+window.executeFixTool = executeFixTool;
+window.downloadCyberHygienePDFReport = downloadCyberHygienePDFReport;
+window.renderEmergencyCenter = renderEmergencyCenter;
+window.switchEmergencyIncident = switchEmergencyIncident;
+window.downloadEmergencyActionPDF = downloadEmergencyActionPDF;
+
+window.copyPassword = () => {
+    const val = UI.pwdInput ? UI.pwdInput.value : '';
+    if (!val) { showToast("No password to copy!", "error"); return; }
+    copyToClipboard(val, "Password copied to clipboard! 📋");
+};
+window.copyQRText = () => {
+    const val = UI.qrGenInput ? UI.qrGenInput.value : '';
+    if (!val) { showToast("No QR text to copy!", "error"); return; }
+    copyToClipboard(val, "QR Link copied to clipboard! 📋");
+};
+window.startQuiz = () => openModal('quiz');
+window.openEvidenceChecklist = () => openModal('evidence');
+window.openDontsChecklist = () => openModal('donts');
+window.selectLawCase = (type) => openModal(`law-${type}`);
+window.openFeedbackModal = () => openModal('contact');
+window.closeSimpleModal = closeModals;
+window.closeContactModal = closeModals;
+window.openPrivacyModal = () => openModal('privacy');
+window.openTermsModal = () => openModal('terms');
+window.toggleAiLearnMore = () => {
+    const content = UI.aiLearnMoreContent;
+    const icon = UI.aiLearnIcon;
+    if (!content) return;
+    const isHidden = content.classList.contains('hidden');
+    if (isHidden) {
+        content.classList.remove('hidden');
+        if (icon) icon.innerText = '−';
+    } else {
+        content.classList.add('hidden');
+        if (icon) icon.innerText = '+';
+    }
+};
+window.installPWA = () => {
+    const btn = UI.installBtn;
+    if (btn) btn.classList.add('hidden');
+    if (State.deferredPrompt) {
+        State.deferredPrompt.prompt();
+        State.deferredPrompt = null;
+        return;
+    }
+    alert('PWA install prompt is not ready yet. Please use browser menu to install.');
+};
 
 const bindEvents = () => {
     // Navigation & UI
@@ -53,10 +133,10 @@ const bindEvents = () => {
     if(UI.evidenceBtn) UI.evidenceBtn.addEventListener('click', () => openModal('evidence'));
     if(UI.dontsBtn) UI.dontsBtn.addEventListener('click', () => openModal('donts'));
     if(document.getElementById('pdfDownloadBtn')) document.getElementById('pdfDownloadBtn').addEventListener('click', downloadPDFReport);
-    UI.lawCaseBtns.forEach(btn => btn.addEventListener('click', (e) => openModal(`law-${e.target.dataset.case}`)));
+    UI.lawCaseBtns.forEach(btn => btn.addEventListener('click', (e) => openModal(`law-${e.target.dataset.case || 'money'}`)));
     
     // Modals
-    const openContact = () => { if(UI.contactModal) { UI.contactModal.classList.remove('hidden'); UI.contactModal.classList.add('flex'); } };
+    const openContact = () => openModal('contact');
     if(document.getElementById('floatingContactBtn')) document.getElementById('floatingContactBtn').addEventListener('click', openContact);
     if(document.getElementById('footerContactBtn')) document.getElementById('footerContactBtn').addEventListener('click', openContact);
     if(document.getElementById('footerPrivacyBtn')) document.getElementById('footerPrivacyBtn').addEventListener('click', () => openModal('privacy'));
@@ -81,14 +161,12 @@ const bindEvents = () => {
 
     // PWA
     if(UI.installBtn) {
-        UI.installBtn.addEventListener('click', () => {
-            UI.installBtn.classList.add('hidden');
-            if (State.deferredPrompt) {
-                State.deferredPrompt.prompt();
-                State.deferredPrompt = null;
-            }
-        });
+        UI.installBtn.addEventListener('click', window.installPWA);
     }
+};
+
+export const renderEncyclopediaCards = () => {
+    renderScamEncyclopedia();
 };
 
 // Application Boot
@@ -97,7 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
     applyLanguage(State.currentLang);
     switchScanMode(State.currentMode);
     initCanvasAnimation();
-    initLiveMeters();
+    initCyberAlerts();
+    fetchCyberIntelligence();
+    renderScamEncyclopedia();
+    renderSafetyDashboard();
+    renderEmergencyCenter();
     initServiceWorker();
     bootSequence();
 });
