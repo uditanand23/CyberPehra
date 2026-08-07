@@ -272,10 +272,24 @@ export const bootSequence = () => {
     const screen = document.getElementById('bootScreen');
     if(!l || !b || !screen) return;
     
+    let isSkipped = false;
+    const hideScreen = () => {
+        screen.style.opacity = '0';
+        screen.style.visibility = 'hidden';
+        setTimeout(() => { screen.style.display = 'none'; }, 600);
+    };
+    
+    screen.addEventListener('click', () => {
+        if (isSkipped) return;
+        isSkipped = true;
+        hideScreen();
+    });
+
     let i = 0;
-    const lines = ['Initializing Engine...', 'Hooking VirusTotal API...', 'Loading heuristics...', 'Systems online.']; 
+    const lines = ['Initializing Neural Core...', 'Hooking VirusTotal API...', 'Loading Safe Browsing heuristics...', 'CyberPehra Shield active.']; 
     
     const nextLine = () => {
+        if (isSkipped) return;
         if (i < lines.length) {
             const d = document.createElement('div');
             d.textContent = '> ' + lines[i++]; 
@@ -284,9 +298,7 @@ export const bootSequence = () => {
             setTimeout(nextLine, 200);
         } else {
             setTimeout(() => {
-                screen.style.opacity = '0';
-                screen.style.visibility = 'hidden';
-                setTimeout(() => { screen.style.display = 'none'; }, 600);
+                if (!isSkipped) hideScreen();
             }, 400);
         }
     };
