@@ -192,26 +192,128 @@ export const closeModals = () => {
     }
 };
 
+export const switchDashboardView = (viewId) => {
+    const views = document.querySelectorAll('.dashboard-view');
+    const navLinks = document.querySelectorAll('.sidebar-nav-link, .mobile-nav-link');
+    
+    let targetView = document.getElementById(`view-${viewId}`);
+    if (!targetView) {
+        targetView = document.getElementById('view-dashboard');
+        viewId = 'dashboard';
+    }
+    
+    views.forEach(v => {
+        v.classList.add('hidden');
+        v.classList.remove('animate-fadeIn');
+    });
+
+    if (targetView) {
+        targetView.classList.remove('hidden');
+        targetView.classList.add('animate-fadeIn');
+    }
+
+    navLinks.forEach(link => {
+        const isMatch = link.dataset.view === viewId;
+        if (isMatch) {
+            link.classList.add('bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'font-bold');
+            link.classList.remove('text-slate-400', 'hover:bg-white/5');
+        } else {
+            link.classList.remove('bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'font-bold');
+            link.classList.add('text-slate-400');
+        }
+    });
+
+    const mainContainer = document.getElementById('mainContentArea');
+    if (mainContainer) mainContainer.scrollTop = 0;
+};
+
 export const initCanvasAnimation = () => {
     const c = document.getElementById('netCanvas');
     if(!c) return;
     const ctx = c.getContext('2d');
     let w = c.width = window.innerWidth;
     let h = c.height = window.innerHeight;
-    let nodes = Array.from({length: 40}, () => ({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3 }));
+    
+    let nodes = Array.from({length: 45}, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 1.5 + 1
+    }));
+    
+    let radarAngle = 0;
     let animId;
 
     const frame = () => {
-        ctx.clearRect(0,0,w,h);
-        nodes.forEach(n => { 
-            n.x += n.vx; n.y += n.vy; 
-            if(n.x < 0 || n.x > w) n.vx *= -1; 
-            if(n.y < 0 || n.y > h) n.vy *= -1; 
-            ctx.beginPath(); 
-            ctx.arc(n.x, n.y, 1.2, 0, Math.PI*2); 
-            ctx.fillStyle = 'rgba(34,197,94,0.4)'; 
-            ctx.fill(); 
-        });
+        ctx.clearRect(0, 0, w, h);
+        
+        // 1. Isometric Grid Overlay
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+        ctx.lineWidth = 1;
+        const gridSize = 60;
+        for (let x = 0; x < w; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, h);
+            ctx.stroke();
+        }
+        for (let y = 0; y < h; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(w, y);
+            ctx.stroke();
+        }
+
+        // 2. Slow Radar Sweep Effect
+        radarAngle += 0.005;
+        const centerX = w / 2;
+        const centerY = h / 2;
+        const radarRadius = Math.max(w, h) * 0.6;
+        
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radarRadius, radarAngle, radarAngle + 0.2);
+        ctx.closePath();
+        const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radarRadius);
+        grad.addColorStop(0, 'rgba(0, 255, 136, 0.08)');
+        grad.addColorStop(1, 'rgba(0, 255, 136, 0)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+        ctx.restore();
+
+        // 3. Particle Network & Connection Lines
+        for (let i = 0; i < nodes.length; i++) {
+            const n = nodes[i];
+            n.x += n.vx;
+            n.y += n.vy;
+
+            if (n.x < 0 || n.x > w) n.vx *= -1;
+            if (n.y < 0 || n.y > h) n.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0, 255, 136, 0.5)';
+            ctx.fill();
+
+            for (let j = i + 1; j < nodes.length; j++) {
+                const n2 = nodes[j];
+                const dx = n.x - n2.x;
+                const dy = n.y - n2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < 130) {
+                    ctx.beginPath();
+                    ctx.moveTo(n.x, n.y);
+                    ctx.lineTo(n2.x, n2.y);
+                    ctx.strokeStyle = `rgba(0, 255, 136, ${0.18 * (1 - dist / 130)})`;
+                    ctx.lineWidth = 0.7;
+                    ctx.stroke();
+                }
+            }
+        }
+
         animId = requestAnimationFrame(frame);
     };
 
@@ -226,6 +328,87 @@ export const initCanvasAnimation = () => {
     });
 
     animId = requestAnimationFrame(frame);
+};
+
+export const initShield3DEffect = () => {
+    const shieldContainer = document.getElementById('cyberShield3D');
+    if (!shieldContainer) return;
+
+    window.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const halfWidth = window.innerWidth / 2;
+        const halfHeight = window.innerHeight / 2;
+        
+        const rotX = ((clientY - halfHeight) / halfHeight) * -12;
+        const rotY = ((clientX - halfWidth) / halfWidth) * 12;
+
+        shieldContainer.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+};
+
+export const initThreatGlobe = () => {
+    const globeCanvas = document.getElementById('threatGlobeCanvas');
+    if (!globeCanvas) return;
+    const ctx = globeCanvas.getContext('2d');
+    let angle = 0;
+    
+    const markers = [
+        { lat: 20.5937, lon: 78.9629, label: "CERT-In National Advisory" },
+        { lat: 28.6139, lon: 77.2090, label: "Delhi Cyber Cell" },
+        { lat: 19.0760, lon: 72.8777, label: "Mumbai Cyber Threat Unit" },
+        { lat: 12.9716, lon: 77.5946, label: "Bengaluru Tech Shield" }
+    ];
+
+    const drawGlobe = () => {
+        const w = globeCanvas.width = globeCanvas.clientWidth || 280;
+        const h = globeCanvas.height = globeCanvas.clientHeight || 280;
+        const r = Math.min(w, h) * 0.4;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        ctx.clearRect(0, 0, w, h);
+        angle += 0.008;
+
+        // Draw Globe Wireframe
+        ctx.strokeStyle = 'rgba(0, 255, 136, 0.25)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Parallels & Meridians
+        for (let i = -r + 15; i < r; i += 25) {
+            const widthAtHeight = Math.sqrt(r * r - i * i);
+            ctx.beginPath();
+            ctx.ellipse(cx, cy + i * 0.5, widthAtHeight, widthAtHeight * 0.3, 0, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(0, 255, 136, 0.08)';
+            ctx.stroke();
+        }
+
+        // Animated Rotating Ring
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 1.15, 0, Math.PI * 1.5);
+        ctx.strokeStyle = 'rgba(0, 255, 136, 0.4)';
+        ctx.setLineDash([6, 6]);
+        ctx.stroke();
+        ctx.restore();
+
+        // Glowing Core
+        const radial = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+        radial.addColorStop(0, 'rgba(0, 255, 136, 0.15)');
+        radial.addColorStop(1, 'rgba(0, 255, 136, 0)');
+        ctx.fillStyle = radial;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        requestAnimationFrame(drawGlobe);
+    };
+
+    drawGlobe();
 };
 
 export const showToast = (message, type = 'success') => {
@@ -279,6 +462,24 @@ export const bootSequence = () => {
         setTimeout(() => { screen.style.display = 'none'; }, 600);
     };
     
+    const skipBtn = document.getElementById('skipBootBtn');
+    if (skipBtn) {
+        skipBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!isSkipped) {
+                isSkipped = true;
+                hideScreen();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !isSkipped) {
+            isSkipped = true;
+            hideScreen();
+        }
+    });
+
     screen.addEventListener('click', () => {
         if (isSkipped) return;
         isSkipped = true;
@@ -286,20 +487,27 @@ export const bootSequence = () => {
     });
 
     let i = 0;
-    const lines = ['Initializing Neural Core...', 'Hooking VirusTotal API...', 'Loading Safe Browsing heuristics...', 'CyberPehra Shield active.']; 
+    const lines = [
+        'Initializing CyberPehra Neural Core v5.0...',
+        'Connecting VirusTotal API node & Google Safe Browsing heuristics...',
+        'Loading SHA-256 local cryptographic engine...',
+        'Syncing CERT-In & National Threat Telemetry feeds...',
+        'CyberPehra Command Shield Online.'
+    ]; 
     
     const nextLine = () => {
         if (isSkipped) return;
         if (i < lines.length) {
             const d = document.createElement('div');
+            d.className = 'text-emerald-400 font-mono text-xs py-0.5 tracking-wider';
             d.textContent = '> ' + lines[i++]; 
             l.appendChild(d); 
-            b.style.width = (i/lines.length*100) + '%'; 
-            setTimeout(nextLine, 200);
+            b.style.width = (i / lines.length * 100) + '%'; 
+            setTimeout(nextLine, 300);
         } else {
             setTimeout(() => {
                 if (!isSkipped) hideScreen();
-            }, 400);
+            }, 500);
         }
     };
     nextLine();

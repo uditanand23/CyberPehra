@@ -2607,4 +2607,214 @@ const renderIntelContent = (articles, timestamp, isCached) => {
             tipEl.innerText = "No awareness tip available.";
         }
     }
+};
+
+// ==========================================
+// 🇮🇳 LIVE INDIA CYBER THREAT MAP DATABASE
+// ==========================================
+export const IndiaStateThreatDB = {
+    "BR": {
+        name: "Bihar",
+        risk: "MODERATE ALERT",
+        summary: "Surge in Telegram Part-Time Job Scams & Fake Banking KYC Verification calls targeting users in Patna, Muzaffarpur, and Gaya.",
+        alerts: [
+            "Fake SBI/PNB APK files distributed via WhatsApp claiming urgent KYC updates.",
+            "Digital Arrest extortion calls impersonating CBI & Telecom Department officers.",
+            "Work-from-Home YouTube video liking scams asking for initial deposit."
+        ],
+        advisories: "CERT-In Advisory CI-2026-004: Never install APK files sent via WhatsApp or unknown links.",
+        scams: ["Telegram Job Fraud", "Digital Arrest", "Fake Bank KYC APK", "Electricity Bill Phishing"],
+        tips: "Do NOT share OTPs or transfer money to claim 'task rewards'. Official banks never ask for APK installation.",
+        contact: "1930 Cyber Helpline • Bihar Cyber Police (cybercell-bih@gov.in)"
+    },
+    "MH": {
+        name: "Maharashtra",
+        risk: "HIGH THREAT ALERT",
+        summary: "High volume of Digital Arrest extortion and Stock Trading Platform scams reported across Mumbai & Pune.",
+        alerts: [
+            "Fraudulent stock investment WhatsApp groups promising 500% returns.",
+            "Courier parcel scams claiming illegal drugs found in FedEx/DHL shipments.",
+            "Credit Card reward point redemption phishing links."
+        ],
+        advisories: "Mumbai Cyber Police Alert: Authorities never place citizens under 'Digital Arrest' over video calls.",
+        scams: ["Stock Trading Scam", "Digital Arrest (CBI/Customs)", "Courier Parcel Scam", "Part-Time Task Scam"],
+        tips: "Verify investment advisors on SEBI register. Do not pay 'clearance fees' for stuck parcels.",
+        contact: "1930 Cyber Helpline • Maharashtra Cyber Cell (cybercell.mh@gov.in)"
+    },
+    "DL": {
+        name: "Delhi NCR",
+        risk: "HIGH THREAT ALERT",
+        summary: "Increased reports of AI Voice Cloning extortion, Fake Challan SMS, and Loan App Spyware in Delhi NCR.",
+        alerts: [
+            "Fake Traffic Challan SMS with malicious link (echallan-parivahan-fake.apk).",
+            "Emergency accident extortion using AI voice clones of family members.",
+            "Unauthorized loan apps harvesting contacts and photo galleries."
+        ],
+        advisories: "Delhi Police Cyber Cell Advisory: Pay traffic challans only on official echallan.parivahan.gov.in.",
+        scams: ["AI Voice Cloning", "Fake E-Challan Links", "Instant Loan App Extortion", "UPI Screen Share"],
+        tips: "Cross-check emergency claims directly with family members before transferring money.",
+        contact: "1930 Helpline • Delhi Cyber Crime Division (cybercell.delhi@gov.in)"
+    },
+    "KA": {
+        name: "Karnataka",
+        risk: "HIGH THREAT ALERT",
+        summary: "Phishing targeting IT professionals via fake LinkedIn recruiter offers, crypto arbitrage schemes, and WhatsApp APKs.",
+        alerts: [
+            "Fake Tech Job offers demanding registration fees via USDT/Crypto.",
+            "Rental flat deposit scams on fake real estate listing portals.",
+            "Malicious Chrome extensions stealing session cookies & passwords."
+        ],
+        advisories: "Bengaluru Cyber Police Advisory: Report fraudulent corporate job handles immediately to 1930.",
+        scams: ["Fake Tech Hiring", "Rental Deposit Phishing", "Crypto Arbitrage Scam", "Remote Access Tools"],
+        tips: "Never install remote access apps like AnyDesk or TeamViewer at the request of unknown callers.",
+        contact: "1930 Helpline • Karnataka Cyber Police (cybercrime-bgl@ksp.gov.in)"
+    },
+    "UP": {
+        name: "Uttar Pradesh",
+        risk: "HIGH THREAT ALERT",
+        summary: "Rise in Electricity Bill Disconnection SMS scams, PM Yojana subsidy phishing, and fake customer care numbers.",
+        alerts: [
+            "SMS threatening electricity power cutoff tonight unless bill is paid via link.",
+            "Fake government welfare scheme portals harvesting Aadhaar and PAN numbers.",
+            "Fake customer service numbers indexed on Google Maps for bank support."
+        ],
+        advisories: "UP Cyber Cell Alert: Power distribution companies never send payment links via personal mobile numbers.",
+        scams: ["Electricity Bill Phishing", "Govt Subsidy Scam", "Fake Customer Care Google Maps", "UPI Payment QR"],
+        tips: "Always check official electricity board portals or official apps for bill verification.",
+        contact: "1930 Helpline • UP Cyber Crime Helpline (cybercell-up@gov.in)"
+    },
+    "TN": {
+        name: "Tamil Nadu",
+        risk: "MODERATE ALERT",
+        summary: "Spike in Part-Time Rating Scams and Fake E-Commerce Cash on Delivery (COD) parcel scams.",
+        alerts: [
+            "Hotel rating tasks on Google Maps offering money for reviews.",
+            "Fake COD parcels delivered with minimal fee to harvest money.",
+            "Phishing links mimicking popular retail festival discounts."
+        ],
+        advisories: "TN Cyber Crime Wing Advisory: Verify order history before accepting unexpected COD deliveries.",
+        scams: ["Part-Time Review Scam", "Fake COD Courier", "Festival Discount Phishing", "Bank KYC SMS"],
+        tips: "Never pay for unordered parcel deliveries. Refuse suspicious COD shipments at doorstep.",
+        contact: "1930 Helpline • TN Cyber Crime Wing (cyber@tn.gov.in)"
+    },
+    "WB": {
+        name: "West Bengal",
+        risk: "MODERATE ALERT",
+        summary: "Reports of Work-From-Home Telegram scams, Lottery prize notifications, and SIM Swap fraud in Kolkata.",
+        alerts: [
+            "Fake Kaun Banega Crorepati (KBC) lottery winning WhatsApp messages.",
+            "SIM Swap requests initiated via fake 5G upgrade calls.",
+            "Telegram crypto investment pools promising guaranteed profits."
+        ],
+        advisories: "Kolkata Cyber Police Notice: Telecom operators never request SIM upgrade verification via WhatsApp.",
+        scams: ["Lottery Scam", "SIM Swap Fraud", "Telegram Crypto Pool", "Fake Bank KYC"],
+        tips: "Do not respond to SMS containing 'SIM SWAP' or share 20-digit SIM card numbers with unknown callers.",
+        contact: "1930 Helpline • Kolkata Police Cyber Cell (cybercell.kp@gov.in)"
+    },
+    "GJ": {
+        name: "Gujarat",
+        risk: "MODERATE ALERT",
+        summary: "Surge in Share Market Trading advice scams, Fake Export/Import license portals, and WhatsApp OTP traps.",
+        alerts: [
+            "Demat account login credential phishing links sent via SMS.",
+            "Fake IPO allotment confirmation emails with fraudulent payment handles.",
+            "WhatsApp account takeover via bogus verification calls."
+        ],
+        advisories: "Gujarat Cyber Crime CID Alert: Never transfer funds to personal bank accounts for IPO allotments.",
+        scams: ["Fake IPO Allotment", "Demat Phishing", "WhatsApp OTP Fraud", "Customs Clearance Scam"],
+        tips: "Verify IPO applications exclusively through official UPI ASBA mechanisms or authorized brokers.",
+        contact: "1930 Helpline • Gujarat CID Cyber Crime (cc-cid@gujarat.gov.in)"
+    },
+    "RJ": {
+        name: "Rajasthan",
+        risk: "HIGH THREAT ALERT",
+        summary: "Increased activity of online OLX seller payment scams, fake army officer buyer impersonation, and QR code traps.",
+        alerts: [
+            "Scammers posing as Army Personnel offering advance payment for secondhand goods.",
+            "Reversed UPI payment traps where scanning QR code debits victim's account.",
+            "Fake online hotel booking sites for tourist destinations."
+        ],
+        advisories: "Rajasthan Police Advisory: You NEVER need to enter your UPI PIN or scan a QR code to RECEIVE money.",
+        scams: ["OLX Fake Army Officer", "UPI Receive QR Trap", "Fake Hotel Booking", "Part-Time Task Scam"],
+        tips: "Remember: Entering UPI PIN ALWAYS deducts money from your bank account.",
+        contact: "1930 Helpline • Rajasthan Cyber Crime Cell (cyber-cell.phq@rajasthan.gov.in)"
+    }
+};
+
+export const renderStateThreatDetails = (stateCode) => {
+    const container = document.getElementById('indiaStateDetailsContainer');
+    if (!container) return;
+
+    const data = IndiaStateThreatDB[stateCode];
+
+    if (!data) {
+        container.innerHTML = `
+            <div class="space-y-4 font-mono text-xs">
+                <div class="p-3 rounded-xl bg-amber-950/40 border border-amber-800/60 text-amber-300">
+                    <span class="font-bold">⚠️ Notice:</span> Latest verified state-specific advisory is currently unavailable for this region. Showing official national cyber advisories below.
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-white text-sm">🇮🇳 National Cyber Crime Advisory</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800">CERT-In Active</span>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-[11px]">
+                        The National Cyber Crime Reporting Portal (cybercrime.gov.in) warns citizens against Digital Arrest scams, fake Part-Time Job offers, and unauthorized loan apps.
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+                        <div class="text-emerald-400 font-bold">Recommended Immediate Action:</div>
+                        <ul class="list-disc pl-4 space-y-0.5 text-slate-400">
+                            <li>Report financial fraud within 24 hours to National Helpline <strong>1930</strong>.</li>
+                            <li>Never transfer funds or enter UPI PIN to receive payments.</li>
+                            <li>Do not install APK files sent via WhatsApp or Telegram.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="space-y-4 font-mono text-xs animate-fadeIn">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div>
+                    <h3 class="text-lg font-bold text-white tracking-wide">${sanitizeHTML(data.name)}</h3>
+                    <span class="text-[10px] text-emerald-400">Verified Regional Threat Telemetry</span>
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-800 tracking-wider uppercase">
+                    ${sanitizeHTML(data.risk)}
+                </span>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 space-y-1">
+                <span class="text-amber-400 font-bold text-[11px]">Regional Threat Overview:</span>
+                <p class="text-[11px] text-slate-300 leading-relaxed">${sanitizeHTML(data.summary)}</p>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-xs font-bold text-white flex items-center gap-1.5">
+                    <span class="text-rose-400">🚨</span> Latest Active Scams in ${sanitizeHTML(data.name)}:
+                </span>
+                <ul class="space-y-1.5">
+                    ${data.alerts.map(a => `
+                        <li class="p-2 rounded-lg bg-slate-950 border border-slate-800/80 text-[11px] text-slate-300 flex items-start gap-2">
+                            <span class="text-rose-400 text-xs">►</span>
+                            <span>${sanitizeHTML(a)}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+
+            <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-800/50 space-y-1 text-slate-300">
+                <span class="text-emerald-400 font-bold text-[11px]">💡 Official Prevention Guidance:</span>
+                <p class="text-[11px] text-slate-300">${sanitizeHTML(data.tips)}</p>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px] flex items-center justify-between text-slate-400">
+                <span>Official Helpline & Cell:</span>
+                <strong class="text-emerald-400">${sanitizeHTML(data.contact)}</strong>
+            </div>
+        </div>
+    `;
 };

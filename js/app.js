@@ -1,11 +1,16 @@
 import { State } from './state.js';
-import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, initLiveMeters, bootSequence, showToast } from './ui.js';
+import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, initLiveMeters, bootSequence, showToast, switchDashboardView, initShield3DEffect, initThreatGlobe } from './ui.js';
 import { applyLanguage, toggleLangMenu } from './language.js';
 import { switchScanMode, handleFileHash, executeScan, handleQrUpload } from './scanner.js';
-import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, runBrowserSecurityCheck, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF } from './tools.js';
+import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, runBrowserSecurityCheck, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails } from './tools.js';
 import { initServiceWorker } from './utils.js';
 
 // Expose global window methods for inline HTML onclick attributes
+window.switchDashboardView = switchDashboardView;
+window.selectIndiaState = (code) => {
+    renderStateThreatDetails(code);
+    State.selectedState = code;
+};
 window.toggleLangMenu = toggleLangMenu;
 window.setLanguage = (lang) => applyLanguage(lang);
 window.toggleMobileMenu = toggleMobileMenu;
@@ -86,12 +91,26 @@ window.installPWA = () => {
 };
 
 const bindEvents = () => {
-    // Navigation & UI
-    if(UI.brandLogoBtn) UI.brandLogoBtn.addEventListener('click', () => window.scrollTo(0,0));
-    if(UI.langMenuToggle) UI.langMenuToggle.addEventListener('click', (e) => { e.stopPropagation(); toggleLangMenu(); });
+    // SPA View Navigation
+    document.querySelectorAll('[data-view]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const targetView = btn.dataset.view;
+            if (targetView) {
+                switchDashboardView(targetView);
+                const mobileMenu = UI.mobileMenu;
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    toggleMobileMenu();
+                }
+            }
+        });
+    });
+
+    // Brand logo click goes home
+    if (UI.brandLogoBtn) UI.brandLogoBtn.addEventListener('click', () => switchDashboardView('dashboard'));
+    if (UI.langMenuToggle) UI.langMenuToggle.addEventListener('click', (e) => { e.stopPropagation(); toggleLangMenu(); });
     document.addEventListener('click', () => toggleLangMenu(true));
     
-    // Language logic fix
+    // Language selection
     UI.langBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             applyLanguage(btn.dataset.lang);
@@ -100,9 +119,8 @@ const bindEvents = () => {
     });
     
     if(UI.mobileMenuBtn) UI.mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    UI.mobileNavLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
     
-    // Tab logic fix
+    // Scanner Tab switching
     UI.tabBtns.forEach((btn, index) => {
         btn.addEventListener('click', () => {
             switchScanMode(btn.dataset.mode);
@@ -118,7 +136,7 @@ const bindEvents = () => {
         });
     });
 
-    // Inputs & Primary Actions
+    // Inputs & Primary Scanner Actions
     if(UI.fileHashInput) UI.fileHashInput.addEventListener('change', handleFileHash);
     if(UI.qrInput) UI.qrInput.addEventListener('change', handleQrUpload);
     if(UI.submitBtn) UI.submitBtn.addEventListener('click', executeScan);
@@ -175,11 +193,14 @@ document.addEventListener('DOMContentLoaded', () => {
     applyLanguage(State.currentLang);
     switchScanMode(State.currentMode);
     initCanvasAnimation();
+    initShield3DEffect();
+    initThreatGlobe();
     initCyberAlerts();
     fetchCyberIntelligence();
     renderScamEncyclopedia();
     renderSafetyDashboard();
     renderEmergencyCenter();
+    renderStateThreatDetails('BR'); // Default Bihar state threat info
     initServiceWorker();
     bootSequence();
 });
