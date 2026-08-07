@@ -157,12 +157,6 @@ const renderScamExplainAi = (mode, target, malicious, total, riskScore, status, 
             ? "Digital Arrest Scam • Telegram Task Scam • WhatsApp OTP Scam"
             : mode === 'file'
             ? "Illegal Loan App Spyware • Remote Access App Scam"
-    // 11. Related scam categories
-    if (UI.aiRelatedScams) {
-        UI.aiRelatedScams.innerText = mode === 'chat'
-            ? "Digital Arrest Scam • Telegram Task Scam • WhatsApp OTP Scam"
-            : mode === 'file'
-            ? "Illegal Loan App Spyware • Remote Access App Scam"
             : "Fake Courier Parcel Scam • Fake Bank KYC Scam";
     }
 };

@@ -6,7 +6,14 @@ const APP_SHELL = [
   '/icon.svg',
   '/icons/icon-192.png',
   '/icons/icon-512.png',
-  '/404.html'
+  '/404.html',
+  '/js/app.js',
+  '/js/tools.js',
+  '/js/ui.js',
+  '/js/scanner.js',
+  '/js/state.js',
+  '/js/language.js',
+  '/js/utils.js'
 ];
 
 self.addEventListener('install', (event) => {
