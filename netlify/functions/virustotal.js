@@ -1,5 +1,27 @@
 const MAX_BODY_SIZE = 1024 * 1024;
 
+// Simple in-memory sliding window rate limiter (Free Tier: 4 requests per 60 seconds)
+const requestLog = [];
+const RATE_LIMIT_MAX = 4;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+
+function checkRateLimit() {
+  const now = Date.now();
+  // Remove timestamps outside the 60-second window
+  while (requestLog.length > 0 && requestLog[0] <= now - RATE_LIMIT_WINDOW_MS) {
+    requestLog.shift();
+  }
+
+  if (requestLog.length >= RATE_LIMIT_MAX) {
+    const oldest = requestLog[0];
+    const retryAfterSeconds = Math.ceil((oldest + RATE_LIMIT_WINDOW_MS - now) / 1000);
+    return { limited: true, retryAfter: Math.max(1, retryAfterSeconds) };
+  }
+
+  requestLog.push(now);
+  return { limited: false, retryAfter: 0 };
+}
+
 function buildJsonResponse(statusCode, body) {
   return {
     statusCode,
@@ -62,7 +84,20 @@ exports.handler = async (event) => {
 
   const apiKey = process.env.VT_API_KEY;
   if (!apiKey) {
-    return buildJsonResponse(500, { error: "VirusTotal API key is not configured" });
+    return buildJsonResponse(503, {
+      error: "VirusTotal API key is not configured",
+      unconfigured: true
+    });
+  }
+
+  // Rate Limit check for VirusTotal free tier (4 req / min)
+  const rateLimitStatus = checkRateLimit();
+  if (rateLimitStatus.limited) {
+    return buildJsonResponse(429, {
+      error: "VirusTotal API rate limit reached (4 req/min free tier)",
+      rateLimited: true,
+      retryAfter: rateLimitStatus.retryAfter
+    });
   }
 
   try {

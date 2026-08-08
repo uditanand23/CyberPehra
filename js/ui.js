@@ -52,6 +52,13 @@ export const UI = {
     get trustSha256() { return document.getElementById('trustSha256'); },
     get trustStored() { return document.getElementById('trustStored'); },
     get trustConfidence() { return document.getElementById('trustConfidence'); },
+    get sourceStatusHeader() { return document.getElementById('sourceStatusHeader'); },
+    get sourceStatusBadges() { return document.getElementById('sourceStatusBadges'); },
+    get rateLimitCountdownBox() { return document.getElementById('rateLimitCountdownBox'); },
+    get rateLimitTimer() { return document.getElementById('rateLimitTimer'); },
+    get fallbackNoticeBanner() { return document.getElementById('fallbackNoticeBanner'); },
+    get fallbackNoticeReason() { return document.getElementById('fallbackNoticeReason'); },
+    get multiSourceBreakdownContainer() { return document.getElementById('multiSourceBreakdownContainer'); },
     get whyResultContainer() { return document.getElementById('whyResultContainer'); },
     get actionChecklistContainer() { return document.getElementById('actionChecklistContainer'); },
     get aiIncidentAssistantSection() { return document.getElementById('aiIncidentAssistantSection'); },
@@ -115,10 +122,6 @@ export const UI = {
     get emergencyPlaybookSteps() { return document.getElementById('emergencyPlaybookSteps'); },
     get emergencyEvidenceChecklist() { return document.getElementById('emergencyEvidenceChecklist'); },
     get evidenceItemCount() { return document.getElementById('evidenceItemCount'); },
-    get bankEmergencyGrid() { return document.getElementById('bankEmergencyGrid'); },
-    get upiEmergencyGrid() { return document.getElementById('upiEmergencyGrid'); },
-    get telecomEmergencyGrid() { return document.getElementById('telecomEmergencyGrid'); },
-    get officialResourcesGrid() { return document.getElementById('officialResourcesGrid'); },
     get downloadEmergencyPdfBtn() { return document.getElementById('downloadEmergencyPdfBtn'); }
 };
 
@@ -151,32 +154,142 @@ export const openModal = (type) => {
     
     switch(type) {
         case 'privacy':
-            title.innerText = "Privacy Policy (0-Day Retention)";
-            body.innerHTML = `<p>1. <strong>Local Computation:</strong> File SHA-256 hashes are generated locally. Your files are NEVER uploaded to our servers.</p><p>2. <strong>Data Retention:</strong> We adhere to a strict <strong>0-day retention policy</strong>. No scan logs or personal info are stored.</p><p>3. <strong>Third-Party APIs:</strong> Hashes and domain queries are routed directly to VirusTotal and WHOIS nodes.</p>`;
+            title.innerText = "Privacy Policy (0-Day Retention Policy)";
+            body.innerHTML = `
+                <div class="space-y-3">
+                    <p>1. <strong>Local Client Hashing:</strong> File SHA-256 hashes are computed locally inside your browser using Web Crypto API. Your files are NEVER uploaded to our servers.</p>
+                    <p>2. <strong>Zero Data Retention:</strong> CyberPehra operates under a strict <strong>0-day data retention policy</strong>. No search queries, IP addresses, or personal info are stored.</p>
+                    <p>3. <strong>Verified Third-Party Nodes:</strong> Domain queries and file hash lookups are sent directly to official VirusTotal and public WHOIS/RDAP endpoints.</p>
+                </div>
+            `;
             break;
         case 'terms':
-            title.innerText = "Terms of Service & Liability";
-            body.innerHTML = `<p>1. <strong>Educational Shield:</strong> CyberPehra provides automated threat telemetry.</p><p>2. <strong>No Warranty:</strong> Risk scores are probabilistic and do not guarantee absolute safety or replace professional advice. Use at your own risk.</p>`;
+            title.innerText = "Terms of Service & Security Notice";
+            body.innerHTML = `
+                <div class="space-y-3">
+                    <p>1. <strong>Public Cyber Defense Tool:</strong> CyberPehra provides automated threat telemetry and security risk indicators.</p>
+                    <p>2. <strong>Verification Disclaimer:</strong> Risk verdicts are automated consensus assessments. They do not constitute formal legal advice or guarantees. Human verification is recommended.</p>
+                </div>
+            `;
             break;
         case 'evidence':
-            title.innerText = "📸 Evidence Checklist";
-            body.innerHTML = `<ul class="list-disc pl-5 space-y-2"><li><strong>Screenshots:</strong> Take screenshots of chat/profile immediately.</li><li><strong>Transactions:</strong> Save PDF receipts of transfers.</li><li><strong>Do NOT delete:</strong> Do not delete chat history.</li></ul>`;
+            title.innerText = "📸 Incident Evidence Preservation Checklist";
+            body.innerHTML = `
+                <div class="space-y-3">
+                    <ul class="list-disc pl-5 space-y-2 text-slate-300">
+                        <li><strong>Chat Screenshots:</strong> Take full-screen screenshots showing profile info, phone numbers, and timestamps.</li>
+                        <li><strong>Payment Records:</strong> Export PDF transaction receipts and save bank UTR numbers immediately.</li>
+                        <li><strong>Do NOT Delete:</strong> Keep original WhatsApp / SMS conversation history intact for law enforcement.</li>
+                    </ul>
+                </div>
+            `;
             break;
         case 'donts':
-            title.innerText = "🚫 Abhi Kya Na Kare";
-            body.innerHTML = `<ul class="list-disc pl-5 space-y-2 text-rose-300"><li><strong>Do not pay fees:</strong> Scammers ask for money to "unlock" money.</li><li><strong>Do not install AnyDesk:</strong> Never install screen-sharing apps.</li><li><strong>Call 1930:</strong> Report within the first 24 hours.</li></ul>`;
+            title.innerText = "🚫 Extortion & Scams — Critical Mistakes to Avoid";
+            body.innerHTML = `
+                <div class="space-y-3 text-rose-300">
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Never Transfer Advance Fees:</strong> Scammers ask for "processing fees" to release promised funds or lottery winnings.</li>
+                        <li><strong>Never Install Remote Apps:</strong> Never install AnyDesk, TeamViewer, or RustDesk on request of unknown callers.</li>
+                        <li><strong>Call 1930 Helpline Immediately:</strong> Report financial fraud within the 24-hour Golden Hour window to initiate bank freeze.</li>
+                    </ul>
+                </div>
+            `;
             break;
         case 'quiz':
-            title.innerText = "🧠 Quick Cyber Quiz";
-            body.innerHTML = `<p>CyberPehra's quiz experience is ready to expand with interactive questions and score tracking.</p><p>For now, this button opens a lightweight safety guide while keeping the existing experience intact.</p>`;
+            title.innerText = "🎮 Cyber Security Scenario Assessment";
+            body.innerHTML = `
+                <div class="space-y-4">
+                    <p class="text-xs text-slate-300">Evaluate your cyber risk awareness in 3 quick scenarios:</p>
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-bold text-emerald-400 text-xs">Q1: A caller claiming to be from your bank asks for an OTP to stop a fraud transaction. What do you do?</div>
+                        <div class="text-[11px] text-slate-300 font-sans">✅ Disconnect immediately and call the official bank helpline on the back of your debit card. Banks NEVER ask for OTPs over phone calls.</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-bold text-emerald-400 text-xs">Q2: Someone sends a QR code claiming you will RECEIVE ₹5,000 after scanning. What is true?</div>
+                        <div class="text-[11px] text-slate-300 font-sans">✅ Entering your UPI PIN is strictly for PAYING money, NEVER for receiving money. Scanning a QR code with a PIN prompt will debit your account.</div>
+                    </div>
+                </div>
+            `;
+            break;
+        case 'whois':
+            title.innerText = "🌐 WHOIS Domain Lookup Tool";
+            body.innerHTML = `
+                <div class="space-y-4 font-sans text-xs">
+                    <p class="text-slate-300">Enter a domain name to inspect registration records & creation timestamp:</p>
+                    <div class="flex gap-2">
+                        <input type="text" id="whoisInput" class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-xs focus:outline-none focus:border-[#00FF88]" placeholder="e.g. google.com">
+                        <button onclick="window.runWhoisLookup()" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Lookup</button>
+                    </div>
+                    <div id="whoisOutput" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hidden whitespace-pre-wrap"></div>
+                </div>
+            `;
+            break;
+        case 'ip':
+            title.innerText = "🌍 IP Geolocation & Threat Lookup";
+            body.innerHTML = `
+                <div class="space-y-4 font-sans text-xs">
+                    <p class="text-slate-300">Enter an IP address to query ISP, country, and ASN details:</p>
+                    <div class="flex gap-2">
+                        <input type="text" id="ipInput" class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-xs focus:outline-none focus:border-[#00FF88]" placeholder="e.g. 8.8.8.8">
+                        <button onclick="window.runIpLookup()" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Inspect IP</button>
+                    </div>
+                    <div id="ipOutput" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hidden whitespace-pre-wrap"></div>
+                </div>
+            `;
+            break;
+        case 'dns':
+            title.innerText = "🔍 DNS Record Topology Lookup";
+            body.innerHTML = `
+                <div class="space-y-4 font-sans text-xs">
+                    <p class="text-slate-300">Query DNS A, MX, TXT, and NS records via Google DNS over HTTPS:</p>
+                    <div class="flex gap-2">
+                        <input type="text" id="dnsInput" class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-xs focus:outline-none focus:border-[#00FF88]" placeholder="e.g. github.com">
+                        <button onclick="window.runDnsLookup()" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Fetch DNS</button>
+                    </div>
+                    <div id="dnsOutput" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hidden whitespace-pre-wrap"></div>
+                </div>
+            `;
+            break;
+        case 'screenshot':
+            title.innerText = "📸 Screenshot Evidence & QR Analyzer";
+            body.innerHTML = `
+                <div class="space-y-4 font-sans text-xs">
+                    <p class="text-slate-300">Upload a screenshot of a suspicious message, payment QR code, or website to inspect for scam patterns:</p>
+                    <label class="flex flex-col items-center justify-center p-6 rounded-xl bg-slate-950 border-2 border-dashed border-slate-800 hover:border-emerald-500/50 cursor-pointer transition">
+                        <span class="text-2xl mb-1">📸</span>
+                        <span class="text-xs font-sans text-emerald-400 font-bold">Select Screenshot Image</span>
+                        <span id="screenshotIndicator" class="text-[10px] text-slate-500 mt-1">Supports PNG, JPG, WebP</span>
+                        <input type="file" id="screenshotInput" accept="image/*" class="hidden" onchange="window.handleScreenshotUpload(event)">
+                    </label>
+                    <div id="screenshotOutput" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hidden"></div>
+                </div>
+            `;
+            break;
+        case 'phishing':
+            title.innerText = "🎣 Phishing Link & Domain Detector";
+            body.innerHTML = `
+                <div class="space-y-4 font-sans text-xs">
+                    <p class="text-slate-300">Phishing URLs frequently impersonate banking portals, government services, or courier tracking sites using typosquatting.</p>
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-bold text-amber-400">Key Markers of Phishing Websites:</div>
+                        <ul class="list-disc pl-4 space-y-1 text-slate-300">
+                            <li>Misspelled domain names (e.g. <code>sbl-bank.com</code> instead of <code>sbi.co.in</code>)</li>
+                            <li>Requests to update KYC, unblock SIM, or verify netbanking urgently</li>
+                            <li>Unencrypted HTTP protocol or recent WHOIS registration (&lt; 30 days old)</li>
+                        </ul>
+                    </div>
+                    <button onclick="window.closeSimpleModal(); window.switchDashboardView('scanner'); window.switchMode('url');" class="w-full py-3 rounded-xl bg-[#00FF88] text-black font-bold uppercase tracking-wider">Launch Full URL Scanner ➔</button>
+                </div>
+            `;
             break;
         case 'law-money':
-            title.innerText = '💸 Financial Fraud Guidance'; 
-            body.innerHTML = '<p>Block the transfer immediately, preserve the payment proof, and report the scam to the cybercrime portal.</p><p>Never attempt to “recover” funds through another unknown contact.</p>';
+            title.innerText = '💸 Financial Fraud Legal Playbook'; 
+            body.innerHTML = '<p>Report the incident immediately under IT Act Section 66D to your bank and National Cyber Crime Helpline 1930.</p><p>Preserve bank UTR transaction numbers and conversation screenshots. Do NOT send money to unknown "recovery agents".</p>';
             break;
         case 'law-photo':
-            title.innerText = '📸 Image & Video Blackmail Guidance'; 
-            body.innerHTML = '<p>Do not engage with the blackmailer. Preserve screenshots, report the profile, and contact the cybercrime helpline.</p><p>Do not share more images or private data.</p>';
+            title.innerText = '📸 Blackmail & Image Misuse Legal Playbook'; 
+            body.innerHTML = '<p>File a complaint under IT Act Sections 66E and 67 at cybercrime.gov.in or your nearest cyber police station.</p><p>Do NOT give in to extortion demands or transfer money. Block the perpetrator and save evidence.</p>';
             break;
     }
 };
@@ -225,6 +338,23 @@ export const switchDashboardView = (viewId) => {
 
     const mainContainer = document.getElementById('mainContentArea');
     if (mainContainer) mainContainer.scrollTop = 0;
+
+    // Execute view initializers on navigation
+    if ((viewId === 'safety' || viewId === 'dashboard') && typeof window.renderSafetyDashboard === 'function') {
+        window.renderSafetyDashboard();
+    }
+    if (viewId === 'scams' && typeof window.renderScamEncyclopedia === 'function') {
+        window.renderScamEncyclopedia();
+    }
+    if (viewId === 'intel' && typeof window.fetchCyberIntelligence === 'function') {
+        window.fetchCyberIntelligence();
+    }
+    if (viewId === 'emergency' && typeof window.renderEmergencyCenter === 'function') {
+        window.renderEmergencyCenter();
+    }
+    if (viewId === 'map' && typeof window.initIndiaThreatMap === 'function') {
+        window.initIndiaThreatMap();
+    }
 };
 
 export const initCanvasAnimation = () => {
@@ -421,7 +551,7 @@ export const showToast = (message, type = 'success') => {
     const bgClass = type === 'error' 
         ? 'bg-rose-950/95 text-rose-300 border-rose-800 shadow-rose-950/50' 
         : 'bg-emerald-950/95 text-emerald-300 border-emerald-800 shadow-emerald-950/50';
-    toast.className = `fixed bottom-6 right-6 z-[1000] px-4 py-3 rounded-xl font-mono text-xs shadow-2xl flex items-center gap-2 border backdrop-blur-md transition-all duration-300 ${bgClass}`;
+    toast.className = `fixed bottom-6 right-6 z-[1000] px-4 py-3 rounded-xl font-sans text-xs shadow-2xl flex items-center gap-2 border backdrop-blur-md transition-all duration-300 ${bgClass}`;
     toast.innerHTML = `<span class="text-base">${type === 'error' ? '⚠️' : '⚡'}</span> <span>${message}</span>`;
     
     setTimeout(() => {
@@ -513,7 +643,7 @@ export const bootSequence = () => {
         if (isHidden) return;
         if (i < lines.length) {
             const d = document.createElement('div');
-            d.className = 'text-emerald-400 font-mono text-xs py-0.5 tracking-wider';
+            d.className = 'text-emerald-400 font-sans text-xs py-0.5 tracking-wider';
             d.textContent = '> ' + lines[i++]; 
             l.appendChild(d); 
             b.style.width = (i / lines.length * 100) + '%'; 

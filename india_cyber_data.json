@@ -1,0 +1,665 @@
+{
+  "meta": {
+    "title": "India Cyber Crime Telemetry Dataset",
+    "version": "2026.07",
+    "lastUpdated": "2026-07-01",
+    "primarySources": ["NCRB (National Crime Records Bureau)", "I4C (Indian Cyber Crime Coordination Centre)", "CERT-In Advisories"],
+    "totalStatesAndUTs": 36
+  },
+  "states": {
+    "MH": {
+      "state": "Maharashtra",
+      "code": "MH",
+      "severity": "high",
+      "totalCases": 12500,
+      "activeAlerts": 340,
+      "biggestScam": { "type": "Investment & Stock Trading Scam", "amount": "₹200 Cr" },
+      "commonScamType": "UPI Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [8200, 9100, 9800, 10500, 11400, 12500],
+      "recentIncidents": [
+        "Victim duped of ₹3.5 Cr via fake institutional stock trading app promising 400% IPO allocations in Mumbai.",
+        "Phishing campaign targeting high-net-worth individuals using spoofed bank KYC verification links.",
+        "Part-time Telegram rating task fraud defrauding Pune IT professional of ₹42 Lakh."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Mumbai Cyber Police",
+      "isPending": false
+    },
+    "DL": {
+      "state": "Delhi NCR",
+      "code": "DL",
+      "severity": "high",
+      "totalCases": 11200,
+      "activeAlerts": 290,
+      "biggestScam": { "type": "Digital Arrest Extortion", "amount": "₹150 Cr" },
+      "commonScamType": "Digital Arrest",
+      "trend": "increasing",
+      "sixMonthTrend": [7500, 8300, 8900, 9600, 10400, 11200],
+      "recentIncidents": [
+        "Senior citizen coerced into transferring ₹1.2 Cr after fake ED/CBI video arrest call.",
+        "Customs package parcel trap targeting residents claiming illegal narcotics in transit.",
+        "Fake electricity bill disconnection SMS campaign harvesting credit card details."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "I4C / Delhi Cyber Cell",
+      "isPending": false
+    },
+    "KA": {
+      "state": "Karnataka",
+      "code": "KA",
+      "severity": "high",
+      "totalCases": 14100,
+      "activeAlerts": 310,
+      "biggestScam": { "type": "AI Deepfake & Crypto Pool Fraud", "amount": "₹180 Cr" },
+      "commonScamType": "Investment Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [9100, 10200, 11000, 12100, 13200, 14100],
+      "recentIncidents": [
+        "Bengaluru techie targeted by AI voice clone impersonating family member in distress.",
+        "Unregulated WhatsApp crypto trading scheme promising fixed daily payouts.",
+        "Corporate email compromise phishing targeting startup vendor invoice payments."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Bengaluru CID Cyber",
+      "isPending": false
+    },
+    "UP": {
+      "state": "Uttar Pradesh",
+      "code": "UP",
+      "severity": "high",
+      "totalCases": 15800,
+      "activeAlerts": 380,
+      "biggestScam": { "type": "Fake Govt Yojana & Job Portal Scam", "amount": "₹120 Cr" },
+      "commonScamType": "Job Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [10800, 11900, 12800, 13900, 14800, 15800],
+      "recentIncidents": [
+        "Phishing domain spoofing railway recruitment board collecting registration fees.",
+        "Noida call center racket impersonating bank loan executive to extract processing charges.",
+        "UPI payment receipt spoofing apps used to scam local retail merchants."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / UP Cyber Police",
+      "isPending": false
+    },
+    "TG": {
+      "state": "Telangana",
+      "code": "TG",
+      "severity": "high",
+      "totalCases": 9800,
+      "activeAlerts": 240,
+      "biggestScam": { "type": "Illegal Instant Loan App Spyware", "amount": "₹95 Cr" },
+      "commonScamType": "Loan App Extortion",
+      "trend": "increasing",
+      "sixMonthTrend": [6100, 6800, 7500, 8300, 9000, 9800],
+      "recentIncidents": [
+        "Unauthorized loan app accessing contacts list and blackmailing victims with morphed images.",
+        "Hyderabad stock market WhatsApp group trap coercing high deposits.",
+        "E-SIM swap fraud resulting in unauthorized bank withdrawals."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "I4C / Telangana Cyber Security Bureau",
+      "isPending": false
+    },
+    "RJ": {
+      "state": "Rajasthan",
+      "code": "RJ",
+      "severity": "high",
+      "totalCases": 8900,
+      "activeAlerts": 210,
+      "biggestScam": { "type": "Sextortion & OLX Army Buyer Fraud", "amount": "₹70 Cr" },
+      "commonScamType": "Sextortion",
+      "trend": "increasing",
+      "sixMonthTrend": [5400, 6100, 6800, 7400, 8100, 8900],
+      "recentIncidents": [
+        "Mewat region cyber syndicate targeting victims via video call extortion traps.",
+        "Fake Army officer buyer scam requesting advance QR scan for vehicle purchases.",
+        "Biometric Aadhaar spoofing attempting cash withdrawals from AePS portals."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Rajasthan Cyber Police",
+      "isPending": false
+    },
+    "HR": {
+      "state": "Haryana",
+      "code": "HR",
+      "severity": "high",
+      "totalCases": 9400,
+      "activeAlerts": 230,
+      "biggestScam": { "type": "Telegram Rating Task & Part-Time Job Scam", "amount": "₹110 Cr" },
+      "commonScamType": "Part-Time Job Scam",
+      "trend": "increasing",
+      "sixMonthTrend": [6000, 6700, 7400, 8100, 8700, 9400],
+      "recentIncidents": [
+        "Gurugram resident duped of ₹55 Lakh in hotel review rating investment pool.",
+        "Fake online loan sanction letter scam extracting insurance processing deposits.",
+        "Phishing links mimicking corporate HR salary slip portals."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Haryana Cyber Police",
+      "isPending": false
+    },
+    "BR": {
+      "state": "Bihar",
+      "code": "BR",
+      "severity": "medium",
+      "totalCases": 6700,
+      "activeAlerts": 140,
+      "biggestScam": { "type": "KBC Lottery & Customer Care Spoofing", "amount": "₹45 Cr" },
+      "commonScamType": "OTP Scam",
+      "trend": "stable",
+      "sixMonthTrend": [5800, 6000, 6200, 6400, 6500, 6700],
+      "recentIncidents": [
+        "Fake Kaun Banega Crorepati WhatsApp audio messages demanding tax clearance fees.",
+        "Google Maps business listing contact number modification fraud targeting customer support callers.",
+        "Aadhaar Enabled Payment System (AePS) biometric cloning attempt."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Bihar Cyber Crime Division",
+      "isPending": false
+    },
+    "TN": {
+      "state": "Tamil Nadu",
+      "code": "TN",
+      "severity": "medium",
+      "totalCases": 7800,
+      "activeAlerts": 160,
+      "biggestScam": { "type": "Phishing & Fake Overseas Job Consultancy", "amount": "₹60 Cr" },
+      "commonScamType": "Phishing",
+      "trend": "stable",
+      "sixMonthTrend": [6900, 7100, 7300, 7500, 7600, 7800],
+      "recentIncidents": [
+        "Chennai residents targeted by fraudulent overseas employment visas demanding upfront security.",
+        "Malicious APK files sent via SMS posing as electricity bill payment receipts.",
+        "Phishing websites mimicking popular e-commerce sale discount portals."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / TN Cyber Crime Wing",
+      "isPending": false
+    },
+    "WB": {
+      "state": "West Bengal",
+      "code": "WB",
+      "severity": "medium",
+      "totalCases": 7400,
+      "activeAlerts": 150,
+      "biggestScam": { "type": "SIM Swap & Matrimonial Fraud", "amount": "₹50 Cr" },
+      "commonScamType": "UPI Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [5900, 6200, 6500, 6800, 7100, 7400],
+      "recentIncidents": [
+        "Kolkata resident tricked into sharing banking OTP via fake courier delivery rescheduling.",
+        "Matrimonial portal profile posing as overseas doctor requesting emergency funds.",
+        "Fake tech support popups locking browser windows and demanding remote access."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / West Bengal Cyber Police",
+      "isPending": false
+    },
+    "GJ": {
+      "state": "Gujarat",
+      "code": "GJ",
+      "severity": "medium",
+      "totalCases": 7100,
+      "activeAlerts": 135,
+      "biggestScam": { "type": "Stock Market IPO Investment Trap", "amount": "₹85 Cr" },
+      "commonScamType": "Investment Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [5500, 5800, 6200, 6500, 6800, 7100],
+      "recentIncidents": [
+        "Ahmedabad businessman duped via institutional demat trading group claiming pre-IPO shares.",
+        "Fake franchise application portal charging non-refundable security fees.",
+        "UPI payment link trick posing as online grocery refund."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Gujarat Cyber Cell",
+      "isPending": false
+    },
+    "PB": {
+      "state": "Punjab",
+      "code": "PB",
+      "severity": "medium",
+      "totalCases": 5900,
+      "activeAlerts": 120,
+      "biggestScam": { "type": "Overseas Visa & Study Permit Fraud", "amount": "₹55 Cr" },
+      "commonScamType": "Visa Scam",
+      "trend": "stable",
+      "sixMonthTrend": [5200, 5350, 5500, 5650, 5800, 5900],
+      "recentIncidents": [
+        "Fake work visa processing agency issuing forged offer letters for UK & Canada.",
+        "Airline ticket booking scam using cloned flight booking portals.",
+        "WhatsApp verification code trick leading to social media account hijacking."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Punjab Police Cyber Crime Division",
+      "isPending": false
+    },
+    "KL": {
+      "state": "Kerala",
+      "code": "KL",
+      "severity": "medium",
+      "totalCases": 5100,
+      "activeAlerts": 110,
+      "biggestScam": { "type": "Crypto Pool & AI Deepfake Impersonation", "amount": "₹40 Cr" },
+      "commonScamType": "Phishing",
+      "trend": "increasing",
+      "sixMonthTrend": [3900, 4200, 4400, 4600, 4850, 5100],
+      "recentIncidents": [
+        "Unverified stock trading advisory app coercing users into high deposit schemes.",
+        "Deepfake video calls impersonating close friends requesting medical loan assistance.",
+        "Phishing SMS claiming bank account suspended due to pending PAN update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Kerala Police Cyberdome",
+      "isPending": false
+    },
+    "MP": {
+      "state": "Madhya Pradesh",
+      "code": "MP",
+      "severity": "medium",
+      "totalCases": 6200,
+      "activeAlerts": 125,
+      "biggestScam": { "type": "Work-From-Home Task Scam", "amount": "₹38 Cr" },
+      "commonScamType": "UPI Fraud",
+      "trend": "stable",
+      "sixMonthTrend": [5400, 5600, 5750, 5900, 6050, 6200],
+      "recentIncidents": [
+        "Telegram task group demanding deposit to release earned commissions.",
+        "Fake bank customer support numbers published on social media.",
+        "UPI merchant QR code manipulation at fuel pumps."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / MP Cyber Crime Cell",
+      "isPending": false
+    },
+    "OD": {
+      "state": "Odisha",
+      "code": "OD",
+      "severity": "medium",
+      "totalCases": 4300,
+      "activeAlerts": 95,
+      "biggestScam": { "type": "Electricity Disconnection Phishing", "amount": "₹25 Cr" },
+      "commonScamType": "Phishing",
+      "trend": "stable",
+      "sixMonthTrend": [3800, 3900, 4000, 4100, 4200, 4300],
+      "recentIncidents": [
+        "SMS warning power cutoff unless immediate bill payment is made via provided link.",
+        "Fraudulent pension update portal soliciting Aadhaar details.",
+        "Retail store UPI QR code substitution."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Odisha CID Cyber Crime",
+      "isPending": false
+    },
+    "AP": {
+      "state": "Andhra Pradesh",
+      "code": "AP",
+      "severity": "medium",
+      "totalCases": 5600,
+      "activeAlerts": 115,
+      "biggestScam": { "type": "Trading App Fraud & Job Baiting", "amount": "₹48 Cr" },
+      "commonScamType": "UPI Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [4400, 4650, 4900, 5150, 5380, 5600],
+      "recentIncidents": [
+        "Fake investment platform luring investors with fake high dividend statements.",
+        "Instant loan app harassment targeting young professionals.",
+        "Phishing links sent posing as gas agency booking portals."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / AP Cyber Crime Cell",
+      "isPending": false
+    },
+    "JH": {
+      "state": "Jharkhand",
+      "code": "JH",
+      "severity": "medium",
+      "totalCases": 4900,
+      "activeAlerts": 105,
+      "biggestScam": { "type": "Phishing & Banking OTP Hijack", "amount": "₹35 Cr" },
+      "commonScamType": "OTP Scam",
+      "trend": "stable",
+      "sixMonthTrend": [4300, 4420, 4550, 4680, 4790, 4900],
+      "recentIncidents": [
+        "Vishing calls claiming to assist with credit card reward point redemption.",
+        "Fake mobile tower installation offers demanding advance registration.",
+        "Aadhaar AePS biometrics skimming alert."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Jharkhand Police Cyber Cell",
+      "isPending": false
+    },
+    "CT": {
+      "state": "Chhattisgarh",
+      "code": "CT",
+      "severity": "low",
+      "totalCases": 2800,
+      "activeAlerts": 60,
+      "biggestScam": { "type": "Fake Loan Approval & UPI Trap", "amount": "₹18 Cr" },
+      "commonScamType": "UPI Fraud",
+      "trend": "stable",
+      "sixMonthTrend": [2400, 2480, 2560, 2640, 2720, 2800],
+      "recentIncidents": [
+        "SMS claiming pre-approved low interest personal loans demanding processing charge.",
+        "Social media fake store selling discounted electronics."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Chhattisgarh Police",
+      "isPending": false
+    },
+    "AS": {
+      "state": "Assam",
+      "code": "AS",
+      "severity": "low",
+      "totalCases": 3200,
+      "activeAlerts": 70,
+      "biggestScam": { "type": "Trading App & Job Scam", "amount": "₹22 Cr" },
+      "commonScamType": "Job Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [2500, 2640, 2780, 2920, 3060, 3200],
+      "recentIncidents": [
+        "Fake oil PSU job notifications collecting registration fees.",
+        "Online shopping portals taking advance payment without shipping goods."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Assam Police Cyber CID",
+      "isPending": false
+    },
+    "HP": {
+      "state": "Himachal Pradesh",
+      "code": "HP",
+      "severity": "low",
+      "totalCases": 1800,
+      "activeAlerts": 40,
+      "biggestScam": { "type": "Tourist Hotel Booking Phishing", "amount": "₹12 Cr" },
+      "commonScamType": "Phishing",
+      "trend": "stable",
+      "sixMonthTrend": [1550, 1600, 1650, 1700, 1750, 1800],
+      "recentIncidents": [
+        "Cloned homestay and resort websites collecting advance booking deposits.",
+        "Fake online apple distribution portal scam."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / HP Cyber Crime Police",
+      "isPending": false
+    },
+    "UT": {
+      "state": "Uttarakhand",
+      "code": "UT",
+      "severity": "low",
+      "totalCases": 2100,
+      "activeAlerts": 45,
+      "biggestScam": { "type": "Char Dham Heli Ticket Scam", "amount": "₹15 Cr" },
+      "commonScamType": "Phishing",
+      "trend": "stable",
+      "sixMonthTrend": [1800, 1860, 1920, 1980, 2040, 2100],
+      "recentIncidents": [
+        "Fake helicopter ticket booking websites targeting Char Dham pilgrims.",
+        "Fake army officer OLX furniture purchase scam."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Uttarakhand Police STF",
+      "isPending": false
+    },
+    "GA": {
+      "state": "Goa",
+      "code": "GA",
+      "severity": "low",
+      "totalCases": 950,
+      "activeAlerts": 25,
+      "biggestScam": { "type": "Villa Booking & Casino Pass Fraud", "amount": "₹8 Cr" },
+      "commonScamType": "Phishing",
+      "trend": "stable",
+      "sixMonthTrend": [820, 850, 880, 900, 930, 950],
+      "recentIncidents": [
+        "Spoofed luxury villa booking sites taking advance deposits.",
+        "Fake event ticket sale portals."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Goa Cyber Cell",
+      "isPending": false
+    },
+    "JK": {
+      "state": "Jammu & Kashmir",
+      "code": "JK",
+      "severity": "low",
+      "totalCases": 1600,
+      "activeAlerts": 35,
+      "biggestScam": { "type": "Dry Fruit Export & Govt Job Bait", "amount": "₹10 Cr" },
+      "commonScamType": "OTP Scam",
+      "trend": "stable",
+      "sixMonthTrend": [1350, 1400, 1450, 1500, 1550, 1600],
+      "recentIncidents": [
+        "Fake government job portal promising recruitment in local departments.",
+        "Phishing links sent posing as mobile data recharge offers."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / J&K Cyber Police",
+      "isPending": false
+    },
+    "CH": {
+      "state": "Chandigarh",
+      "code": "CH",
+      "severity": "medium",
+      "totalCases": 1900,
+      "activeAlerts": 50,
+      "biggestScam": { "type": "Stock Market Trading & Crypto Pool", "amount": "₹16 Cr" },
+      "commonScamType": "Investment Fraud",
+      "trend": "increasing",
+      "sixMonthTrend": [1400, 1500, 1600, 1700, 1800, 1900],
+      "recentIncidents": [
+        "High-return stock market investment group fraud.",
+        "Part-time task review scam."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Chandigarh Cyber Crime Cell",
+      "isPending": false
+    },
+    "PY": {
+      "state": "Puducherry",
+      "code": "PY",
+      "severity": "low",
+      "totalCases": 420,
+      "activeAlerts": 15,
+      "biggestScam": { "type": "UPI Refund & Customer Support", "amount": "₹3 Cr" },
+      "commonScamType": "UPI Fraud",
+      "trend": "stable",
+      "sixMonthTrend": [360, 375, 390, 400, 410, 420],
+      "recentIncidents": [
+        "Fake electricity payment link sent via SMS.",
+        "UPI payment receipt spoofing."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / Puducherry Cyber Cell",
+      "isPending": false
+    },
+    "SK": {
+      "state": "Sikkim",
+      "code": "SK",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed state breakdown pending official publication in next quarterly update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "MN": {
+      "state": "Manipur",
+      "code": "MN",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed state breakdown pending official publication in next quarterly update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "ML": {
+      "state": "Meghalaya",
+      "code": "ML",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed state breakdown pending official publication in next quarterly update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "MZ": {
+      "state": "Mizoram",
+      "code": "MZ",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed state breakdown pending official publication in next quarterly update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "NL": {
+      "state": "Nagaland",
+      "code": "NL",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed state breakdown pending official publication in next quarterly update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "TR": {
+      "state": "Tripura",
+      "code": "TR",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed state breakdown pending official publication in next quarterly update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "AR": {
+      "state": "Arunachal Pradesh",
+      "code": "AR",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed state breakdown pending official publication in next quarterly update."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "LA": {
+      "state": "Ladakh",
+      "code": "LA",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed territory breakdown pending official publication."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "AN": {
+      "state": "Andaman & Nicobar Islands",
+      "code": "AN",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed territory breakdown pending official publication."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "DN": {
+      "state": "Dadra & Nagar Haveli and Daman & Diu",
+      "code": "DN",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed territory breakdown pending official publication."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    },
+    "LD": {
+      "state": "Lakshadweep",
+      "code": "LD",
+      "severity": "pending",
+      "totalCases": null,
+      "activeAlerts": 0,
+      "biggestScam": { "type": "Data pending", "amount": "N/A" },
+      "commonScamType": "Data pending",
+      "trend": "stable",
+      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "recentIncidents": [
+        "Detailed territory breakdown pending official publication."
+      ],
+      "lastUpdated": "2026-07-01",
+      "source": "NCRB / I4C Telemetry Pending",
+      "isPending": true
+    }
+  }
+}

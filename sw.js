@@ -13,7 +13,10 @@ const APP_SHELL = [
   '/js/scanner.js',
   '/js/state.js',
   '/js/language.js',
-  '/js/utils.js'
+  '/js/utils.js',
+  '/js/indiaMap.js',
+  '/india_cyber_data.json',
+  '/india_states.geojson'
 ];
 
 self.addEventListener('install', (event) => {

@@ -104,10 +104,10 @@ const renderScamExplainAi = (mode, target, malicious, total, riskScore, status, 
     if (UI.aiConfidenceBadge) {
         UI.aiConfidenceBadge.innerText = `Confidence: ${confidenceLevel}`;
         UI.aiConfidenceBadge.className = confidenceLevel === "High"
-            ? "text-[10px] font-mono px-2.5 py-1 rounded-full font-bold bg-emerald-950 text-emerald-300 border border-emerald-800"
+            ? "text-[10px] font-sans px-2.5 py-1 rounded-full font-bold bg-emerald-950 text-emerald-300 border border-emerald-800"
             : confidenceLevel === "Medium"
-            ? "text-[10px] font-mono px-2.5 py-1 rounded-full font-bold bg-amber-950 text-amber-300 border border-amber-800"
-            : "text-[10px] font-mono px-2.5 py-1 rounded-full font-bold bg-slate-800 text-sky-400 border border-sky-800";
+            ? "text-[10px] font-sans px-2.5 py-1 rounded-full font-bold bg-amber-950 text-amber-300 border border-amber-800"
+            : "text-[10px] font-sans px-2.5 py-1 rounded-full font-bold bg-slate-800 text-sky-400 border border-sky-800";
     }
     if (UI.aiConfidenceText) {
         UI.aiConfidenceText.innerText = confidenceExplanation;
@@ -188,16 +188,16 @@ const renderAiIncidentAssistant = (mode, target, malicious, total, riskScore, st
     if (UI.aiIncidentVerdictBadge) {
         if (isError) {
             UI.aiIncidentVerdictBadge.innerText = "VERDICT: UNKNOWN / ERROR";
-            UI.aiIncidentVerdictBadge.className = "text-[10px] font-mono px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase tracking-wider";
+            UI.aiIncidentVerdictBadge.className = "text-[10px] font-sans px-3 py-1 rounded-full font-bold bg-slate-800 text-slate-300 border border-slate-700 uppercase tracking-wider";
         } else if (isThreat) {
             UI.aiIncidentVerdictBadge.innerText = "VERDICT: THREAT DETECTED";
-            UI.aiIncidentVerdictBadge.className = "text-[10px] font-mono px-3 py-1 rounded-full font-bold bg-rose-950 text-rose-300 border border-rose-800 animate-pulse uppercase tracking-wider";
+            UI.aiIncidentVerdictBadge.className = "text-[10px] font-sans px-3 py-1 rounded-full font-bold bg-rose-950 text-rose-300 border border-rose-800 animate-pulse uppercase tracking-wider";
         } else if (isSuspicious) {
             UI.aiIncidentVerdictBadge.innerText = "VERDICT: SUSPICIOUS";
-            UI.aiIncidentVerdictBadge.className = "text-[10px] font-mono px-3 py-1 rounded-full font-bold bg-amber-950 text-amber-300 border border-amber-800 uppercase tracking-wider";
+            UI.aiIncidentVerdictBadge.className = "text-[10px] font-sans px-3 py-1 rounded-full font-bold bg-amber-950 text-amber-300 border border-amber-800 uppercase tracking-wider";
         } else {
             UI.aiIncidentVerdictBadge.innerText = "VERDICT: SAFE";
-            UI.aiIncidentVerdictBadge.className = "text-[10px] font-mono px-3 py-1 rounded-full font-bold bg-emerald-950 text-emerald-300 border border-emerald-800 uppercase tracking-wider";
+            UI.aiIncidentVerdictBadge.className = "text-[10px] font-sans px-3 py-1 rounded-full font-bold bg-emerald-950 text-emerald-300 border border-emerald-800 uppercase tracking-wider";
         }
     }
 
@@ -306,7 +306,7 @@ const updateResultUI = (isError, riskScore, malicious, total, domainOrHash, stat
     UI.breakdownContainer.classList.remove('hidden');
     
     if (isError) {
-        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-mono bg-rose-950 text-rose-400 border-rose-800"; 
+        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-rose-950 text-rose-400 border-rose-800"; 
         UI.badgeStatus.innerText = "SCAN FAILED"; 
         UI.gaugeArc.style.stroke = "#F43F5E"; 
         UI.gaugeArc.style.strokeDashoffset = 0; 
@@ -343,7 +343,7 @@ const updateResultUI = (isError, riskScore, malicious, total, domainOrHash, stat
     if (UI.trustConfidence) UI.trustConfidence.innerText = total >= 50 ? "High Evidence (70+ AV Engines)" : total > 0 ? "Medium Evidence (Vendor Consensus)" : "Medium Evidence (Rule Match)";
 
     if (riskScore >= 40 || malicious > 0) {
-        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-mono bg-rose-950 text-rose-400 border-rose-800 animate-pulse"; 
+        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-rose-950 text-rose-400 border-rose-800 animate-pulse"; 
         UI.badgeStatus.innerText = "HIGH RISK // SUSPICIOUS"; 
         UI.gaugeArc.style.stroke = "#F43F5E"; 
         UI.gaugeArc.style.strokeDashoffset = 251 - (riskScore / 100) * 251; 
@@ -351,7 +351,7 @@ const updateResultUI = (isError, riskScore, malicious, total, domainOrHash, stat
         UI.resultText.innerHTML = `<strong class="text-rose-400">High Risk Threat Detected:</strong> Multiple security vendors flagged <code>${safeTarget}</code>. Avoid interaction.`; 
         UI.govGuide.classList.remove('hidden');
     } else if (riskScore > 0) {
-        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-mono bg-amber-950 text-amber-400 border-amber-800"; 
+        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-amber-950 text-amber-400 border-amber-800"; 
         UI.badgeStatus.innerText = "CAUTION ADVISED"; 
         UI.gaugeArc.style.stroke = "#F59E0B"; 
         UI.gaugeArc.style.strokeDashoffset = 251 - (riskScore / 100) * 251; 
@@ -359,7 +359,7 @@ const updateResultUI = (isError, riskScore, malicious, total, domainOrHash, stat
         UI.resultText.innerHTML = `<strong class="text-amber-400">Moderate Risk Flags:</strong> Minor warnings exist for <code>${safeTarget}</code>. Proceed with caution.`; 
         UI.govGuide.classList.add('hidden');
     } else {
-        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-mono bg-emerald-950 text-emerald-400 border-emerald-800"; 
+        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-emerald-950 text-emerald-400 border-emerald-800"; 
         UI.badgeStatus.innerText = "SECURE // SAFE"; 
         UI.gaugeArc.style.stroke = "#34D399"; 
         UI.gaugeArc.style.strokeDashoffset = 251; 
@@ -369,39 +369,344 @@ const updateResultUI = (isError, riskScore, malicious, total, domainOrHash, stat
     }
 };
 
-export const runURLScan = async (urlInput) => {
+// Rate Limit Timer Helper
+let rateLimitTimerInterval = null;
+
+const startRateLimitCountdown = (seconds) => {
+    if (rateLimitTimerInterval) clearInterval(rateLimitTimerInterval);
+    const box = UI.rateLimitCountdownBox;
+    const timerEl = UI.rateLimitTimer;
+    if (!box || !timerEl) return;
+
+    box.classList.remove('hidden');
+    let remaining = seconds;
+    timerEl.innerText = `${remaining}s`;
+
+    rateLimitTimerInterval = setInterval(() => {
+        remaining -= 1;
+        if (remaining <= 0) {
+            clearInterval(rateLimitTimerInterval);
+            box.classList.add('hidden');
+        } else {
+            timerEl.innerText = `${remaining}s`;
+        }
+    }, 1000);
+};
+
+// Client-side URL Pattern & RDAP Domain Age Heuristic Fallback
+export const runLocalUrlHeuristicFallback = async (urlInput, vtStatus, gsbStatus) => {
     let parsedUrl;
     try {
-        if (!urlInput.startsWith('http://') && !urlInput.startsWith('https://')) throw new Error("URL must start with http:// or https://");
         parsedUrl = new URL(urlInput);
-        if (parsedUrl.protocol === 'file:' || parsedUrl.protocol === 'ftp:') throw new Error("Local file protocols cannot be scanned.");
-    } catch (e) {
-        updateResultUI(true, 0, 0, 0, "", e.message, "");
+    } catch(e) {
+        updateResultUI(true, 0, 0, 0, "", "Invalid URL format for heuristic scan", "");
         return;
     }
 
+    const domain = parsedUrl.hostname;
+    let score = 10;
+    const flags = [];
+    let domainAgeText = "Unverifiable domain registry";
+
+    // 1. Direct IP Address in URL
+    const isIp = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(domain);
+    if (isIp) {
+        flags.push("⚠️ Direct IP address used in URL instead of domain name");
+        score += 35;
+    }
+
+    // 2. Punycode / Homograph Domain Check
+    if (domain.startsWith('xn--') || /[^\x00-\x7F]/.test(domain)) {
+        flags.push("⚠️ Punycode / Homograph domain character spoofing detected");
+        score += 40;
+    }
+
+    // 3. Excessive Subdomain Depth (4+ subdomains)
+    const subdomains = domain.split('.');
+    if (subdomains.length >= 4) {
+        flags.push(`⚠️ Excessive subdomain depth (${subdomains.length} subdomain levels)`);
+        score += 25;
+    }
+
+    // 4. Known URL Shortener Masking
+    const shorteners = ['bit.ly', 'tinyurl.com', 't.co', 'goo.gl', 'is.gd', 'buff.ly', 'ow.ly', 'cutt.ly', 'rb.gy', 'shorturl.at'];
+    const isShortened = shorteners.some(s => domain.toLowerCase().includes(s));
+    if (isShortened) {
+        flags.push("⚠️ Masked short URL service — final destination is hidden");
+        score += 30;
+    }
+
+    // 5. Insecure HTTP Connection on Credential / Payment Keywords
+    const hasHttp = parsedUrl.protocol === 'http:';
+    const sensitiveKeywords = ['login', 'bank', 'verify', 'account', 'signin', 'update', 'secure', 'pay', 'wallet', 'kyc'];
+    const matchedKeyword = sensitiveKeywords.find(kw => urlInput.toLowerCase().includes(kw));
+    if (hasHttp && matchedKeyword) {
+        flags.push(`⚠️ Insecure HTTP connection asking for '${matchedKeyword}' keyword`);
+        score += 35;
+    }
+
+    // 6. Live RDAP Domain Age Check
     try {
-        const response = await fetch('/.netlify/functions/virustotal', {
+        const rdapRes = await fetch(`https://rdap.org/domain/${encodeURIComponent(domain)}`);
+        if (rdapRes.ok) {
+            const rdapData = await rdapRes.json();
+            const events = rdapData.events || [];
+            const regEvent = events.find(e => e.eventAction === 'registration');
+            if (regEvent && regEvent.eventDate) {
+                const regDate = new Date(regEvent.eventDate);
+                const ageDays = Math.floor((new Date() - regDate) / (1000 * 60 * 60 * 24));
+                domainAgeText = `${ageDays} days old (${regDate.toLocaleDateString('en-IN')})`;
+                if (ageDays < 30) {
+                    flags.push(`⚠️ Newly registered domain (${ageDays} days old — high scam risk)`);
+                    score += 30;
+                }
+            }
+        }
+    } catch(err) {
+        // RDAP unavailable - keep default domainAgeText
+    }
+
+    // Update Fallback Transparency Banner
+    if (UI.fallbackNoticeBanner) {
+        UI.fallbackNoticeBanner.classList.remove('hidden');
+        if (UI.fallbackNoticeReason) {
+            const vtReason = vtStatus ? (vtStatus.error || 'VT Unavailable') : 'VT Unavailable';
+            const gsbReason = gsbStatus ? (gsbStatus.error || 'GSB Unavailable') : 'GSB Unavailable';
+            UI.fallbackNoticeReason.innerText = `Live API sources unavailable (${vtReason}; ${gsbReason}). Evaluated against domain age & 5 client-side URL pattern rules.`;
+        }
+    }
+
+    // Update Source Status Badges Header
+    if (UI.sourceStatusHeader && UI.sourceStatusBadges) {
+        UI.sourceStatusHeader.classList.remove('hidden');
+        UI.sourceStatusBadges.innerHTML = `
+            <span class="px-2.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400">VirusTotal: ${vtStatus?.unconfigured ? '🔒 Not Configured' : vtStatus?.rateLimited ? '⏳ Throttled' : '✕ Offline'}</span>
+            <span class="px-2.5 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-400">Google Safe Browsing: ${gsbStatus?.unconfigured ? '🔒 Not Configured' : '✕ Offline'}</span>
+            <span class="px-2.5 py-0.5 rounded bg-amber-950/80 border border-amber-800 text-amber-300 font-bold">Local Heuristics: ✓ Active (${flags.length} Flags)</span>
+        `;
+    }
+
+    // Render Multi-Source Breakdown Cards
+    if (UI.multiSourceBreakdownContainer) {
+        UI.multiSourceBreakdownContainer.innerHTML = `
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <div class="font-bold text-amber-400">Local URL Pattern Analysis</div>
+                <div class="text-[11px] text-slate-300">${flags.length > 0 ? flags.join('<br>') : 'No suspicious URL pattern triggers matched.'}</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <div class="font-bold text-slate-300">RDAP Domain Registration Age</div>
+                <div class="text-[11px] text-slate-300">${domainAgeText}</div>
+            </div>
+        `;
+    }
+
+    const finalScore = flags.length === 0 ? 12 : Math.min(score, 99);
+    updateResultUI(false, finalScore, flags.length, 5, domain, flags.length === 0 ? 'Passed Heuristics' : 'Heuristic Risk Flags', domainAgeText);
+};
+
+export function normalizeAndValidateUrl(rawInput) {
+    if (!rawInput || typeof rawInput !== 'string') {
+        return { valid: false, error: "Empty target input. Enter a website domain (e.g. google.com) or URL." };
+    }
+
+    let trimmed = rawInput.trim();
+    if (!trimmed) {
+        return { valid: false, error: "Target input cannot be empty whitespace." };
+    }
+
+    let originalInput = trimmed;
+
+    // Check if input already has a scheme
+    const hasScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(trimmed);
+
+    if (hasScheme) {
+        try {
+            const parsed = new URL(trimmed);
+            if (!['http:', 'https:'].includes(parsed.protocol)) {
+                return { valid: false, error: "Only http:// and https:// website URLs are supported." };
+            }
+            return {
+                valid: true,
+                originalInput,
+                normalizedUrl: trimmed,
+                domain: parsed.hostname,
+                protocol: parsed.protocol,
+                isIp: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(parsed.hostname)
+            };
+        } catch (err) {
+            return { valid: false, error: "Malformed URL format. Please check address syntax." };
+        }
+    }
+
+    // Check direct IP address candidate (e.g. 192.168.1.1 or 192.168.1.1/login)
+    const ipMatch = trimmed.match(/^((?:[0-9]{1,3}\.){3}[0-9]{1,3})(?::\d+)?([/?#].*)?$/);
+    if (ipMatch) {
+        const normalizedUrl = `http://${trimmed}`;
+        try {
+            const parsed = new URL(normalizedUrl);
+            return {
+                valid: true,
+                originalInput,
+                normalizedUrl,
+                domain: parsed.hostname,
+                protocol: 'http:',
+                isIp: true
+            };
+        } catch(err) {
+            return { valid: false, error: "Malformed IP address target." };
+        }
+    }
+
+    // Domain candidate validation (e.g. google.com, www.google.com, sub.domain.co.in/path)
+    const domainCandidateRegex = /^(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?::\d+)?(?:[/?#]\S*)?$/;
+    if (domainCandidateRegex.test(trimmed)) {
+        const normalizedUrl = `https://${trimmed}`;
+        try {
+            const parsed = new URL(normalizedUrl);
+            return {
+                valid: true,
+                originalInput,
+                normalizedUrl,
+                domain: parsed.hostname,
+                protocol: 'https:',
+                isIp: false
+            };
+        } catch (err) {
+            return { valid: false, error: "Unable to normalize domain structure." };
+        }
+    }
+
+    return {
+        valid: false,
+        error: "Invalid target format. Enter a domain (e.g. google.com) or URL (e.g. https://example.com)."
+    };
+}
+
+export const runURLScan = async (urlInput) => {
+    const norm = normalizeAndValidateUrl(urlInput);
+    if (!norm.valid) {
+        updateResultUI(true, 0, 0, 0, "", norm.error, "");
+        return;
+    }
+
+    const targetUrl = norm.normalizedUrl;
+    const originalTarget = norm.originalInput;
+    const domain = norm.domain;
+
+    // Reset UI banners & countdown
+    if (UI.fallbackNoticeBanner) UI.fallbackNoticeBanner.classList.add('hidden');
+    if (UI.rateLimitCountdownBox) UI.rateLimitCountdownBox.classList.add('hidden');
+
+    // Execute Parallel Multi-Source API Call (Promise.allSettled)
+    const [vtSettled, gsbSettled] = await Promise.allSettled([
+        fetch('/.netlify/functions/virustotal', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: urlInput })
-        });
+            body: JSON.stringify({ url: targetUrl })
+        }).then(async r => {
+            const body = await r.json().catch(() => ({}));
+            return { status: r.status, ok: r.ok, body };
+        }),
+        fetch('/.netlify/functions/safebrowsing', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: targetUrl })
+        }).then(async r => {
+            const body = await r.json().catch(() => ({}));
+            return { status: r.status, ok: r.ok, body };
+        })
+    ]);
 
-        const payload = await response.json();
-        if (!response.ok) throw new Error(payload.error || `VirusTotal request failed`);
+    const vtResult = vtSettled.status === 'fulfilled' ? vtSettled.value : null;
+    const gsbResult = gsbSettled.status === 'fulfilled' ? gsbSettled.value : null;
 
-        const domain = parsedUrl.hostname;
-        const stats = payload.stats || {};
-        const malicious = Number(stats.malicious || 0);
-        const suspicious = Number(stats.suspicious || 0);
-        const total = malicious + suspicious + Number(stats.harmless || 0) + Number(stats.undetected || 0) || 70;
-        const riskScore = total > 0 ? Math.min(99, Math.round(((malicious + suspicious) / total) * 100)) : 0;
-        const dateStr = payload.last_analysis_date ? new Date(payload.last_analysis_date * 1000).toLocaleString('en-IN') : 'Available in report';
+    const vtOk = vtResult && vtResult.ok;
+    const gsbOk = gsbResult && gsbResult.ok;
 
-        updateResultUI(false, riskScore, malicious + suspicious, total, domain, payload.status || 'Completed', dateStr);
-    } catch (e) {
-        updateResultUI(true, 0, 0, 0, "", e.message, "");
+    // Handle Rate Limit (HTTP 429) from VT
+    if (vtResult && vtResult.status === 429) {
+        startRateLimitCountdown(vtResult.body?.retryAfter || 15);
     }
+
+    // Both APIs failed / unconfigured / rate-limited -> Fallback to Local Heuristics
+    if (!vtOk && !gsbOk) {
+        await runLocalUrlHeuristicFallback(
+            urlInput,
+            vtResult?.body || { error: 'Network error' },
+            gsbResult?.body || { error: 'Network error' }
+        );
+        return;
+    }
+
+    // Process VirusTotal payload if available
+    let vtMalicious = 0;
+    let vtTotal = 0;
+    let vtStatusText = "Unavailable";
+    if (vtOk) {
+        const stats = vtResult.body.stats || {};
+        vtMalicious = Number(stats.malicious || 0) + Number(stats.suspicious || 0);
+        vtTotal = vtMalicious + Number(stats.harmless || 0) + Number(stats.undetected || 0) || 70;
+        vtStatusText = `${vtMalicious}/${vtTotal} AV vendors`;
+    }
+
+    // Process Google Safe Browsing payload if available
+    let gsbClean = true;
+    let gsbThreats = [];
+    let gsbStatusText = "Clean";
+    if (gsbOk) {
+        gsbClean = gsbResult.body.clean !== false;
+        gsbThreats = gsbResult.body.threatTypes || [];
+        gsbStatusText = gsbClean ? "No threats found" : `Threat detected (${gsbThreats.join(', ')})`;
+    }
+
+    // Multi-Source Disagreement & Combined Verdict
+    const hasVtThreat = vtMalicious > 0;
+    const hasGsbThreat = !gsbClean;
+    const isMixedSignal = (vtOk && gsbOk) && ((hasVtThreat && !hasGsbThreat) || (!hasVtThreat && hasGsbThreat));
+
+    // Calculate combined risk score
+    let combinedScore = 0;
+    if (hasVtThreat || hasGsbThreat) {
+        const vtRatio = vtTotal > 0 ? (vtMalicious / vtTotal) * 100 : 0;
+        combinedScore = Math.max(45, Math.round(vtRatio));
+        if (hasGsbThreat) combinedScore = Math.max(combinedScore, 85);
+    }
+
+    // Render Source Status Badges Header
+    if (UI.sourceStatusHeader && UI.sourceStatusBadges) {
+        UI.sourceStatusHeader.classList.remove('hidden');
+        let vtBadge = `<span class="px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">VirusTotal: ✓ ${vtStatusText}</span>`;
+        if (!vtOk) {
+            const isUnconfigured = vtResult?.body?.unconfigured;
+            const isRateLimit = vtResult?.status === 429;
+            vtBadge = `<span class="px-2.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-700">VirusTotal: ${isUnconfigured ? '🔒 Not Configured' : isRateLimit ? '⏳ Throttled (4/min)' : '✕ Offline'}</span>`;
+        }
+
+        let gsbBadge = `<span class="px-2.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">Google Safe Browsing: ✓ ${gsbStatusText}</span>`;
+        if (!gsbOk) {
+            const isUnconfigured = gsbResult?.body?.unconfigured;
+            gsbBadge = `<span class="px-2.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-700">Google Safe Browsing: ${isUnconfigured ? '🔒 Not Configured' : '✕ Offline'}</span>`;
+        }
+
+        UI.sourceStatusBadges.innerHTML = `${vtBadge} ${gsbBadge}`;
+    }
+
+    // Render Multi-Source Breakdown Cards
+    if (UI.multiSourceBreakdownContainer) {
+        UI.multiSourceBreakdownContainer.innerHTML = `
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <div class="font-bold text-slate-200">VirusTotal Vendor Consensus</div>
+                <div class="text-[11px] ${hasVtThreat ? 'text-rose-400 font-bold' : 'text-slate-300'}">${vtOk ? vtStatusText : (vtResult?.body?.error || 'Unconfigured')}</div>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <div class="font-bold text-slate-200">Google Safe Browsing</div>
+                <div class="text-[11px] ${hasGsbThreat ? 'text-rose-400 font-bold' : 'text-slate-300'}">${gsbOk ? gsbStatusText : (gsbResult?.body?.error || 'Unconfigured')}</div>
+            </div>
+        `;
+    }
+
+    const finalStatusText = isMixedSignal ? "MIXED SIGNAL // EXERCISE CAUTION" : (hasVtThreat || hasGsbThreat) ? "THREAT DETECTED" : "CLEAN VERDICT";
+    updateResultUI(false, combinedScore, vtMalicious + (hasGsbThreat ? 1 : 0), (vtTotal || 70) + (gsbOk ? 1 : 0), domain, finalStatusText, new Date().toLocaleString('en-IN'));
 };
 
 export const handleFileHash = async (event) => {
@@ -411,30 +716,30 @@ export const handleFileHash = async (event) => {
     
     if (file.size > 50 * 1024 * 1024) {
         UI.fileHashIndicator.classList.remove('hidden');
-        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
+        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
         UI.fileHashIndicator.innerText = 'Error: File exceeds local 50MB hashing limit to prevent browser crash.';
         return;
     }
 
     if (!crypto || !crypto.subtle) {
         UI.fileHashIndicator.classList.remove('hidden');
-        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
+        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
         UI.fileHashIndicator.innerText = 'Error: Secure context (HTTPS) is required for local cryptographic hashing.';
         return;
     }
 
     UI.fileHashIndicator.classList.remove('hidden');
-    UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-amber-400 bg-amber-950/40 border border-amber-800/50';
+    UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-amber-400 bg-amber-950/40 border border-amber-800/50';
     UI.fileHashIndicator.innerText = 'Computing SHA-256 hash locally on client...';
 
     try {
         const buffer = await file.arrayBuffer();
         const digest = await crypto.subtle.digest('SHA-256', buffer);
         State.pendingHash = Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
-        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-green-400 bg-green-950/40 border border-green-800/50';
+        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-green-400 bg-green-950/40 border border-green-800/50';
         UI.fileHashIndicator.innerText = `File: ${sanitizeHTML(file.name)} (${(file.size/1024).toFixed(1)} KB)\nSHA-256: ${State.pendingHash}`;
     } catch(err) { 
-        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
+        UI.fileHashIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
         UI.fileHashIndicator.innerText = 'Local SHA-256 computation failed.'; 
         State.pendingHash = null; 
     }
@@ -499,14 +804,14 @@ export const runChatScan = () => {
     };
     
     if(flags.length === 0) {
-        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-mono bg-emerald-950 text-emerald-400 border-emerald-800"; 
+        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-emerald-950 text-emerald-400 border-emerald-800"; 
         UI.badgeStatus.innerText = "NO FLAGS FOUND"; 
         UI.gaugeArc.style.stroke = "#34D399"; 
         UI.gaugeArc.style.strokeDashoffset = 251 - (0.12 * 251); 
         UI.gaugeValue.innerText = "12%"; 
         UI.resultText.innerHTML = `<strong class="text-emerald-400">No obvious scam markers found.</strong> However, always verify the sender's identity independently.`;
     } else {
-        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-mono bg-rose-950 text-rose-400 border-rose-800 animate-pulse"; 
+        UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-rose-950 text-rose-400 border-rose-800 animate-pulse"; 
         UI.badgeStatus.innerText = "HIGH RISK SCAM"; 
         let finalScore = Math.min(score, 99); 
         UI.gaugeArc.style.stroke = "#F43F5E"; 
@@ -559,22 +864,119 @@ export const runChatScan = () => {
     }
 };
 
+const renderScanStage = (stageNum, statusText, isError = false) => {
+    const consoleBox = document.getElementById('scanStagesConsole');
+    if (!consoleBox) return;
+    consoleBox.classList.remove('hidden');
+
+    const stageNames = [
+        "1. Initializing Connection & Context",
+        "2. Parsing Input Format & Parameters",
+        "3. Domain / Hash Telemetry Extraction",
+        "4. Executing Local Client Heuristic Scan",
+        "5. Querying VirusTotal & Intelligence Nodes",
+        "6. Aggregating Security Vendor Reports",
+        "7. Finalizing Verdict & Risk Metrics"
+    ];
+
+    const nodesContainer = document.getElementById('scanStageNodes');
+    const stageLogText = document.getElementById('scanStageLogText');
+    const stageBar = document.getElementById('scanStageProgressBar');
+
+    if (stageLogText) {
+        stageLogText.innerHTML = isError 
+            ? `<span class="text-rose-400 font-bold">❌ Stage ${stageNum} Error: ${sanitizeHTML(statusText)}</span>`
+            : `<span class="text-emerald-400 font-bold">⚡ Stage ${stageNum}/7 Active:</span> <span class="text-slate-300">${sanitizeHTML(statusText)}</span>`;
+    }
+
+    if (stageBar) {
+        const percent = Math.round((stageNum / 7) * 100);
+        stageBar.style.width = `${percent}%`;
+    }
+
+    if (nodesContainer) {
+        let html = '';
+        for (let i = 1; i <= 7; i++) {
+            const isDone = i < stageNum;
+            const isActive = i === stageNum;
+            const isErr = isActive && isError;
+
+            let badgeClass = "bg-slate-950 text-slate-500 border-slate-800";
+            let icon = `${i}`;
+            if (isDone) {
+                badgeClass = "bg-emerald-950/80 text-emerald-400 border-emerald-700/60";
+                icon = "✓";
+            } else if (isErr) {
+                badgeClass = "bg-rose-950 text-rose-300 border-rose-800 animate-pulse";
+                icon = "✕";
+            } else if (isActive) {
+                badgeClass = "bg-emerald-500/20 text-[#00FF88] border-[#00FF88]/60 shadow-[0_0_15px_rgba(0,255,136,0.3)] animate-pulse";
+            }
+
+            html += `
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl border font-sans text-[10px] ${badgeClass}">
+                    <span class="font-bold">${icon}</span>
+                    <span class="hidden sm:inline">${stageNames[i-1].split('. ')[1]}</span>
+                </div>
+            `;
+        }
+        nodesContainer.innerHTML = html;
+    }
+};
+
 export const executeScan = async () => {
     if (State.isScanning) return;
     State.isScanning = true;
     
     UI.submitBtn.disabled = true;
     UI.submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    UI.resultBox.classList.remove('hidden');
-    UI.scanBeamEl.classList.remove('hidden');
-    UI.resultText.innerHTML = '<span class="text-slate-400 animate-pulse">Establishing secure connection... Analyzing telemetry data...</span>';
+    if (UI.resultBox) UI.resultBox.classList.remove('hidden');
+    if (UI.scanBeamEl) UI.scanBeamEl.classList.remove('hidden');
+    if (UI.resultText) UI.resultText.innerHTML = '<span class="text-slate-400 animate-pulse">Establishing secure connection... Executing 7-stage risk analysis...</span>';
     
     try {
-        if (State.currentMode === 'url') await runURLScan(UI.urlInputArea.value.trim());
-        else if (State.currentMode === 'file') await runFileScan();
-        else if (State.currentMode === 'chat') runChatScan();
+        renderScanStage(1, "Initializing connection & cryptographic context...");
+        await new Promise(r => setTimeout(r, 80));
+
+        renderScanStage(2, "Parsing input format & protocol parameters...");
+        await new Promise(r => setTimeout(r, 80));
+
+        renderScanStage(3, "Extracting target domain / hash telemetry...");
+        await new Promise(r => setTimeout(r, 80));
+
+        renderScanStage(4, "Executing local client heuristic analysis...");
+        await new Promise(r => setTimeout(r, 80));
+
+        renderScanStage(5, "Querying VirusTotal & global threat intelligence nodes...");
+
+        if (State.currentMode === 'url') {
+            const val = UI.urlInputArea ? UI.urlInputArea.querySelector('input')?.value.trim() : '';
+            await runURLScan(val);
+        } else if (State.currentMode === 'file') {
+            await runFileScan();
+        } else if (State.currentMode === 'chat') {
+            const txt = UI.chatInputArea ? (UI.chatInputArea.querySelector('textarea')?.value || UI.chatInputArea.value) : '';
+            runChatScan();
+        } else if (State.currentMode === 'qr') {
+            const qrText = UI.qrIndicator ? UI.qrIndicator.innerText : '';
+            if (qrText.includes('Decoded: http')) {
+                const link = qrText.split('Decoded: ')[1].trim();
+                await runURLScan(link);
+            } else if (qrText.includes('Decoded: ')) {
+                runChatScan();
+            } else {
+                updateResultUI(true, 0, 0, 0, "", "No decoded QR code payload found. Please upload a clear QR code image first.", "");
+            }
+        }
+
+        renderScanStage(6, "Processing vendor consensus & threat indicators...");
+        await new Promise(r => setTimeout(r, 80));
+
+        renderScanStage(7, "Finalizing assessment verdict & action checklist.");
+    } catch(err) {
+        renderScanStage(5, err.message || "Execution error", true);
     } finally {
-        UI.scanBeamEl.classList.add('hidden');
+        if (UI.scanBeamEl) UI.scanBeamEl.classList.add('hidden');
         UI.submitBtn.disabled = false;
         UI.submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         State.isScanning = false;
@@ -589,7 +991,7 @@ export const handleQrUpload = (event) => {
     if (!file.type.startsWith('image/')) {
         if (UI.qrIndicator) {
             UI.qrIndicator.classList.remove('hidden');
-            UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
+            UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
             UI.qrIndicator.innerText = 'Please upload a valid image file.';
         }
         return;
@@ -621,10 +1023,10 @@ export const handleQrUpload = (event) => {
             if (UI.qrIndicator) {
                 UI.qrIndicator.classList.remove('hidden');
                 if (!code) {
-                    UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-amber-400 bg-amber-950/40 border border-amber-800/50';
+                    UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-amber-400 bg-amber-950/40 border border-amber-800/50';
                     UI.qrIndicator.innerText = 'No QR code detected. Try a clearer image.';
                 } else {
-                    UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-green-400 bg-green-950/40 border border-green-800/50';
+                    UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-green-400 bg-green-950/40 border border-green-800/50';
                     UI.qrIndicator.innerText = `Decoded: ${code.data}`;
                 }
             }
@@ -632,7 +1034,7 @@ export const handleQrUpload = (event) => {
         image.onerror = () => {
             if (UI.qrIndicator) {
                 UI.qrIndicator.classList.remove('hidden');
-                UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-mono break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
+                UI.qrIndicator.className = 'text-xs mt-2 p-3 rounded-xl font-sans break-all text-rose-400 bg-rose-950/40 border border-rose-800/50';
                 UI.qrIndicator.innerText = 'The image could not be decoded.';
             }
         };

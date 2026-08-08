@@ -2,15 +2,18 @@ import { State } from './state.js';
 import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, initLiveMeters, bootSequence, showToast, switchDashboardView, initShield3DEffect, initThreatGlobe } from './ui.js';
 import { applyLanguage, toggleLangMenu } from './language.js';
 import { switchScanMode, handleFileHash, executeScan, handleQrUpload } from './scanner.js';
-import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, runBrowserSecurityCheck, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails } from './tools.js';
+import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, runBrowserSecurityCheck, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails, runWhoisLookup, runIpLookup, runDnsLookup, handleScreenshotUpload, runPasswordBreachCheck, renderCyberCellDetails } from './tools.js';
 import { initServiceWorker } from './utils.js';
+import { initIndiaThreatMap, openStateReportModal, closeStateReportModal } from './indiaMap.js';
 
 // Expose global window methods for inline HTML onclick attributes
 window.switchDashboardView = switchDashboardView;
+window.initIndiaThreatMap = initIndiaThreatMap;
 window.selectIndiaState = (code) => {
-    renderStateThreatDetails(code);
+    openStateReportModal(code);
     State.selectedState = code;
 };
+window.closeStateReportModal = closeStateReportModal;
 window.toggleLangMenu = toggleLangMenu;
 window.setLanguage = (lang) => applyLanguage(lang);
 window.toggleMobileMenu = toggleMobileMenu;
@@ -25,6 +28,13 @@ window.openBrowserCheckModal = () => {
     openModal('browser');
     runBrowserSecurityCheck();
 };
+window.runWhoisLookup = runWhoisLookup;
+window.runIpLookup = runIpLookup;
+window.runDnsLookup = runDnsLookup;
+window.handleScreenshotUpload = handleScreenshotUpload;
+window.runPasswordBreachCheck = runPasswordBreachCheck;
+window.renderCyberCellDetails = renderCyberCellDetails;
+window.openModal = openModal;
 window.checkPasswordStrength = checkPasswordStrength;
 window.generatePassword = generatePassword;
 window.generateQR = generateQR;
@@ -87,7 +97,7 @@ window.installPWA = () => {
         State.deferredPrompt = null;
         return;
     }
-    alert('PWA install prompt is not ready yet. Please use browser menu to install.');
+    showToast('PWA install prompt is not ready yet. Please use browser menu to install.', 'info');
 };
 
 const bindEvents = () => {
@@ -208,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     safeInit(renderScamEncyclopedia, 'renderScamEncyclopedia');
     safeInit(renderSafetyDashboard, 'renderSafetyDashboard');
     safeInit(renderEmergencyCenter, 'renderEmergencyCenter');
-    safeInit(() => renderStateThreatDetails('BR'), 'renderStateThreatDetails');
+    safeInit(() => renderCyberCellDetails('DL'), 'renderCyberCellDetails');
+    safeInit(initIndiaThreatMap, 'initIndiaThreatMap');
     safeInit(initServiceWorker, 'initServiceWorker');
 });

@@ -1,0 +1,7 @@
+Contact: mailto:security@cyberpehra.in
+Contact: https://cyberpehra.in/security
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, hi
+Canonical: https://cyberpehra.in/.well-known/security.txt
+Policy: https://cyberpehra.in/security-policy
+Hiring: https://cyberpehra.in/careers
