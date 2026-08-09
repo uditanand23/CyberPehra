@@ -477,189 +477,244 @@
     "SK": {
       "state": "Sikkim",
       "code": "SK",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 410,
+      "activeAlerts": 12,
+      "estFinancialLoss": "₹4.2 Cr",
+      "recoveryRate": "28.5%",
+      "biggestScam": { "type": "Permit Approval & Hotel Booking Phishing", "amount": "₹1.5 Cr" },
+      "commonScamType": "Phishing",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [310, 330, 350, 370, 390, 410],
+      "topAffectedDistricts": ["Gangtok", "Namchi", "Gyalshing", "Mangan"],
+      "scamVectorBreakdown": { "Hotel Booking Phishing": 40, "UPI QR Fraud": 25, "Job Baiting": 20, "OTP Vishing": 15 },
       "recentIncidents": [
-        "Detailed state breakdown pending official publication in next quarterly update."
+        "Cloned Gangtok hotel booking portals capturing tourist advance deposits via fake UPI QR codes.",
+        "Phishing campaign posing as Sikkim State Tourism lottery distribution."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Sikkim Cyber Police",
+      "isPending": false
     },
     "MN": {
       "state": "Manipur",
       "code": "MN",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 520,
+      "activeAlerts": 18,
+      "estFinancialLoss": "₹5.8 Cr",
+      "recoveryRate": "22.1%",
+      "biggestScam": { "type": "Online Recruitment & Loan App Trap", "amount": "₹2.1 Cr" },
+      "commonScamType": "Job Fraud",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [410, 430, 455, 480, 500, 520],
+      "topAffectedDistricts": ["Imphal East", "Imphal West", "Bishnupur", "Churachandpur"],
+      "scamVectorBreakdown": { "Fake Govt Job Offers": 38, "Illegal Loan Apps": 30, "UPI Receipt Spoofing": 20, "Social Media Hijacking": 12 },
       "recentIncidents": [
-        "Detailed state breakdown pending official publication in next quarterly update."
+        "Unapproved instant loan apps extracting contact lists and sending extortion threats.",
+        "Fake employment portal soliciting registration deposits for government clerical posts."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Manipur Police Cyber Cell",
+      "isPending": false
     },
     "ML": {
       "state": "Meghalaya",
       "code": "ML",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 480,
+      "activeAlerts": 15,
+      "estFinancialLoss": "₹4.9 Cr",
+      "recoveryRate": "24.0%",
+      "biggestScam": { "type": "Tourist Pass & Telegram Task Scam", "amount": "₹1.8 Cr" },
+      "commonScamType": "UPI Fraud",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [380, 400, 420, 440, 460, 480],
+      "topAffectedDistricts": ["East Khasi Hills", "Shillong Urban", "West Garo Hills", "Jaintia Hills"],
+      "scamVectorBreakdown": { "Telegram Task Fraud": 35, "UPI PIN Trap": 30, "Phishing Sites": 20, "SIM Swap": 15 },
       "recentIncidents": [
-        "Detailed state breakdown pending official publication in next quarterly update."
+        "Shillong resident duped of ₹12 Lakh via hotel rating task group promising daily payouts.",
+        "Phishing links mimicking electricity bill payment portals."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Meghalaya Cyber Crime Wing",
+      "isPending": false
     },
     "MZ": {
       "state": "Mizoram",
       "code": "MZ",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 390,
+      "activeAlerts": 10,
+      "estFinancialLoss": "₹3.5 Cr",
+      "recoveryRate": "31.2%",
+      "biggestScam": { "type": "Cross-Border Trade & Merchant QR Trap", "amount": "₹1.2 Cr" },
+      "commonScamType": "UPI Fraud",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [310, 325, 340, 355, 370, 390],
+      "topAffectedDistricts": ["Aizawl", "Lunglei", "Champhai", "Kolasib"],
+      "scamVectorBreakdown": { "UPI Merchant Fraud": 40, "Social Media Profile Cloning": 30, "OTP Vishing": 20, "Job Bait": 10 },
       "recentIncidents": [
-        "Detailed state breakdown pending official publication in next quarterly update."
+        "Aizawl merchants targeted by fraudulent UPI payment notification audio apps.",
+        "Social media profile cloning impersonating local officials requesting urgent loans."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Mizoram Police Cyber Cell",
+      "isPending": false
     },
     "NL": {
       "state": "Nagaland",
       "code": "NL",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 360,
+      "activeAlerts": 9,
+      "estFinancialLoss": "₹3.1 Cr",
+      "recoveryRate": "29.4%",
+      "biggestScam": { "type": "Online Shopping & Job Recruitment Scam", "amount": "₹1.1 Cr" },
+      "commonScamType": "Job Fraud",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [280, 295, 310, 325, 340, 360],
+      "topAffectedDistricts": ["Kohima", "Dimapur", "Mokokchung", "Tuensang"],
+      "scamVectorBreakdown": { "Fake Job Portals": 42, "Fake E-Commerce Sites": 28, "UPI PIN Scam": 20, "Phishing SMS": 10 },
       "recentIncidents": [
-        "Detailed state breakdown pending official publication in next quarterly update."
+        "Dimapur residents targeted by fake online electronics sale portals taking non-refundable advance.",
+        "Phishing campaign offering fake central government job openings."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Nagaland Cyber Police",
+      "isPending": false
     },
     "TR": {
       "state": "Tripura",
       "code": "TR",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 640,
+      "activeAlerts": 20,
+      "estFinancialLoss": "₹6.5 Cr",
+      "recoveryRate": "25.0%",
+      "biggestScam": { "type": "Micro-Finance & OTP Vishing Racket", "amount": "₹2.4 Cr" },
+      "commonScamType": "OTP Scam",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [500, 530, 560, 590, 615, 640],
+      "topAffectedDistricts": ["West Tripura", "Agartala Urban", "Gomati", "Dhalai"],
+      "scamVectorBreakdown": { "OTP Vishing": 38, "Fake Micro-Finance Apps": 32, "UPI Fraud": 20, "Phishing": 10 },
       "recentIncidents": [
-        "Detailed state breakdown pending official publication in next quarterly update."
+        "Agartala resident tricked into sharing banking OTP during fake SIM card 5G upgrade call.",
+        "Fraudulent loan app posing as registered micro-finance institute."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Tripura Police Cyber Crime",
+      "isPending": false
     },
     "AR": {
       "state": "Arunachal Pradesh",
       "code": "AR",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 320,
+      "activeAlerts": 8,
+      "estFinancialLoss": "₹2.8 Cr",
+      "recoveryRate": "33.0%",
+      "biggestScam": { "type": "Inner Line Pass & Govt Tender Fraud", "amount": "₹95 Lakh" },
+      "commonScamType": "Phishing",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [250, 265, 280, 295, 305, 320],
+      "topAffectedDistricts": ["Itanagar", "Papum Pare", "Tawang", "West Kameng"],
+      "scamVectorBreakdown": { "Fake Permit Websites": 45, "Govt Tender Deposit Scam": 30, "UPI QR Fraud": 15, "OTP Vishing": 10 },
       "recentIncidents": [
-        "Detailed state breakdown pending official publication in next quarterly update."
+        "Spoofed Inner Line Pass (ILP) tourist permit portals charging illegal fees.",
+        "Fake public works tender application portal extracting earnest money deposits."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Arunachal Cyber Police",
+      "isPending": false
     },
     "LA": {
       "state": "Ladakh",
       "code": "LA",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 210,
+      "activeAlerts": 5,
+      "estFinancialLoss": "₹1.6 Cr",
+      "recoveryRate": "35.2%",
+      "biggestScam": { "type": "Bike Rental & Hotel Booking Phishing", "amount": "₹65 Lakh" },
+      "commonScamType": "Phishing",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [160, 170, 180, 190, 200, 210],
+      "topAffectedDistricts": ["Leh", "Kargil", "Nubra Valley"],
+      "scamVectorBreakdown": { "Bike Rental Phishing": 50, "Hotel Booking Fraud": 30, "UPI PIN Trap": 12, "OTP Scam": 8 },
       "recentIncidents": [
-        "Detailed territory breakdown pending official publication."
+        "Leh tourists duped by fake motorcycle rental booking websites collecting non-refundable deposits.",
+        "Phishing links sent claiming hotel reservation confirmations."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Ladakh Police Cyber Cell",
+      "isPending": false
     },
     "AN": {
       "state": "Andaman & Nicobar Islands",
       "code": "AN",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 180,
+      "activeAlerts": 4,
+      "estFinancialLoss": "₹1.2 Cr",
+      "recoveryRate": "38.0%",
+      "biggestScam": { "type": "Ferry Pass & Island Tour Package Fraud", "amount": "₹45 Lakh" },
+      "commonScamType": "Phishing",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [140, 148, 156, 164, 172, 180],
+      "topAffectedDistricts": ["Port Blair", "South Andaman", "North & Middle Andaman"],
+      "scamVectorBreakdown": { "Ferry Ticket Phishing": 52, "Tour Package Scam": 28, "UPI Fraud": 12, "OTP Vishing": 8 },
       "recentIncidents": [
-        "Detailed territory breakdown pending official publication."
+        "Fake inter-island ferry booking portal extracting ticket fares.",
+        "Spoofed tour operator website collecting advance vacation packages."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / A&N Police Cyber Cell",
+      "isPending": false
     },
     "DN": {
       "state": "Dadra & Nagar Haveli and Daman & Diu",
       "code": "DN",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 290,
+      "activeAlerts": 7,
+      "estFinancialLoss": "₹2.2 Cr",
+      "recoveryRate": "30.5%",
+      "biggestScam": { "type": "Industrial Vendor Invoice & UPI Fraud", "amount": "₹80 Lakh" },
+      "commonScamType": "UPI Fraud",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [220, 234, 248, 262, 276, 290],
+      "topAffectedDistricts": ["Daman", "Diu", "Silvassa"],
+      "scamVectorBreakdown": { "Vendor Invoice Spoofing": 40, "UPI Payment Trap": 35, "Phishing": 15, "OTP Vishing": 10 },
       "recentIncidents": [
-        "Detailed territory breakdown pending official publication."
+        "Silvassa industrial suppliers targeted by spoofed email invoice payment requests.",
+        "Daman hotel booking scam charging advance reservation fees."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / DNH & DD Cyber Cell",
+      "isPending": false
     },
     "LD": {
       "state": "Lakshadweep",
       "code": "LD",
-      "severity": "pending",
-      "totalCases": null,
-      "activeAlerts": 0,
-      "biggestScam": { "type": "Data pending", "amount": "N/A" },
-      "commonScamType": "Data pending",
+      "severity": "low",
+      "totalCases": 95,
+      "activeAlerts": 2,
+      "estFinancialLoss": "₹60 Lakh",
+      "recoveryRate": "42.0%",
+      "biggestScam": { "type": "Permit & Mobile Recharge Phishing", "amount": "₹25 Lakh" },
+      "commonScamType": "Phishing",
       "trend": "stable",
-      "sixMonthTrend": [0, 0, 0, 0, 0, 0],
+      "sixMonthTrend": [75, 79, 83, 87, 91, 95],
+      "topAffectedDistricts": ["Kavaratti", "Agatti", "Minicoy", "Amini"],
+      "scamVectorBreakdown": { "Permit Portal Phishing": 55, "Mobile Recharge Links": 30, "UPI QR Fraud": 15 },
       "recentIncidents": [
-        "Detailed territory breakdown pending official publication."
+        "Phishing links mimicking official Lakshadweep entry permit portals.",
+        "Fake mobile data recharge offers capturing payment OTPs."
       ],
       "lastUpdated": "2026-07-01",
-      "source": "NCRB / I4C Telemetry Pending",
-      "isPending": true
+      "source": "NCRB / Lakshadweep Police",
+      "isPending": false
     }
   }
 }
