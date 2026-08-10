@@ -53,7 +53,7 @@ tailwind.config = {
     darkMode: 'class',
     theme: {
         extend: {
-            colors: { 
+            colors: {
                 bgDark: '#020403',
                 bgSurface: '#050806',
                 neon: '#00FF88',
@@ -139,19 +139,19 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 #bootScreen { transition: opacity .5s ease, visibility .5s ease; }
 
 .tab-btn { transition: all .25s ease; }
-.tab-btn.active { 
-    background: #00FF88; 
-    color: #020403; 
-    font-weight: 700; 
+.tab-btn.active {
+    background: #00FF88;
+    color: #020403;
+    font-weight: 700;
     box-shadow: 0 0 25px rgba(0, 255, 136, 0.35);
 }
 .dashboard-view { min-height: calc(100vh - 12rem); }
 .scan-panel { display: none; }
 .scan-panel.active { display: block; }
-.scan-beam { 
-    position: absolute; left: 0; right: 0; height: 40%; 
-    background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.3), transparent); 
-    animation: scanBeam 1.8s linear infinite; pointer-events: none; 
+.scan-beam {
+    position: absolute; left: 0; right: 0; height: 40%;
+    background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.3), transparent);
+    animation: scanBeam 1.8s linear infinite; pointer-events: none;
 }
 
 /* Custom Scrollbar */
@@ -160,9 +160,9 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 ::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.2); border-radius: 8px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 136, 0.4); }
 
-@media (prefers-reduced-motion: reduce) { 
-    .radar-sweep, .scan-beam, .glow-dot, .floating-shield { animation: none !important; } 
-    html { scroll-behavior: auto; } 
+@media (prefers-reduced-motion: reduce) {
+    .radar-sweep, .scan-beam, .glow-dot, .floating-shield { animation: none !important; }
+    html { scroll-behavior: auto; }
 }
 </style>
 </head>
@@ -375,7 +375,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 
         <!-- VIEW 1: HERO & STREAMLINED HOMEPAGE -->
         <section id="view-dashboard" class="dashboard-view space-y-12 animate-fadeIn">
-            
+
             <!-- 1. HERO SECTION -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center pt-4 sm:pt-8">
                 <div class="lg:col-span-7 space-y-6">
@@ -406,7 +406,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     <div id="cyberShield3D" class="card-3d-tilt relative w-72 h-72 sm:w-96 sm:h-96 flex items-center justify-center">
                         <div class="absolute inset-0 rounded-full border border-[#00FF88]/20 radar-pulse-bg pointer-events-none"></div>
                         <div class="absolute inset-0 rounded-full border border-[#00FF88]/30 radar-sweep pointer-events-none"></div>
-                        
+
                         <div class="absolute w-72 h-72 rounded-full border border-emerald-500/30 animate-spin" style="animation-duration: 22s;"></div>
                         <div class="absolute w-60 h-60 rounded-full border border-teal-400/30 animate-spin" style="animation-duration: 14s; animation-direction: reverse;"></div>
 
@@ -732,7 +732,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                             <p id="hudSubTitle" class="text-xs text-slate-400">Multi-Vector Threat Analysis Protocol</p>
                         </div>
                     </div>
-                    
+
                     <div class="text-right font-sans hidden sm:block">
                         <div class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">SECURITY CONSOLE</div>
                         <div class="text-xs text-emerald-400 font-mono font-bold">Neural SOC v5.0</div>
@@ -815,7 +815,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 
                 <!-- DETAILED CYBERPEHRA THREAT ASSESSMENT REPORT SECTION -->
                 <div id="detailedThreatReportContainer" class="pt-6 border-t border-white/10 space-y-6 text-slate-300 font-sans text-xs">
-                    
+
                     <!-- Report Header -->
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
                         <div>
@@ -1235,7 +1235,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                 <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-4">
                     <h3 class="text-lg font-bold text-white" data-i18n="tool_pwd">Password Entropy Analyzer</h3>
                     <input type="password" id="pwdInput" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-sm focus:outline-none focus:border-[#00FF88]" placeholder="Enter password to test entropy..." data-i18n-placeholder="ph_pwd">
-                    
+
                     <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
                         <div id="pwdBar" class="h-full w-0 transition-all duration-300"></div>
                     </div>
@@ -1274,7 +1274,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                         </span>
                     </div>
                     <p class="text-xs text-slate-400" data-i18n="tool_cell_desc">Select your State/UT to find official Cyber Crime Cell addresses, nodal officer contact numbers, and reporting details.</p>
-                    
+
                     <div class="flex flex-wrap items-center gap-3">
                         <label class="text-xs text-slate-300 font-bold" data-i18n="tool_cell_label">Select State / Union Territory:</label>
                         <select id="cyberCellStateSelect" onchange="window.renderCyberCellDetails(this.value)" class="px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-emerald-400 font-sans text-xs focus:outline-none focus:border-[#00FF88] cursor-pointer">
@@ -1326,7 +1326,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                 <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-4">
                     <h3 class="text-lg font-bold text-white" data-i18n="tool_qr">CyberPehra Tools (Secure QR Generator)</h3>
                     <input type="text" id="qrGenInput" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-sm focus:outline-none focus:border-[#00FF88]" placeholder="Enter link or payload text..." data-i18n-placeholder="ph_qr_gen">
-                    
+
                     <div id="qrOutput" class="hidden p-4 rounded-xl bg-white flex justify-center"></div>
 
                     <div class="flex gap-2 pt-2">
@@ -1577,6 +1577,51 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
     <div id="stateReportModalContent" class="glass-card max-w-7xl w-full h-full max-h-[94vh] rounded-3xl border border-[#00FF88]/30 shadow-[0_0_80px_rgba(0,255,136,0.25)] overflow-hidden flex flex-col bg-[#050806]/95">
         <!-- Dynamic Full-Page State Command Center rendered by js/indiaMap.js -->
     </div>
+</div>
+
+<!-- VISUAL CYBER INVESTIGATION WORKSPACE (SCREENSHOT ANALYZER FULL-SCREEN OVERLAY) -->
+<div id="screenshotWorkspaceOverlay" class="hidden fixed inset-0 z-[1000] bg-[#020403]/98 backdrop-blur-2xl overflow-y-auto flex flex-col font-sans animate-fadeIn">
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#050806]/95 backdrop-blur-md border-b border-white/10 px-4 py-3 flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-3">
+            <button onclick="window.closeScreenshotWorkspace()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer" aria-label="Go back">
+                <span>←</span>
+                <span data-i18n="sw_back">Back</span>
+            </button>
+            <div class="h-4 w-px bg-white/10 hidden sm:block"></div>
+            <div class="flex items-center gap-2">
+                <span class="text-xl">📸</span>
+                <div>
+                    <h2 class="text-sm font-bold text-white leading-none" data-i18n="sw_title">Visual Cyber Investigation Workspace</h2>
+                    <span class="text-[10px] text-emerald-400 font-medium tracking-wide uppercase" data-i18n="sw_subtitle">CyberPehra Threat Analysis Command Center</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <div class="relative">
+                <button id="workspaceLangToggleBtn" onclick="window.toggleWorkspaceLangMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                    <span id="workspaceCurrentLangLabel">English</span>
+                    <span class="text-[10px]">▼</span>
+                </button>
+                <div id="workspaceLangMenu" class="hidden absolute right-0 mt-1 w-32 bg-slate-950 border border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden text-xs">
+                    <button onclick="window.setLanguage('en'); window.toggleWorkspaceLangMenu(true);" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">English</button>
+                    <button onclick="window.setLanguage('hi'); window.toggleWorkspaceLangMenu(true);" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">हिन्दी</button>
+                    <button onclick="window.setLanguage('hinglish'); window.toggleWorkspaceLangMenu(true);" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">Hinglish</button>
+                </div>
+            </div>
+
+            <button onclick="window.closeScreenshotWorkspace()" class="px-3 py-1.5 rounded-xl bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/50 text-rose-300 font-bold text-xs transition cursor-pointer flex items-center gap-1" aria-label="Close analysis">
+                <span>✕</span>
+                <span class="hidden sm:inline" data-i18n="sw_close">Close Analysis</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main id="screenshotWorkspaceContent" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+        <!-- Dynamic content rendered by js/tools.js -->
+    </main>
 </div>
 
 <!-- FIXED APP-LIKE MOBILE BOTTOM NAVIGATION DOCK (MD:HIDDEN) -->

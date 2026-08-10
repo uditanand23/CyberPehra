@@ -35,8 +35,8 @@ export const UI = {
     get qrOutput() { return document.getElementById('qrOutput'); },
     get genQrBtn() { return document.getElementById('genQrBtn'); },
     get startQuizBtn() { return document.getElementById('startQuizBtn'); },
-    get evidenceBtn() { return document.getElementById('evidenceBtn'); }, 
-    get dontsBtn() { return document.getElementById('dontsBtn'); },       
+    get evidenceBtn() { return document.getElementById('evidenceBtn'); },
+    get dontsBtn() { return document.getElementById('dontsBtn'); },
     get lawCaseBtns() { return document.querySelectorAll('.law-case-btn'); },
     get faqTriggers() { return document.querySelectorAll('.faq-trigger'); },
     get simpleModal() { return document.getElementById('simpleModal'); },
@@ -149,9 +149,9 @@ export const openModal = (type) => {
     const title = UI.simpleModalTitle;
     const body = UI.simpleModalBody;
     if (!modal || !title || !body) return;
-    modal.classList.remove('hidden'); 
+    modal.classList.remove('hidden');
     modal.classList.add('flex');
-    
+
     switch(type) {
         case 'privacy':
             title.innerText = "Privacy Policy (0-Day Retention Policy)";
@@ -244,10 +244,15 @@ export const openModal = (type) => {
             `;
             break;
         case 'screenshot':
-            title.innerText = "📸 Screenshot Evidence & QR Analyzer";
+            if (typeof window.openScreenshotWorkspace === 'function') {
+                closeModals();
+                window.openScreenshotWorkspace();
+                return;
+            }
+            title.innerText = "📸 Visual Cyber Investigation Workspace";
             body.innerHTML = `
                 <div class="space-y-4 font-sans text-xs">
-                    <p class="text-slate-300">Upload a screenshot of a suspicious message, payment QR code, or website to inspect for scam patterns:</p>
+                    <p class="text-slate-300">Upload screenshot images to inspect for scam patterns, URLs, UPI handles & threat indicators:</p>
                     <label class="flex flex-col items-center justify-center p-6 rounded-xl bg-slate-950 border-2 border-dashed border-slate-800 hover:border-emerald-500/50 cursor-pointer transition">
                         <span class="text-2xl mb-1">📸</span>
                         <span class="text-xs font-sans text-emerald-400 font-bold">Select Screenshot Image</span>
@@ -276,11 +281,11 @@ export const openModal = (type) => {
             `;
             break;
         case 'law-money':
-            title.innerText = '💸 Financial Fraud Legal Playbook'; 
+            title.innerText = '💸 Financial Fraud Legal Playbook';
             body.innerHTML = '<p>Report the incident immediately under IT Act Section 66D to your bank and National Cyber Crime Helpline 1930.</p><p>Preserve bank UTR transaction numbers and conversation screenshots. Do NOT send money to unknown "recovery agents".</p>';
             break;
         case 'law-photo':
-            title.innerText = '📸 Blackmail & Image Misuse Legal Playbook'; 
+            title.innerText = '📸 Blackmail & Image Misuse Legal Playbook';
             body.innerHTML = '<p>File a complaint under IT Act Sections 66E and 67 at cybercrime.gov.in or your nearest cyber police station.</p><p>Do NOT give in to extortion demands or transfer money. Block the perpetrator and save evidence.</p>';
             break;
     }
@@ -300,13 +305,13 @@ export const closeModals = () => {
 export const switchDashboardView = (viewId) => {
     const views = document.querySelectorAll('.dashboard-view');
     const navLinks = document.querySelectorAll('.sidebar-nav-link, .mobile-nav-link, .mobile-dock-item');
-    
+
     let targetView = document.getElementById(`view-${viewId}`);
     if (!targetView) {
         targetView = document.getElementById('view-dashboard');
         viewId = 'dashboard';
     }
-    
+
     views.forEach(v => {
         v.classList.add('hidden');
         v.classList.remove('animate-fadeIn');
@@ -362,7 +367,7 @@ export const initCanvasAnimation = () => {
     const ctx = c.getContext('2d');
     let w = c.width = window.innerWidth;
     let h = c.height = window.innerHeight;
-    
+
     let nodes = Array.from({length: 45}, () => ({
         x: Math.random() * w,
         y: Math.random() * h,
@@ -370,13 +375,13 @@ export const initCanvasAnimation = () => {
         vy: (Math.random() - 0.5) * 0.35,
         radius: Math.random() * 1.5 + 1
     }));
-    
+
     let radarAngle = 0;
     let animId;
 
     const frame = () => {
         ctx.clearRect(0, 0, w, h);
-        
+
         // 1. Isometric Grid Overlay
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
         ctx.lineWidth = 1;
@@ -399,7 +404,7 @@ export const initCanvasAnimation = () => {
         const centerX = w / 2;
         const centerY = h / 2;
         const radarRadius = Math.max(w, h) * 0.6;
-        
+
         ctx.save();
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
@@ -450,7 +455,7 @@ export const initCanvasAnimation = () => {
         if (document.hidden) cancelAnimationFrame(animId);
         else animId = requestAnimationFrame(frame);
     });
-    
+
     window.addEventListener('resize', () => {
         w = c.width = window.innerWidth;
         h = c.height = window.innerHeight;
@@ -467,7 +472,7 @@ export const initShield3DEffect = () => {
         const { clientX, clientY } = e;
         const halfWidth = window.innerWidth / 2;
         const halfHeight = window.innerHeight / 2;
-        
+
         const rotX = ((clientY - halfHeight) / halfHeight) * -12;
         const rotY = ((clientX - halfWidth) / halfWidth) * 12;
 
@@ -480,7 +485,7 @@ export const initThreatGlobe = () => {
     if (!globeCanvas) return;
     const ctx = globeCanvas.getContext('2d');
     let angle = 0;
-    
+
     const markers = [
         { lat: 20.5937, lon: 78.9629, label: "CERT-In National Advisory" },
         { lat: 28.6139, lon: 77.2090, label: "Delhi Cyber Cell" },
@@ -547,16 +552,16 @@ export const showToast = (message, type = 'success') => {
         toast.id = 'cyberToast';
         document.body.appendChild(toast);
     }
-    const bgClass = type === 'error' 
-        ? 'bg-rose-950/95 text-rose-300 border-rose-800 shadow-rose-950/50' 
+    const bgClass = type === 'error'
+        ? 'bg-rose-950/95 text-rose-300 border-rose-800 shadow-rose-950/50'
         : 'bg-emerald-950/95 text-emerald-300 border-emerald-800 shadow-emerald-950/50';
     toast.className = `fixed bottom-6 right-6 z-[1000] px-4 py-3 rounded-xl font-sans text-xs shadow-2xl flex items-center gap-2 border backdrop-blur-md transition-all duration-300 ${bgClass}`;
     toast.innerHTML = `<span class="text-base">${type === 'error' ? '⚠️' : '⚡'}</span> <span>${message}</span>`;
-    
+
     setTimeout(() => {
         toast.classList.remove('translate-y-10', 'opacity-0');
     }, 10);
-    
+
     setTimeout(() => {
         toast.classList.add('translate-y-10', 'opacity-0');
     }, 3000);
@@ -566,12 +571,12 @@ export const initLiveMeters = () => {
     const indCounter = document.getElementById('indiaLossCounter');
     const glbCounter = document.getElementById('globalScamsCounter');
     if(!indCounter || !glbCounter) return;
-    
+
     const startOfDay = new Date().setHours(0,0,0,0);
-    
+
     const updateMeters = () => {
         const s = (Date.now() - startOfDay) / 1000;
-        indCounter.innerText = `₹${(142.80 + (s * 0.0008)).toFixed(2)} Crores`; 
+        indCounter.innerText = `₹${(142.80 + (s * 0.0008)).toFixed(2)} Crores`;
         glbCounter.innerText = (48219 + Math.floor(s * 0.05)).toLocaleString('en-IN');
         setTimeout(() => requestAnimationFrame(updateMeters), 1000);
     };
@@ -583,7 +588,7 @@ export const bootSequence = () => {
     const b = document.getElementById('bootBar');
     const screen = document.getElementById('bootScreen');
     if (!screen) return;
-    
+
     let isHidden = false;
 
     const hideScreen = () => {
@@ -592,8 +597,8 @@ export const bootSequence = () => {
         screen.style.opacity = '0';
         screen.style.visibility = 'hidden';
         screen.style.pointerEvents = 'none';
-        setTimeout(() => { 
-            screen.style.display = 'none'; 
+        setTimeout(() => {
+            screen.style.display = 'none';
         }, 500);
     };
 
@@ -636,16 +641,16 @@ export const bootSequence = () => {
         'Loading SHA-256 local cryptographic engine...',
         'Syncing CERT-In & National Threat Telemetry feeds...',
         'CyberPehra Command Shield Online.'
-    ]; 
-    
+    ];
+
     const nextLine = () => {
         if (isHidden) return;
         if (i < lines.length) {
             const d = document.createElement('div');
             d.className = 'text-emerald-400 font-sans text-xs py-0.5 tracking-wider';
-            d.textContent = '> ' + lines[i++]; 
-            l.appendChild(d); 
-            b.style.width = (i / lines.length * 100) + '%'; 
+            d.textContent = '> ' + lines[i++];
+            l.appendChild(d);
+            b.style.width = (i / lines.length * 100) + '%';
             setTimeout(nextLine, 350);
         } else {
             setTimeout(() => {

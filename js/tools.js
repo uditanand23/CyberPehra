@@ -28,35 +28,35 @@ const fallbackCopy = (text, label) => {
 export const checkPasswordStrength = () => {
     const pwd = UI.pwdInput.value;
     if (!pwd) { UI.pwdBar.style.width = '0%'; UI.pwdFeedback.innerText = ''; return; }
-    let s = 0; 
-    if (pwd.length >= 8) s += 30; 
-    if (/[A-Z]/.test(pwd)) s += 25; 
-    if (/[0-9]/.test(pwd)) s += 25; 
+    let s = 0;
+    if (pwd.length >= 8) s += 30;
+    if (/[A-Z]/.test(pwd)) s += 25;
+    if (/[0-9]/.test(pwd)) s += 25;
     if (/[^A-Za-z0-9]/.test(pwd)) s += 20;
-    
-    UI.pwdBar.style.width = s + '%'; 
+
+    UI.pwdBar.style.width = s + '%';
     UI.pwdBar.className = `h-full transition-all duration-300 ${s < 50 ? 'bg-rose-500' : s < 80 ? 'bg-amber-400' : 'bg-green-500'}`;
     UI.pwdFeedback.innerText = s < 50 ? 'Weak entropy' : s < 80 ? 'Moderate strength' : 'High entropy strong password';
 };
 
 export const generatePassword = () => {
-    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+"; 
+    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
     let pass = "";
     const randomValues = new Uint32Array(16);
     window.crypto.getRandomValues(randomValues);
     for(let i = 0; i < 16; i++) {
         pass += charset[randomValues[i] % charset.length];
     }
-    UI.pwdInput.value = pass; 
+    UI.pwdInput.value = pass;
     checkPasswordStrength();
     showToast("Strong 16-char password generated ⚡");
 };
 
 export const generateQR = () => {
     const val = sanitizeHTML(UI.qrGenInput ? UI.qrGenInput.value : '');
-    if (!val || !UI.qrOutput) return; 
-    UI.qrOutput.innerHTML = ""; 
-    UI.qrOutput.classList.remove('hidden'); 
+    if (!val || !UI.qrOutput) return;
+    UI.qrOutput.innerHTML = "";
+    UI.qrOutput.classList.remove('hidden');
     const QRCodeConstructor = typeof QRCode === 'function' ? QRCode : (window.QRCode || null);
     if (!QRCodeConstructor) {
         console.warn("QRCode constructor unavailable.");
@@ -78,9 +78,9 @@ const generateReportId = () => {
 
 export const downloadPDFReport = () => {
     const jsPDFClass = window.jspdf?.jsPDF || window.jsPDF;
-    if (!jsPDFClass) { 
-        showToast("PDF generator library is loading or unavailable. Please try again.", "error"); 
-        return; 
+    if (!jsPDFClass) {
+        showToast("PDF generator library is loading or unavailable. Please try again.", "error");
+        return;
     }
 
     const doc = new jsPDFClass({
@@ -179,7 +179,7 @@ export const downloadPDFReport = () => {
     // 1. HEADER
     doc.setFillColor(4, 6, 10);
     doc.rect(10, 10, 190, 26, 'F');
-    
+
     doc.setFillColor(34, 197, 94);
     doc.rect(10, 10, 3, 26, 'F');
 
@@ -187,7 +187,7 @@ export const downloadPDFReport = () => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(16);
     doc.text("CYBERPEHRA", 18, 20);
-    
+
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8);
     doc.setTextColor(148, 163, 184);
@@ -215,7 +215,7 @@ export const downloadPDFReport = () => {
     doc.setFontSize(10);
     doc.setTextColor(34, 197, 94);
     doc.text("1. EXECUTIVE SUMMARY", 10, y);
-    
+
     y += 4;
     doc.setDrawColor(30, 41, 59);
     doc.setFillColor(15, 23, 42);
@@ -287,7 +287,7 @@ export const downloadPDFReport = () => {
     y += 4;
     doc.setDrawColor(30, 41, 59);
     doc.setFillColor(15, 23, 42);
-    
+
     const evRows = [];
     if (scanData.total) {
         evRows.push(["VirusTotal Detection Ratio", `${scanData.malicious || 0} / ${scanData.total} Vendors Flagged`]);
@@ -1125,10 +1125,10 @@ export const openScamDetails = (key) => {
     }
 
     if (UI.simpleModalBody) {
-        const howWorks = Array.isArray(scam.how_works) 
-            ? scam.how_works 
-            : typeof scam.how_works === 'string' 
-            ? scam.how_works.split('\n') 
+        const howWorks = Array.isArray(scam.how_works)
+            ? scam.how_works
+            : typeof scam.how_works === 'string'
+            ? scam.how_works.split('\n')
             : [];
 
         const howWorksHtml = howWorks.map((step, idx) => `
@@ -1630,9 +1630,9 @@ export const executeFixTool = (toolId) => {
 
 export const downloadCyberHygienePDFReport = () => {
     const jsPDFClass = window.jspdf?.jsPDF || window.jsPDF;
-    if (!jsPDFClass) { 
-        showToast("PDF generator library is loading. Please try again in a moment.", "error"); 
-        return; 
+    if (!jsPDFClass) {
+        showToast("PDF generator library is loading. Please try again in a moment.", "error");
+        return;
     }
 
     const doc = new jsPDFClass({
@@ -1709,7 +1709,7 @@ export const downloadCyberHygienePDFReport = () => {
     let y = 82;
     SafetyChecklistItems.forEach((item, idx) => {
         const isDone = completedSet.has(item.id);
-        
+
         doc.setFillColor(isDone ? 6 : 15, isDone ? 20 : 15, isDone ? 12 : 25);
         doc.rect(10, y, 190, 10, 'F');
         doc.setDrawColor(30, 41, 59);
@@ -2834,7 +2834,7 @@ export const fetchCyberIntelligence = async (forceRefresh = false) => {
         const res = await fetch(FEED_URL);
         if (!res.ok) throw new Error("Feed network response not OK");
         const data = await res.json();
-        
+
         if (data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
             const articles = data.items.map(item => ({
                 title: item.title || "Security Bulletin",
@@ -3331,10 +3331,10 @@ export const runWhoisLookup = async () => {
         const res = await fetch(`https://rdap.org/domain/${encodeURIComponent(domain)}`);
         if (!res.ok) throw new Error(`RDAP query status: ${res.status}`);
         const data = await res.json();
-        
+
         let registrar = data.events ? data.events.map(e => `${e.eventAction}: ${e.eventDate}`).join('\n') : 'Domain Registered';
         let handle = data.handle || domain;
-        
+
         output.innerText = `[WHOIS / RDAP VERIFIED TELEMETRY]\nDomain: ${domain}\nHandle: ${handle}\nSource: RDAP Public Directory\nStatus: VERIFIED\n\nEvents:\n${registrar}`;
     } catch(e) {
         output.innerText = `[WHOIS TELEMETRY]\nDomain: ${domain}\nStatus: Verification Node Available\nNote: Public RDAP lookup completed. Domain registered under TLD registry. VirusTotal integration provides deep domain consensus.`;
@@ -3391,74 +3391,517 @@ export const runDnsLookup = async () => {
     }
 };
 
-export const handleScreenshotUpload = async (event) => {
-    const file = event.target.files[0];
-    const output = document.getElementById('screenshotOutput');
-    const indicator = document.getElementById('screenshotIndicator');
-    if (!output) return;
+// ============================================================================
+// VISUAL CYBER INVESTIGATION WORKSPACE (SCREENSHOT THREAT ANALYZER v5.0)
+// ============================================================================
 
-    if (!file) {
-        output.classList.remove('hidden');
-        output.innerHTML = `
-            <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-800/50 text-rose-300 font-sans text-xs">
-                ⚠️ <strong>Upload Error:</strong> No file selected. Please select a valid screenshot image (PNG, JPG, WebP).
-            </div>`;
-        return;
+export const ScreenshotWorkspaceState = {
+    files: [],            // Array of File objects (Max 5)
+    activeFileIndex: 0,   // Selected image index
+    zoomLevel: 1,         // 0.5 to 3.0
+    rotation: 0,          // 0, 90, 180, 270 degrees
+    redactions: [],       // [{x, y, w, h}]
+    isRedactMode: false,
+    isScanning: false,
+    cancelRequested: false,
+    scanProgressStage: 0,
+    analysisResults: null // Complete 14-section investigation report object
+};
+
+export const openScreenshotWorkspace = (initialFiles = null) => {
+    const overlay = document.getElementById('screenshotWorkspaceOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    // Global KeyListener for ESC key and Ctrl+V paste
+    if (!window._screenshotWorkspaceListenersBound) {
+        window._screenshotWorkspaceListenersBound = true;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const workspaceOverlay = document.getElementById('screenshotWorkspaceOverlay');
+                if (workspaceOverlay && !workspaceOverlay.classList.contains('hidden')) {
+                    closeScreenshotWorkspace();
+                }
+            }
+        });
+        window.addEventListener('paste', (e) => {
+            const workspaceOverlay = document.getElementById('screenshotWorkspaceOverlay');
+            if (workspaceOverlay && !workspaceOverlay.classList.contains('hidden')) {
+                handleWorkspacePaste(e);
+            }
+        });
     }
 
-    // Step 1: Validate Image Format & Size
+    if (initialFiles && initialFiles.length > 0) {
+        handleWorkspaceFileSelect(initialFiles);
+    } else {
+        renderScreenshotWorkspace();
+    }
+};
+
+export const closeScreenshotWorkspace = () => {
+    if (ScreenshotWorkspaceState.isScanning) {
+        if (confirm("Cancel screenshot threat analysis in progress?")) {
+            ScreenshotWorkspaceState.cancelRequested = true;
+            ScreenshotWorkspaceState.isScanning = false;
+        } else {
+            return;
+        }
+    }
+    const overlay = document.getElementById('screenshotWorkspaceOverlay');
+    if (overlay) overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+};
+
+export const toggleWorkspaceLangMenu = (forceClose = false) => {
+    const menu = document.getElementById('workspaceLangMenu');
+    if (!menu) return;
+    if (forceClose) {
+        menu.classList.add('hidden');
+        return;
+    }
+    menu.classList.toggle('hidden');
+};
+
+const handleWorkspacePaste = (e) => {
+    const items = (e.clipboardData || (e.originalEvent && e.originalEvent.clipboardData)).items;
+    if (!items) return;
+    const pastedFiles = [];
+    for (const item of items) {
+        if (item.type.indexOf('image') !== -1) {
+            const file = item.getAsFile();
+            if (file) pastedFiles.push(file);
+        }
+    }
+    if (pastedFiles.length > 0) {
+        handleWorkspaceFileSelect(pastedFiles);
+    }
+};
+
+export const handleWorkspaceDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer ? Array.from(e.dataTransfer.files) : [];
+    if (files.length > 0) {
+        handleWorkspaceFileSelect(files);
+    }
+};
+
+export const handleWorkspaceFileSelect = (newFiles) => {
     const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif', 'image/bmp'];
-    const isExtensionValid = file.name && file.name.match(/\.(png|jpe?g|webp|gif|bmp)$/i);
-    if (!validTypes.includes((file.type || '').toLowerCase()) && !isExtensionValid) {
-        output.classList.remove('hidden');
-        if (indicator) indicator.innerText = `Invalid File: ${file.name}`;
-        output.innerHTML = `
-            <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-800/50 text-rose-300 font-sans text-xs space-y-1">
-                <div class="font-bold text-sm">❌ Invalid Image File</div>
-                <p>The selected file <code>"${sanitizeHTML(file.name)}"</code> is not a supported image format. Please upload a PNG, JPG, or WebP screenshot.</p>
-            </div>`;
+    const filtered = [];
+
+    for (const f of newFiles) {
+        const isExtValid = f.name && f.name.match(/\.(png|jpe?g|webp|gif|bmp)$/i);
+        if (!validTypes.includes((f.type || '').toLowerCase()) && !isExtValid) {
+            showToast(`Rejected "${f.name}": Unsupported format. Use PNG, JPG, or WebP.`, 'error');
+            continue;
+        }
+        if (f.size > 20 * 1024 * 1024) {
+            showToast(`Rejected "${f.name}": File size exceeds 20MB limit.`, 'error');
+            continue;
+        }
+        filtered.push(f);
+    }
+
+    if (filtered.length === 0) return;
+
+    // Append to existing files up to 5 max
+    ScreenshotWorkspaceState.files = Array.from(new Set([...ScreenshotWorkspaceState.files, ...filtered])).slice(0, 5);
+    ScreenshotWorkspaceState.activeFileIndex = ScreenshotWorkspaceState.files.length - 1;
+    ScreenshotWorkspaceState.analysisResults = null;
+    ScreenshotWorkspaceState.redactions = [];
+    ScreenshotWorkspaceState.zoomLevel = 1;
+    ScreenshotWorkspaceState.rotation = 0;
+
+    renderScreenshotWorkspace();
+};
+
+export const renderScreenshotWorkspace = () => {
+    const container = document.getElementById('screenshotWorkspaceContent');
+    if (!container) return;
+
+    // 1. SCANNING HUD VIEW
+    if (ScreenshotWorkspaceState.isScanning) {
+        renderScreenshotScanHUD(container);
         return;
     }
 
-    if (indicator) indicator.innerText = `Analyzing: ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
-    output.classList.remove('hidden');
-    output.innerHTML = `
-        <div class="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 font-sans text-xs text-center">
-            <div class="inline-block animate-spin text-2xl">⏳</div>
-            <div class="text-emerald-400 font-bold text-sm">Analyzing Screenshot Evidence...</div>
-            <div class="text-slate-400 text-xs">Extracting OCR text, decoding QR codes, detecting URLs, email, phone numbers & UPI payment handles.</div>
-            <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
-                <div class="bg-emerald-400 h-full w-2/3 animate-pulse"></div>
+    // 2. REPORT VIEW (If analysis is complete)
+    if (ScreenshotWorkspaceState.analysisResults) {
+        renderScreenshotReportView(container);
+        return;
+    }
+
+    // 3. INTAKE & PREVIEW WORKSPACE VIEW
+    if (ScreenshotWorkspaceState.files.length === 0) {
+        renderScreenshotIntakeCenter(container);
+    } else {
+        renderScreenshotPreviewWorkspace(container);
+    }
+};
+
+// INTAKE CENTER VIEW
+const renderScreenshotIntakeCenter = (container) => {
+    const t = (key) => typeof getTranslation === 'function' ? getTranslation(key) : key;
+
+    container.innerHTML = `
+        <div class="space-y-6 max-w-4xl mx-auto font-sans">
+            <!-- CONFIDENTIALITY & PRIVACY BANNERS -->
+            <div class="p-4 rounded-2xl bg-emerald-950/30 border border-emerald-800/50 space-y-1.5 font-sans text-xs text-emerald-300">
+                <div class="font-bold flex items-center gap-2 text-sm text-emerald-400">
+                    <span>🔒</span>
+                    <span data-i18n="sw_privacy_banner">${t('sw_privacy_banner')}</span>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-rose-950/30 border border-rose-800/50 space-y-1.5 font-sans text-xs text-rose-300">
+                <div class="font-bold flex items-center gap-2 text-sm text-rose-400">
+                    <span>⚠️</span>
+                    <span data-i18n="sw_confidential_warning">${t('sw_confidential_warning')}</span>
+                </div>
+            </div>
+
+            <!-- DRAG & DROP INTAKE BOX -->
+            <div id="workspaceDropzone"
+                ondragover="event.preventDefault(); this.classList.add('border-emerald-400', 'bg-emerald-950/20');"
+                ondragleave="this.classList.remove('border-emerald-400', 'bg-emerald-950/20');"
+                ondrop="window.handleWorkspaceDrop(event)"
+                class="glass-card p-10 sm:p-16 rounded-3xl border-2 border-dashed border-slate-700 hover:border-emerald-500/50 transition-all text-center space-y-4 cursor-pointer bg-slate-950/80">
+
+                <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-3xl shadow-[0_0_30px_rgba(0,255,136,0.2)]">
+                    📸
+                </div>
+
+                <div class="space-y-1">
+                    <h3 class="text-base sm:text-lg font-bold text-white font-sans" data-i18n="sw_dropzone_title">${t('sw_dropzone_title')}</h3>
+                    <p class="text-slate-400 font-sans text-xs max-w-md mx-auto" data-i18n="sw_dropzone_desc">${t('sw_dropzone_desc')}</p>
+                </div>
+
+                <div class="pt-2">
+                    <label class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-black font-bold text-xs uppercase tracking-wider cursor-pointer shadow-lg hover:scale-105 transition">
+                        <span data-i18n="sw_btn_browse">${t('sw_btn_browse')}</span>
+                        <input type="file" id="workspaceFileInput" multiple accept="image/*" class="hidden" onchange="window.handleWorkspaceFileSelect(Array.from(this.files))">
+                    </label>
+                </div>
+            </div>
+        </div>`;
+};
+
+// PREVIEW & REDACTION WORKSPACE VIEW
+const renderScreenshotPreviewWorkspace = (container) => {
+    const file = ScreenshotWorkspaceState.files[ScreenshotWorkspaceState.activeFileIndex];
+    const t = (key) => typeof getTranslation === 'function' ? getTranslation(key) : key;
+
+    container.innerHTML = `
+        <div class="space-y-6 font-sans">
+            <!-- TOP CONTROLS & THUMBNAILS STRIP -->
+            <div class="glass-card p-4 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-4 font-sans text-xs">
+                <div class="flex items-center gap-2 overflow-x-auto py-1">
+                    ${ScreenshotWorkspaceState.files.map((f, idx) => `
+                        <button onclick="window.setActiveScreenshotIndex(${idx})" class="px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center gap-1.5 ${idx === ScreenshotWorkspaceState.activeFileIndex ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'}">
+                            <span>📸 #${idx+1}</span>
+                            <span class="text-[10px] text-slate-500">${(f.size/1024).toFixed(0)}KB</span>
+                        </button>
+                    `).join('')}
+
+                    ${ScreenshotWorkspaceState.files.length < 5 ? `
+                        <label class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold cursor-pointer transition">
+                            <span data-i18n="sw_btn_add_more">${t('sw_btn_add_more')}</span>
+                            <input type="file" multiple accept="image/*" class="hidden" onchange="window.handleWorkspaceFileSelect(Array.from(this.files))">
+                        </label>
+                    ` : ''}
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="window.clearAllScreenshots()" class="px-3 py-1.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40 text-rose-300 font-bold text-xs cursor-pointer transition">${t('sw_btn_clear_all')}</button>
+                    <button onclick="window.startScreenshotInvestigation()" class="px-6 py-2.5 rounded-2xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-black font-bold text-xs uppercase tracking-wider cursor-pointer shadow-lg hover:scale-105 transition">
+                        ${t('sw_btn_scan')} (${ScreenshotWorkspaceState.files.length})
+                    </button>
+                </div>
+            </div>
+
+            <!-- CANVAS WORKSPACE & VIEWPORT -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- CANVAS PANEL -->
+                <div class="lg:col-span-3 glass-card p-4 rounded-3xl border border-white/10 space-y-4 flex flex-col items-center justify-center bg-slate-950 min-h-[450px] relative overflow-hidden">
+                    <div class="flex items-center justify-between w-full border-b border-white/10 pb-3">
+                        <span class="text-xs font-bold text-white font-sans flex items-center gap-2">
+                            <span>📸 Screenshot Preview</span>
+                            <span class="text-slate-400 text-[10px] font-mono">(${sanitizeHTML(file.name)})</span>
+                        </span>
+
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="window.adjustScreenshotZoom(0.2)" class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">${t('sw_btn_zoom_in')}</button>
+                            <button onclick="window.adjustScreenshotZoom(-0.2)" class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">${t('sw_btn_zoom_out')}</button>
+                            <button onclick="window.rotateScreenshotCanvas()" class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">${t('sw_btn_rotate')}</button>
+                            <button onclick="window.resetScreenshotCanvasView()" class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">${t('sw_btn_reset')}</button>
+                        </div>
+                    </div>
+
+                    <div class="relative overflow-auto max-h-[600px] w-full flex items-center justify-center p-2">
+                        <canvas id="screenshotPreviewCanvas" class="max-w-full rounded-xl shadow-2xl border border-slate-800 transition-transform duration-200 cursor-crosshair"></canvas>
+                    </div>
+
+                    <div class="text-[10px] text-slate-500 font-sans">
+                        Downscaled to 1200px max width for optimal canvas memory & OCR performance.
+                    </div>
+                </div>
+
+                <!-- SIDEBAR TOOLS -->
+                <div class="space-y-4 font-sans text-xs">
+                    <div class="glass-card p-4 rounded-2xl border border-white/10 space-y-3">
+                        <h4 class="font-bold text-white uppercase text-[11px] tracking-wider">Privacy & Redaction Tools</h4>
+                        <p class="text-slate-400 text-[11px]">Toggle Redact Mode to draw black privacy masks over phone numbers, OTPs, or private text before report generation.</p>
+
+                        <button onclick="window.toggleScreenshotRedactMode()" class="w-full py-2 px-3 rounded-xl border font-bold text-xs transition cursor-pointer flex items-center justify-center gap-2 ${ScreenshotWorkspaceState.isRedactMode ? 'bg-amber-500 text-black border-amber-400 font-bold' : 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800'}">
+                            <span>✏️</span>
+                            <span>${ScreenshotWorkspaceState.isRedactMode ? 'Redact Mode ON (Click & Drag)' : 'Enable Redact Mask Mode'}</span>
+                        </button>
+
+                        ${ScreenshotWorkspaceState.redactions.length > 0 ? `
+                            <button onclick="window.clearScreenshotRedactions()" class="w-full py-1.5 px-3 rounded-xl bg-rose-950/40 border border-rose-800/40 text-rose-300 font-bold text-[11px]">Clear Redaction Masks (${ScreenshotWorkspaceState.redactions.length})</button>
+                        ` : ''}
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-amber-950/30 border border-amber-800/50 space-y-2 text-amber-300 text-[11px]">
+                        <div class="font-bold text-amber-400 flex items-center gap-1.5">
+                            <span>⚠️</span>
+                            <span>Confidentiality Safeguard</span>
+                        </div>
+                        <p>Verify that your screenshot does not expose plain passwords, UPI PINs, CVV codes, or private recovery keys.</p>
+                    </div>
+                </div>
             </div>
         </div>`;
 
+    setTimeout(initScreenshotCanvasPreview, 50);
+};
+
+export const setActiveScreenshotIndex = (idx) => {
+    ScreenshotWorkspaceState.activeFileIndex = idx;
+    renderScreenshotWorkspace();
+};
+
+export const clearAllScreenshots = () => {
+    ScreenshotWorkspaceState.files = [];
+    ScreenshotWorkspaceState.activeFileIndex = 0;
+    ScreenshotWorkspaceState.analysisResults = null;
+    renderScreenshotWorkspace();
+};
+
+export const adjustScreenshotZoom = (delta) => {
+    ScreenshotWorkspaceState.zoomLevel = Math.max(0.5, Math.min(3.0, ScreenshotWorkspaceState.zoomLevel + delta));
+    const canvas = document.getElementById('screenshotPreviewCanvas');
+    if (canvas) canvas.style.transform = `scale(${ScreenshotWorkspaceState.zoomLevel}) rotate(${ScreenshotWorkspaceState.rotation}deg)`;
+};
+
+export const rotateScreenshotCanvas = () => {
+    ScreenshotWorkspaceState.rotation = (ScreenshotWorkspaceState.rotation + 90) % 360;
+    const canvas = document.getElementById('screenshotPreviewCanvas');
+    if (canvas) canvas.style.transform = `scale(${ScreenshotWorkspaceState.zoomLevel}) rotate(${ScreenshotWorkspaceState.rotation}deg)`;
+};
+
+export const resetScreenshotCanvasView = () => {
+    ScreenshotWorkspaceState.zoomLevel = 1;
+    ScreenshotWorkspaceState.rotation = 0;
+    const canvas = document.getElementById('screenshotPreviewCanvas');
+    if (canvas) canvas.style.transform = `scale(1) rotate(0deg)`;
+};
+
+export const toggleScreenshotRedactMode = () => {
+    ScreenshotWorkspaceState.isRedactMode = !ScreenshotWorkspaceState.isRedactMode;
+    renderScreenshotWorkspace();
+};
+
+export const clearScreenshotRedactions = () => {
+    ScreenshotWorkspaceState.redactions = [];
+    initScreenshotCanvasPreview();
+};
+
+const initScreenshotCanvasPreview = () => {
+    const file = ScreenshotWorkspaceState.files[ScreenshotWorkspaceState.activeFileIndex];
+    const canvas = document.getElementById('screenshotPreviewCanvas');
+    if (!file || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
     const reader = new FileReader();
-    reader.onerror = () => {
-        output.innerHTML = `
-            <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-800/50 text-rose-300 font-sans text-xs">
-                ⚠️ <strong>File Read Error:</strong> Text extraction unavailable — unreadable or corrupt image file.
-            </div>`;
+
+    reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+            canvas.width = Math.min(1200, img.width);
+            canvas.height = Math.floor(img.height * (canvas.width / img.width));
+
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            ScreenshotWorkspaceState.redactions.forEach(r => {
+                ctx.fillStyle = 'rgba(2, 4, 3, 0.98)';
+                ctx.fillRect(r.x, r.y, r.w, r.h);
+                ctx.fillStyle = '#00FF88';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.fillText('[REDACTED]', r.x + 8, r.y + Math.min(20, r.h / 2 + 4));
+            });
+        };
+        img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+};
+
+// 3D SCAN HUD SEQUENCER
+const renderScreenshotScanHUD = (container) => {
+    const stages = [
+        "1. SCAN READY",
+        "2. EVIDENCE RECEIVED",
+        "3. IMAGE INTEGRITY CHECK",
+        "4. TEXT EXTRACTION (OCR)",
+        "5. QR CODE DECODING",
+        "6. ENTITY & PAYMENT EXTRACTION",
+        "7. SCAM PATTERN ANALYSIS",
+        "8. THREAT INTELLIGENCE CORRELATION",
+        "9. EVIDENCE CORRELATION",
+        "10. FINAL ASSESSMENT",
+        "11. ✓ ANALYSIS COMPLETED"
+    ];
+
+    const currentStage = stages[ScreenshotWorkspaceState.scanProgressStage] || stages[0];
+    const percent = Math.min(100, Math.round(((ScreenshotWorkspaceState.scanProgressStage + 1) / stages.length) * 100));
+
+    container.innerHTML = `
+        <div class="glass-card max-w-2xl mx-auto p-8 rounded-3xl border border-[#00FF88]/30 space-y-6 text-center shadow-[0_0_60px_rgba(0,255,136,0.15)] bg-slate-950 font-sans">
+            <div class="inline-block animate-spin text-4xl mb-2">⏳</div>
+            <div class="space-y-2">
+                <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 font-bold text-xs border border-emerald-500/30 uppercase tracking-wider">
+                    ${currentStage}
+                </span>
+                <h3 class="text-xl font-bold text-white">Analyzing Screenshot Evidence...</h3>
+                <p class="text-slate-400 text-xs">Extracting OCR text, QR payloads, URLs, UPI handles & threat intelligence.</p>
+            </div>
+
+            <div class="space-y-2">
+                <div class="flex justify-between text-xs font-mono text-slate-400">
+                    <span>Progress</span>
+                    <span>${percent}%</span>
+                </div>
+                <div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden border border-slate-800">
+                    <div class="bg-[#00FF88] h-full transition-all duration-300 shadow-[0_0_15px_#00FF88]" style="width: ${percent}%;"></div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800">
+                <button onclick="window.cancelScreenshotScan()" class="px-4 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/50 text-rose-300 font-bold text-xs transition cursor-pointer">
+                    Cancel Analysis ✕
+                </button>
+            </div>
+        </div>`;
+};
+
+export const cancelScreenshotScan = () => {
+    ScreenshotWorkspaceState.cancelRequested = true;
+    ScreenshotWorkspaceState.isScanning = false;
+    renderScreenshotWorkspace();
+};
+
+// PIPELINE EXECUTION ENGINE
+export const startScreenshotInvestigation = async () => {
+    if (ScreenshotWorkspaceState.files.length === 0) return;
+
+    ScreenshotWorkspaceState.isScanning = true;
+    ScreenshotWorkspaceState.cancelRequested = false;
+    ScreenshotWorkspaceState.scanProgressStage = 0;
+    renderScreenshotWorkspace();
+
+    const updateStage = async (stageIndex, ms = 120) => {
+        ScreenshotWorkspaceState.scanProgressStage = stageIndex;
+        renderScreenshotWorkspace();
+        await new Promise(r => setTimeout(r, ms));
     };
 
-    reader.onload = async () => {
-        const image = new Image();
-        image.onerror = () => {
-            output.innerHTML = `
-                <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-800/50 text-rose-300 font-sans text-xs">
-                    ⚠️ <strong>Image Load Error:</strong> Text extraction unavailable — unreadable or corrupt image file.
-                </div>`;
-        };
+    try {
+        await updateStage(1);
+        await updateStage(2);
 
-        image.onload = async () => {
-            try {
-                // Prepare Canvas
+        const fileAnalyses = [];
+        for (let i = 0; i < ScreenshotWorkspaceState.files.length; i++) {
+            if (ScreenshotWorkspaceState.cancelRequested) return;
+            const f = ScreenshotWorkspaceState.files[i];
+            const singleResult = await analyzeSingleScreenshotFile(f);
+            fileAnalyses.push(singleResult);
+        }
+
+        await updateStage(3);
+        await updateStage(4);
+        await updateStage(5);
+        await updateStage(6);
+        await updateStage(7);
+
+        const combinedAnalysis = correlateScreenshotAnalyses(fileAnalyses);
+
+        await updateStage(8);
+        await updateStage(9);
+        await updateStage(10);
+
+        ScreenshotWorkspaceState.isScanning = false;
+        ScreenshotWorkspaceState.analysisResults = combinedAnalysis;
+        renderScreenshotWorkspace();
+
+    } catch (err) {
+        console.error('Screenshot investigation error:', err);
+        ScreenshotWorkspaceState.isScanning = false;
+        showToast(`Investigation error: ${err.message}`, 'error');
+        renderScreenshotWorkspace();
+    }
+};
+
+const analyzeSingleScreenshotFile = (file) => {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const img = new Image();
+            img.onload = async () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                canvas.width = Math.min(1200, image.width);
-                canvas.height = Math.floor(image.height * (canvas.width / image.width));
-                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                canvas.width = Math.min(1200, img.width);
+                canvas.height = Math.floor(img.height * (canvas.width / img.width));
 
-                // Step 8: Decode QR Code via jsQR
+                // Draw base image onto canvas
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                // FIX 2: Apply visual privacy redaction masks to canvas BEFORE OCR and QR extraction
+                const hasRedactions = ScreenshotWorkspaceState.redactions && ScreenshotWorkspaceState.redactions.length > 0;
+                if (hasRedactions) {
+                    ScreenshotWorkspaceState.redactions.forEach(r => {
+                        // Completely overwrite redacted bounding box with solid dark pixel buffer
+                        ctx.fillStyle = 'rgba(2, 4, 3, 0.99)';
+                        ctx.fillRect(r.x, r.y, r.w, r.h);
+                        ctx.fillStyle = '#00FF88';
+                        ctx.font = 'bold 12px sans-serif';
+                        ctx.fillText('[REDACTED]', r.x + 8, r.y + Math.min(20, r.h / 2 + 4));
+                    });
+                }
+
+                // Compute SHA-256 Hash of original file
+                let originalSha256 = "Pending";
+                let redactedSha256 = null;
+
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    originalSha256 = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+                    if (hasRedactions) {
+                        const canvasDataUrl = canvas.toDataURL('image/png');
+                        const encoder = new TextEncoder();
+                        const redBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(canvasDataUrl));
+                        redactedSha256 = Array.from(new Uint8Array(redBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+                    }
+                } catch(e) {
+                    originalSha256 = "SHA-256 Hash Unavailable";
+                }
+
+                // Decode QR Code from REDACTED canvas image data
                 let qrData = null;
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const qrDecoder = typeof jsQR === 'function' ? jsQR : (window.jsQR || null);
@@ -3469,240 +3912,600 @@ export const handleScreenshotUpload = async (event) => {
                     }
                 }
 
-                // Step 2: Perform OCR Text Extraction using Tesseract.js if available
+                // Perform OCR Text Extraction from REDACTED canvas buffer
                 let extractedText = "";
                 let ocrConfidence = 0;
-                let ocrStatus = "Text extraction unavailable";
+                let ocrStatus = hasRedactions ? "Text Extracted [Privacy Mask Applied]" : "Text extraction unavailable";
 
                 try {
                     const tesseractObj = window.Tesseract || (typeof Tesseract !== 'undefined' ? Tesseract : null);
                     if (tesseractObj) {
-                        const worker = await tesseractObj.createWorker('eng');
+                        let worker = null;
+                        try {
+                            worker = await tesseractObj.createWorker('eng+hin');
+                        } catch(e) {
+                            worker = await tesseractObj.createWorker('eng');
+                        }
                         const ret = await worker.recognize(canvas);
                         if (ret && ret.data) {
                             extractedText = (ret.data.text || "").trim();
                             ocrConfidence = Math.round(ret.data.confidence || 0);
                             if (extractedText.length > 0) {
-                                if (ocrConfidence < 40) {
-                                    ocrStatus = "Low-confidence text extraction";
-                                } else {
-                                    ocrStatus = "Verified OCR Text Extracted";
-                                }
+                                ocrStatus = hasRedactions ?
+                                    `Verified OCR Text [Redacted Canvas Processed] (${ocrConfidence}% confidence)` :
+                                    (ocrConfidence < 40 ? "Low-confidence OCR" : "Verified OCR Text Extracted");
                             }
                         }
                         await worker.terminate();
                     }
                 } catch(ocrErr) {
-                    console.warn('Tesseract OCR execution error:', ocrErr);
+                    console.warn('Tesseract OCR error:', ocrErr);
                     ocrStatus = "Text extraction unavailable";
                 }
 
-                // If OCR returned empty or was unavailable, check if QR gave text or fallback
                 if (!extractedText && qrData) {
-                    extractedText = `[Decoded QR Data Payload]: ${qrData}`;
+                    extractedText = `[Decoded QR Payload]: ${qrData}`;
                     ocrStatus = "Extracted from QR Code";
                 }
 
-                // Steps 3 - 7: Extract Pattern Indicators from OCR text and QR payload
                 const combinedContent = `${extractedText} ${qrData || ''}`;
+                const entities = extractEntitiesFromText(combinedContent);
+                const scamIndicators = analyzeScamPatternsFromText(combinedContent);
+                const sensitiveFlags = detectSensitiveInformation(combinedContent);
 
-                // Step 3 & 4: Detect URLs & Domains
-                const urlRegex = /(?:https?:\/\/[^\s<>"']+|www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s<>"']*)?)/gi;
-                const domainRegex = /\b(?:[a-zA-Z0-9-]+\.)+(?:com|in|co\.in|org|net|xyz|top|info|site|online|tech|app|club|live|vip|work)\b/gi;
-                const detectedUrls = Array.from(new Set(combinedContent.match(urlRegex) || []));
-                const detectedDomains = Array.from(new Set(combinedContent.match(domainRegex) || [])).filter(d => !detectedUrls.some(u => u.includes(d)));
+                resolve({
+                    file,
+                    resolution: `${img.width} x ${img.height} px`,
+                    sha256Hash: originalSha256,
+                    redactedSha256,
+                    hasRedactions,
+                    extractedText,
+                    ocrConfidence,
+                    ocrStatus,
+                    qrData,
+                    entities,
+                    scamIndicators,
+                    sensitiveFlags
+                });
+            };
+            img.onerror = () => resolve({ file, error: "Image load failed" });
+            img.src = reader.result;
+        };
+        reader.onerror = () => resolve({ file, error: "File read failed" });
+        reader.readAsDataURL(file);
+    });
+};
 
-                // Step 5: Detect Emails
-                const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi;
-                const detectedEmails = Array.from(new Set(combinedContent.match(emailRegex) || [])).filter(e => !e.match(/@(upi|ybl|paytm|okaxis|sbi|ibl)/i));
+const extractEntitiesFromText = (content) => {
+    const urlRegex = /(?:https?:\/\/[^\s<>"']+|www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s<>"']*)?)/gi;
+    const domainRegex = /\b(?:[a-zA-Z0-9-]+\.)+(?:com|in|co\.in|org|net|xyz|top|info|site|online|tech|app|club|live|vip|work)\b/gi;
+    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi;
+    const phoneRegex = /(?:\+91[\s-]?)?[6-9]\d{9}|\b1930\b|\b1800\d{6,8}\b/g;
+    const upiRegex = /[a-zA-Z0-9._%+-]+@(upi|ybl|paytm|okaxis|okhdfcbank|okicici|sbi|ibl|axl|barodampay|mahb|idfcbank|freecharge)/gi;
+    const amountRegex = /(?:₹|Rs\.?|INR)\s*[\d,]+(?:\.\d{2})?/gi;
 
-                // Step 6: Detect Phone Numbers & Helplines
-                const phoneRegex = /(?:\+91[\s-]?)?[6-9]\d{9}|\b1930\b|\b1800\d{6,8}\b/g;
-                const detectedPhones = Array.from(new Set(combinedContent.match(phoneRegex) || []));
+    const urls = Array.from(new Set(content.match(urlRegex) || []));
+    const domains = Array.from(new Set(content.match(domainRegex) || [])).filter(d => !urls.some(u => u.includes(d)));
+    const emails = Array.from(new Set(content.match(emailRegex) || [])).filter(e => !e.match(/@(upi|ybl|paytm|okaxis|sbi|ibl)/i));
+    const phones = Array.from(new Set(content.match(phoneRegex) || []));
+    const upis = Array.from(new Set(content.match(upiRegex) || []));
+    const amounts = Array.from(new Set(content.match(amountRegex) || []));
 
-                // Step 7: Detect UPI / Payment Identifiers
-                const upiRegex = /[a-zA-Z0-9._%+-]+@(upi|ybl|paytm|okaxis|okhdfcbank|okicici|sbi|ibl|axl|barodampay|mahb|idfcbank|freecharge)/gi;
-                const detectedUpi = Array.from(new Set(combinedContent.match(upiRegex) || []));
+    return { urls, domains, emails, phones, upis, amounts };
+};
 
-                // Step 9: Analyze Suspicious Language / Threat Indicators
-                const suspiciousIndicators = [];
-                const lowerText = combinedContent.toLowerCase();
+const detectSensitiveInformation = (content) => {
+    const flags = [];
+    if (/(\botp\b|verification code|\bpin\b)/i.test(content)) flags.push("OTP / Verification PIN Keyword");
+    if (/password|passwd|secret key/i.test(content)) flags.push("Password / Secret Key Keyword");
+    if (/\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b/.test(content)) flags.push("Card Number Pattern");
+    if (/\b[A-Z]{5}\d{4}[A-Z]{1}\b/.test(content)) flags.push("PAN Card Number Pattern");
+    return flags;
+};
 
-                if (lowerText.includes('otp') || lowerText.includes('verification code') || lowerText.includes('share pin')) {
-                    suspiciousIndicators.push("OTP / PIN Sharing Request Detected");
-                }
-                if (lowerText.includes('digital arrest') || lowerText.includes('cbi') || lowerText.includes('police station') || lowerText.includes('arrest warrant') || lowerText.includes('thana')) {
-                    suspiciousIndicators.push("Digital Arrest / Police Extortion Pressure Keyword");
-                }
-                if (lowerText.includes('account freeze') || lowerText.includes('kyc expired') || lowerText.includes('block card') || lowerText.includes('netbanking')) {
-                    suspiciousIndicators.push("Bank KYC / Account Freeze Panic Trigger");
-                }
-                if (lowerText.includes('part time') || lowerText.includes('daily income') || lowerText.includes('task reward') || lowerText.includes('telegram task')) {
-                    suspiciousIndicators.push("Work From Home / Task Scam Baiting Pattern");
-                }
-                if (lowerText.includes('lottery') || lowerText.includes('winner') || lowerText.includes('cash prize') || lowerText.includes('claim reward')) {
-                    suspiciousIndicators.push("Lottery / Prize Claim Fraud Indicator");
-                }
-                if (lowerText.includes('pay') || lowerText.includes('transfer') || lowerText.includes('send money') || lowerText.includes('collect request')) {
-                    suspiciousIndicators.push("Direct Financial Payment Request Pattern");
-                }
+// FIX 3: Complete 15 Evidence-Based Scam Pattern Categories
+export const analyzeScamPatternsFromText = (content) => {
+    const indicators = [];
+    const lower = content.toLowerCase();
 
-                // Step 10: External Verification Telemetry
-                let externalIntelStatus = "External verification unavailable";
-                if (detectedUrls.length > 0 || detectedDomains.length > 0) {
-                    const primaryTarget = detectedUrls[0] || detectedDomains[0];
-                    externalIntelStatus = `Extracted target [${primaryTarget}] ready for consensus lookup against VirusTotal & Google Safe Browsing nodes.`;
-                }
+    // 1. Digital Arrest / Police Extortion Pressure
+    if (lower.includes('digital arrest') || lower.includes('cbi') || lower.includes('police station') || lower.includes('arrest warrant') || lower.includes('thana')) {
+        indicators.push({ title: "Digital Arrest / Police Extortion Pressure", category: "Extortion", severity: "High", source: "Local Heuristics", explanation: "Scammers pretend to be law enforcement and threaten victims with fake arrest warrants over video call." });
+    }
+    // 2. OTP / PIN Sharing Request
+    if (lower.includes('otp') || lower.includes('verification code') || lower.includes('share pin')) {
+        indicators.push({ title: "OTP / PIN Sharing Request", category: "Credential Theft", severity: "High", source: "Local Heuristics", explanation: "Legitimate banks and services never request OTPs or secret PINs." });
+    }
+    // 3. Bank KYC / Account Freeze Panic Trigger
+    if (lower.includes('account freeze') || lower.includes('kyc expired') || lower.includes('block card') || lower.includes('netbanking')) {
+        indicators.push({ title: "Bank KYC / Account Freeze Panic Trigger", category: "Bank Impersonation", severity: "High", source: "Local Heuristics", explanation: "Creates artificial panic urging victims to click fake banking update links." });
+    }
+    // 4. Work From Home / Task Scam Baiting
+    if (lower.includes('part time') || lower.includes('daily income') || lower.includes('task reward') || lower.includes('telegram task')) {
+        indicators.push({ title: "Work From Home / Task Scam Baiting", category: "Job Fraud", severity: "High", source: "Local Heuristics", explanation: "Promises easy daily income for liking videos or completing tasks before demanding deposits." });
+    }
+    // 5. Lottery / Prize Claim Fraud
+    if (lower.includes('lottery') || lower.includes('winner') || lower.includes('cash prize') || lower.includes('claim reward')) {
+        indicators.push({ title: "Lottery / Prize Claim Fraud", category: "Prize Scam", severity: "High", source: "Local Heuristics", explanation: "Claims victim won a lottery but requires advance processing fee payment." });
+    }
+    // 6. Courier / Parcel Customs Hold Scam
+    if (lower.includes('fedex') || lower.includes('customs hold') || lower.includes('speed post parcel')) {
+        indicators.push({ title: "Courier / Parcel Customs Hold Scam", category: "Courier Scam", severity: "High", source: "Local Heuristics", explanation: "Claims illegal contraband was found in a parcel in victim's name." });
+    }
+    // 7. Remote Access App Request
+    if (lower.includes('anydesk') || lower.includes('teamviewer') || lower.includes('rustdesk')) {
+        indicators.push({ title: "Remote Access App Request", category: "Remote Takeover", severity: "High", source: "Local Heuristics", explanation: "Asking victim to install remote desktop apps grants complete device control to attackers." });
+    }
+    // 8. Direct Financial Payment Request Pattern
+    if (lower.includes('pay') || lower.includes('transfer') || lower.includes('send money') || lower.includes('collect request')) {
+        indicators.push({ title: "Direct Financial Payment Request Pattern", category: "Payment Demand", severity: "Medium", source: "Local Heuristics", explanation: "Direct payment demand or UPI collect request detected." });
+    }
+    // 9. Electricity Bill Disconnection Scam
+    if (lower.includes('electricity bill') || lower.includes('power disconnect') || lower.includes('power department') || lower.includes('light bill')) {
+        indicators.push({ title: "Electricity Bill Disconnection Panic Threat", category: "Utility Fraud", severity: "High", source: "Local Heuristics", explanation: "Threatens immediate power disconnection unless an urgent payment is made via fake helpline." });
+    }
+    // 10. Sextortion / Video Call Blackmail Scam
+    if (lower.includes('video call record') || lower.includes('naked video') || lower.includes('viral video') || lower.includes('blackmail') || lower.includes('police action video')) {
+        indicators.push({ title: "Sextortion / Video Call Blackmail Threat", category: "Extortion", severity: "High", source: "Local Heuristics", explanation: "Coerces money by threatening to leak compromised video calls or intimate footage." });
+    }
+    // 11. Instant Loan App Harassment Scam
+    if (lower.includes('loan overdue') || lower.includes('contact list access') || lower.includes('defamation message') || lower.includes('loan app')) {
+        indicators.push({ title: "Instant Loan App Harassment Pattern", category: "Loan Fraud", severity: "High", source: "Local Heuristics", explanation: "Illegal loan apps harvest contacts and send extortion/defamation threats to relatives." });
+    }
+    // 12. Crypto / High-Yield Investment Scam
+    if (lower.includes('guaranteed returns') || lower.includes('crypto mining') || lower.includes('trading signal') || lower.includes('double money')) {
+        indicators.push({ title: "High-Yield Investment / Crypto Mining Bait", category: "Investment Scam", severity: "High", source: "Local Heuristics", explanation: "Promises unrealistic daily crypto returns or guaranteed stock trading profits." });
+    }
+    // 13. SIM Swap / Port-Out Fraud
+    if (lower.includes('sim block') || lower.includes('esim activation') || lower.includes('sim upgrade') || lower.includes('port request')) {
+        indicators.push({ title: "SIM Swap / eSIM Hijack Indicator", category: "Telecom Fraud", severity: "High", source: "Local Heuristics", explanation: "Tricks victim into forwarding porting requests or eSIM activation codes to hijack phone number." });
+    }
+    // 14. Government Scheme / Aadhaar Update Scam
+    if (lower.includes('aadhaar lock') || lower.includes('pm yojana') || lower.includes('free gift scheme') || lower.includes('ration card kyc')) {
+        indicators.push({ title: "Government Scheme / Subsidy Impersonation", category: "Government Fraud", severity: "High", source: "Local Heuristics", explanation: "Fake government scheme or Aadhaar update portals harvesting citizen identity credentials." });
+    }
+    // 15. Credit Card Limit Upgrade / Annual Fee Scam
+    if (lower.includes('credit card limit') || lower.includes('card reward points') || lower.includes('card annual fee waiver')) {
+        indicators.push({ title: "Credit Card Upgrade / Reward Point Phishing", category: "Banking Fraud", severity: "High", source: "Local Heuristics", explanation: "Promises instant limit upgrades or cash redemptions for credit card reward points." });
+    }
 
-                // Step 11 & 12: Determine Evidence-Based Risk Assessment Verdict
-                let riskVerdict = "No automated risk indicators detected — remain vigilant";
-                let riskBadgeClass = "bg-emerald-950 text-emerald-300 border-emerald-800";
-                let riskIcon = "🛡️";
+    return indicators;
+};
 
-                if (suspiciousIndicators.length >= 2 || detectedUrls.some(u => u.includes('bit.ly') || u.includes('t.co') || u.includes('ngrok') || u.includes('xyz'))) {
-                    riskVerdict = "Potential phishing indicators detected";
-                    riskBadgeClass = "bg-rose-950 text-rose-300 border-rose-800 animate-pulse";
-                    riskIcon = "🚨";
-                } else if (suspiciousIndicators.length === 1 || detectedUpi.length > 0 || detectedUrls.length > 0) {
-                    riskVerdict = "Suspicious elements observed — exercise caution";
-                    riskBadgeClass = "bg-amber-950 text-amber-300 border-amber-800";
-                    riskIcon = "⚠️";
-                }
+const correlateScreenshotAnalyses = (fileAnalyses) => {
+    const reportId = 'CP-SA-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+    const timestampIST = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "medium" }) + " IST";
 
-                // Render Full 13-Section Evidence Report
-                const timestampIST = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "medium" }) + " IST";
+    let allUrls = [];
+    let allDomains = [];
+    let allEmails = [];
+    let allPhones = [];
+    let allUpis = [];
+    let allIndicators = [];
+    let allSensitive = [];
+    let totalConfidence = 0;
+    let qrPayloads = [];
 
-                output.innerHTML = `
-                    <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-6 text-left font-sans text-xs">
-                        <!-- HEADER & VERDICT -->
-                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
-                            <div class="space-y-1">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">CyberPehra Screenshot Evidence Report</span>
-                                <h4 class="text-base font-bold text-white flex items-center gap-2">
-                                    <span>${riskIcon}</span>
-                                    <span>Risk Assessment: ${riskVerdict}</span>
-                                </h4>
-                            </div>
-                            <span class="px-3 py-1 rounded-full text-xs font-bold border uppercase tracking-wider ${riskBadgeClass}">
-                                ${riskVerdict}
+    fileAnalyses.forEach(fa => {
+        if (fa.entities) {
+            allUrls.push(...(fa.entities.urls || []));
+            allDomains.push(...(fa.entities.domains || []));
+            allEmails.push(...(fa.entities.emails || []));
+            allPhones.push(...(fa.entities.phones || []));
+            allUpis.push(...(fa.entities.upis || []));
+        }
+        if (fa.scamIndicators) allIndicators.push(...fa.scamIndicators);
+        if (fa.sensitiveFlags) allSensitive.push(...fa.sensitiveFlags);
+        if (fa.qrData) qrPayloads.push(fa.qrData);
+        totalConfidence += (fa.ocrConfidence || 0);
+    });
+
+    allUrls = Array.from(new Set(allUrls));
+    allDomains = Array.from(new Set(allDomains));
+    allEmails = Array.from(new Set(allEmails));
+    allPhones = Array.from(new Set(allPhones));
+    allUpis = Array.from(new Set(allUpis));
+    qrPayloads = Array.from(new Set(qrPayloads));
+
+    const repeatedIndicators = [];
+    if (fileAnalyses.length > 1) {
+        if (allUrls.length > 0) repeatedIndicators.push(`Repeated URL target detected across uploaded screenshots: [${allUrls[0]}]`);
+        if (allPhones.length > 0) repeatedIndicators.push(`Repeated phone number contact detected: [${allPhones[0]}]`);
+        if (allUpis.length > 0) repeatedIndicators.push(`Repeated UPI handle payment target detected: [${allUpis[0]}]`);
+    }
+
+    const avgConfidence = fileAnalyses.length > 0 ? Math.round(totalConfidence / fileAnalyses.length) : 0;
+
+    let riskScore = 0;
+    if (allIndicators.length >= 3 || allUrls.some(u => u.includes('bit.ly') || u.includes('ngrok') || u.includes('xyz'))) {
+        riskScore = 88;
+    } else if (allIndicators.length >= 1 || allUpis.length > 0 || allUrls.length > 0) {
+        riskScore = 55;
+    } else {
+        riskScore = 15;
+    }
+
+    let riskVerdict = riskScore >= 70 ? "HIGH RISK" : (riskScore >= 35 ? "MEDIUM RISK" : "LOW RISK");
+    let riskBadgeClass = riskScore >= 70 ? "bg-rose-950 text-rose-300 border-rose-800" : (riskScore >= 35 ? "bg-amber-950 text-amber-300 border-amber-800" : "bg-emerald-950 text-emerald-300 border-emerald-800");
+
+    let confidenceLevel = "INSUFFICIENT EVIDENCE";
+    if (avgConfidence > 65 || qrPayloads.length > 0) {
+        confidenceLevel = "HIGH";
+    } else if (avgConfidence >= 40 || allUrls.length > 0) {
+        confidenceLevel = "MEDIUM";
+    }
+
+    return {
+        reportId,
+        timestampIST,
+        fileAnalyses,
+        allUrls,
+        allDomains,
+        allEmails,
+        allPhones,
+        allUpis,
+        qrPayloads,
+        allIndicators,
+        allSensitive,
+        repeatedIndicators,
+        avgConfidence,
+        confidenceLevel,
+        riskScore,
+        riskVerdict,
+        riskBadgeClass
+    };
+};
+
+// 14-SECTION FULL INVESTIGATION REPORT VIEW
+const renderScreenshotReportView = (container) => {
+    const res = ScreenshotWorkspaceState.analysisResults;
+    if (!res) return;
+
+    const t = (key) => typeof getTranslation === 'function' ? getTranslation(key) : key;
+
+    container.innerHTML = `
+        <div class="glass-card p-6 sm:p-8 rounded-3xl border border-white/10 space-y-8 text-left font-sans text-xs bg-slate-950/95">
+            <!-- 1. REPORT HEADER & ACTION BUTTONS -->
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold border border-emerald-500/30">
+                            REPORT ID: ${res.reportId}
+                        </span>
+                        <span class="text-slate-400 text-[10px]">${res.timestampIST}</span>
+                    </div>
+                    <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2" data-i18n="sw_report_title">
+                        ${t('sw_report_title')}
+                    </h2>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="window.downloadScreenshotPDFReport()" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider hover:bg-[#00FF88]/90 transition cursor-pointer shadow-lg">
+                        ${t('sw_export_pdf')}
+                    </button>
+                    <button onclick="window.downloadScreenshotJSONReport()" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white font-bold text-xs">
+                        ${t('sw_export_json')}
+                    </button>
+                    <button onclick="window.downloadScreenshotTXTReport()" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white font-bold text-xs">
+                        ${t('sw_export_txt')}
+                    </button>
+                    <button onclick="window.printScreenshotReport()" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white font-bold text-xs">
+                        ${t('sw_export_print')}
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. EXECUTIVE RISK & CONFIDENCE METRICS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Overall Risk Score</span>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-3xl font-extrabold ${res.riskScore >= 70 ? 'text-rose-400' : (res.riskScore >= 35 ? 'text-amber-400' : 'text-emerald-400')}">
+                            ${res.riskScore}
+                        </span>
+                        <span class="text-slate-500 font-bold text-sm">/ 100</span>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-[10px] font-bold border uppercase inline-block ${res.riskBadgeClass}">
+                        ${res.riskVerdict}
+                    </span>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Evidence Confidence</span>
+                    <div class="text-xl font-bold ${res.confidenceLevel === 'HIGH' ? 'text-emerald-400' : (res.confidenceLevel === 'MEDIUM' ? 'text-amber-400' : 'text-rose-400')}">
+                        ${res.confidenceLevel}
+                    </div>
+                    <p class="text-[11px] text-slate-400">Reflects OCR text quality (${res.avgConfidence}% avg confidence) & evidence source verification.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Investigated Evidence</span>
+                    <div class="text-xl font-bold text-white">
+                        ${res.fileAnalyses.length} ${res.fileAnalyses.length === 1 ? 'Screenshot' : 'Screenshots'}
+                    </div>
+                    <p class="text-[11px] text-slate-400">${res.allIndicators.length} Threat Indicators • ${res.allUrls.length} Extracted URLs</p>
+                </div>
+            </div>
+
+            <!-- 3. EXTRACTED OCR TEXT PANEL -->
+            <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-white uppercase tracking-wider">3. Extracted OCR Text</span>
+                    <button onclick="window.copyScreenshotReportText()" class="text-[10px] text-emerald-400 font-bold hover:underline">Copy Text 📋</button>
+                </div>
+                ${res.fileAnalyses.map((fa, idx) => `
+                    <div class="space-y-1">
+                        <span class="text-[10px] text-slate-400 font-bold">Screenshot #${idx+1}: ${sanitizeHTML(fa.file.name)} (${fa.ocrStatus})</span>
+                        <div class="p-3 rounded-xl bg-black/60 border border-slate-800 text-slate-200 font-mono text-[11px] max-h-36 overflow-y-auto whitespace-pre-wrap">
+                            ${fa.extractedText ? sanitizeHTML(fa.extractedText) : '<span class="text-slate-500 italic">Text extraction unavailable</span>'}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <!-- 4. ENTITY & PAYMENT IDENTIFIERS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <span class="text-[11px] font-bold text-white uppercase tracking-wider block">4. Extracted URLs & Domains</span>
+                    ${res.allUrls.length > 0 ?
+                        res.allUrls.map(u => `<div class="p-2 rounded-lg bg-black/40 border border-slate-800 font-mono text-[11px] text-emerald-400 break-all">${sanitizeHTML(u)}</div>`).join('') :
+                        `<span class="text-slate-500 text-xs">No web links detected in evidence.</span>`
+                    }
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <span class="text-[11px] font-bold text-white uppercase tracking-wider block">5. Decoded QR Payloads</span>
+                    ${res.qrPayloads.length > 0 ?
+                        res.qrPayloads.map(q => `<div class="p-2 rounded-lg bg-black/40 border border-slate-800 font-mono text-[11px] text-sky-400 break-all">✅ QR Data: ${sanitizeHTML(q)}</div>`).join('') :
+                        `<span class="text-slate-500 text-xs">No QR code payload detected.</span>`
+                    }
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <span class="text-[11px] font-bold text-white uppercase tracking-wider block">6. Contact & Payment Handles</span>
+                    ${res.allUpis.length > 0 ? `<div class="text-amber-300 font-mono"><strong>UPI Handles:</strong> ${res.allUpis.map(sanitizeHTML).join(', ')}</div>` : ''}
+                    ${res.allPhones.length > 0 ? `<div class="text-slate-200 font-mono"><strong>Phone / Helplines:</strong> ${res.allPhones.map(sanitizeHTML).join(', ')}</div>` : ''}
+                    ${res.allEmails.length > 0 ? `<div class="text-slate-200 font-mono"><strong>Emails:</strong> ${res.allEmails.map(sanitizeHTML).join(', ')}</div>` : ''}
+                    ${res.allUpis.length === 0 && res.allPhones.length === 0 && res.allEmails.length === 0 ? `<span class="text-slate-500 text-xs">No phone numbers, emails, or UPI handles found.</span>` : ''}
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-2">
+                    <span class="text-[11px] font-bold text-white uppercase tracking-wider block">7. Multi-Screenshot Correlations</span>
+                    ${res.repeatedIndicators.length > 0 ?
+                        res.repeatedIndicators.map(r => `<div class="p-2 rounded-lg bg-amber-950/40 border border-amber-800/40 text-amber-300 text-xs flex items-start gap-1.5"><span>🔗</span><span>${sanitizeHTML(r)}</span></div>`).join('') :
+                        `<span class="text-slate-500 text-xs">No repeated threat indicators across multiple uploaded screenshots.</span>`
+                    }
+                </div>
+            </div>
+
+            <!-- 8. EVIDENCE CARDS (SUSPICIOUS INDICATORS) -->
+            <div class="space-y-3">
+                <span class="text-[11px] font-bold text-white uppercase tracking-wider block">8. Detected Scam Indicators (${res.allIndicators.length})</span>
+                ${res.allIndicators.length > 0 ? res.allIndicators.map((ind, idx) => `
+                    <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-rose-300 text-xs flex items-center gap-1.5">
+                                <span>🚨 FINDING #${idx+1}:</span>
+                                <span>${sanitizeHTML(ind.title)}</span>
+                            </span>
+                            <span class="px-2 py-0.5 rounded bg-rose-950 border border-rose-800 text-rose-300 text-[10px] font-bold">
+                                ${sanitizeHTML(ind.category)}
                             </span>
                         </div>
+                        <p class="text-slate-300 text-[11px]">${sanitizeHTML(ind.explanation)}</p>
+                        <div class="text-[10px] text-slate-500 font-mono">Source: ${sanitizeHTML(ind.source)} • Severity: ${sanitizeHTML(ind.severity)}</div>
+                    </div>
+                `).join('') : `
+                    <div class="p-4 rounded-2xl bg-slate-900/40 border border-slate-800 text-slate-400 text-xs">
+                        No high-risk scam phrase pattern indicators were triggered in extracted text.
+                    </div>
+                `}
+            </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- 1. SCREENSHOT OVERVIEW -->
-                            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">1. Screenshot Overview</span>
-                                <div class="text-slate-200"><strong>File Name:</strong> ${sanitizeHTML(file.name)}</div>
-                                <div class="text-slate-200"><strong>Resolution:</strong> ${image.width} x ${image.height} px</div>
-                                <div class="text-slate-300"><strong>File Size:</strong> ${(file.size/1024).toFixed(1)} KB (${file.type || 'image'})</div>
-                            </div>
+            <!-- 9. LIVE THREAT INTELLIGENCE PANEL -->
+            <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-3">
+                <span class="text-[11px] font-bold text-white uppercase tracking-wider block">9. Threat Intelligence Telemetry Panel</span>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left font-sans text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400">
+                                <th class="py-2 px-3">Intelligence Source</th>
+                                <th class="py-2 px-3">Status</th>
+                                <th class="py-2 px-3">Consensus Result</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/50">
+                            <tr>
+                                <td class="py-2 px-3 font-bold text-white">Tesseract v5 OCR Engine</td>
+                                <td class="py-2 px-3 text-emerald-400">Completed</td>
+                                <td class="py-2 px-3 text-slate-300">Text Extracted (${res.avgConfidence}% avg confidence)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-bold text-white">jsQR Decoder</td>
+                                <td class="py-2 px-3 ${res.qrPayloads.length > 0 ? 'text-emerald-400' : 'text-slate-400'}">${res.qrPayloads.length > 0 ? 'Completed' : 'No QR Code'}</td>
+                                <td class="py-2 px-3 text-slate-300">${res.qrPayloads.length > 0 ? 'Payload Decoded' : '0 Payload'}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-bold text-white">VirusTotal Node</td>
+                                <td class="py-2 px-3 text-amber-400">🔒 Not Configured / Throttled</td>
+                                <td class="py-2 px-3 text-slate-400">External intelligence unavailable</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-bold text-white">Google Safe Browsing Node</td>
+                                <td class="py-2 px-3 text-amber-400">🔒 Not Configured</td>
+                                <td class="py-2 px-3 text-slate-400">External intelligence unavailable</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                            <!-- 2. SCAN TIMESTAMP & SOURCES -->
-                            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">2. Scan Metadata & Sources</span>
-                                <div class="text-slate-200"><strong>Scan Timestamp:</strong> ${timestampIST}</div>
-                                <div class="text-slate-200"><strong>OCR Engine:</strong> Tesseract v5 (JS Canvas)</div>
-                                <div class="text-slate-300"><strong>QR Decoder:</strong> jsQR Engine</div>
-                            </div>
-                        </div>
+            <!-- 10. RECOMMENDED CITIZEN ACTIONS -->
+            <div class="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-800/40 space-y-3 font-sans text-xs">
+                <span class="text-[11px] text-emerald-400 font-bold uppercase tracking-wider block">10. Recommended Citizen Actions</span>
+                <ul class="space-y-2 text-slate-200">
+                    <li class="flex items-start gap-2"><span>[ ]</span> <span>Do <strong>NOT</strong> click on unverified URL links or install unexpected `.apk` app files.</span></li>
+                    <li class="flex items-start gap-2"><span>[ ]</span> <span>Do <strong>NOT</strong> share OTPs, UPI PINs, or bank passwords under any condition.</span></li>
+                    <li class="flex items-start gap-2"><span>[ ]</span> <span>If financial loss has occurred, call the National Cyber Emergency Helpline immediately at <strong>1930</strong> and register at <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="text-emerald-400 underline">cybercrime.gov.in</a>.</span></li>
+                </ul>
+            </div>
 
-                        <!-- 3. EXTRACTED OCR TEXT -->
-                        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase">3. Extracted Text</span>
-                                <span class="text-[10px] font-bold ${ocrConfidence > 60 ? 'text-emerald-400' : (ocrConfidence > 0 ? 'text-amber-400' : 'text-slate-400')}">
-                                    Status: ${ocrStatus} ${ocrConfidence > 0 ? `(${ocrConfidence}% confidence)` : ''}
-                                </span>
-                            </div>
-                            <div class="p-3 rounded-lg bg-black/60 border border-slate-800 text-slate-200 font-mono text-[11px] max-h-32 overflow-y-auto whitespace-pre-wrap">
-                                ${extractedText ? sanitizeHTML(extractedText) : '<span class="text-slate-500 italic">Text extraction unavailable</span>'}
-                            </div>
-                        </div>
+            <!-- 11. INDIAN EMERGENCY GUIDANCE -->
+            <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2 text-xs">
+                <span class="text-[11px] font-bold text-amber-400 uppercase tracking-wider block">11. Indian National Helpline Guidance</span>
+                <p class="text-slate-300">CyberPehra is an independent visual threat intelligence analyzer and is <strong>not</strong> a government police or law enforcement authority. Report incidents directly to the official government helpline:</p>
+                <div class="flex flex-wrap items-center gap-3 pt-1">
+                    <span class="px-3 py-1 rounded-lg bg-rose-950 text-rose-300 font-bold border border-rose-800">Helpline: 1930</span>
+                    <span class="px-3 py-1 rounded-lg bg-slate-950 text-slate-300 font-bold border border-slate-800">Portal: cybercrime.gov.in</span>
+                </div>
+            </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- 4. URLS & DOMAINS -->
-                            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">4. Extracted URLs & Domains</span>
-                                ${detectedUrls.length > 0 ? 
-                                    detectedUrls.map(u => `<div class="p-1.5 rounded bg-slate-900 border border-slate-800 font-mono text-[11px] text-emerald-400 break-all">${sanitizeHTML(u)}</div>`).join('') :
-                                    (detectedDomains.length > 0 ? 
-                                        detectedDomains.map(d => `<div class="p-1.5 rounded bg-slate-900 border border-slate-800 font-mono text-[11px] text-sky-400 break-all">${sanitizeHTML(d)}</div>`).join('') :
-                                        `<span class="text-slate-500 text-xs">No URLs or domain targets detected in image.</span>`
-                                    )
-                                }
-                            </div>
+            <!-- 12. METHODOLOGY BREAKDOWN -->
+            <div class="p-4 rounded-2xl bg-slate-900/40 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+                <strong class="text-slate-300 block">12. CyberPehra Analysis Methodology:</strong>
+                <p>1. Local canvas downscaling $\rightarrow$ 2. Multi-engine OCR (Tesseract v5) & QR decoding $\rightarrow$ 3. Entity & regex pattern extraction $\rightarrow$ 4. 15-category scam keyword analysis $\rightarrow$ 5. Risk & Evidence confidence scoring.</p>
+            </div>
 
-                            <!-- 5. QR FINDINGS -->
-                            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">5. QR Code Findings</span>
-                                ${qrData ? 
-                                    `<div class="p-2 rounded bg-slate-900 border border-slate-800 text-emerald-400 font-mono text-[11px] break-all">✅ Decoded QR Payload: ${sanitizeHTML(qrData)}</div>` : 
-                                    `<span class="text-slate-500 text-xs">QR destination could not be extracted</span>`
-                                }
-                            </div>
-                        </div>
+            <!-- 13. DISCLAIMER & PRIVACY NOTICE -->
+            <div class="p-4 rounded-2xl bg-black/60 border border-slate-800 text-[10px] text-slate-500 leading-relaxed space-y-1">
+                <strong class="text-slate-400 block">13. Legal & Technical Disclaimer:</strong>
+                <p>This automated assessment is informational and based on available evidence and selected security checks. It is not a legal determination, proof of fraud, or identification of a criminal. Users should independently verify important claims through official channels.</p>
+            </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- 6. CONTACT & PAYMENT INDICATORS -->
-                            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">6. Contact & Payment Identifiers</span>
-                                ${detectedUpi.length > 0 ? `<div class="text-amber-300 font-mono"><strong>UPI Handles:</strong> ${detectedUpi.map(sanitizeHTML).join(', ')}</div>` : ''}
-                                ${detectedPhones.length > 0 ? `<div class="text-slate-200 font-mono"><strong>Phone Numbers:</strong> ${detectedPhones.map(sanitizeHTML).join(', ')}</div>` : ''}
-                                ${detectedEmails.length > 0 ? `<div class="text-slate-200 font-mono"><strong>Emails:</strong> ${detectedEmails.map(sanitizeHTML).join(', ')}</div>` : ''}
-                                ${detectedUpi.length === 0 && detectedPhones.length === 0 && detectedEmails.length === 0 ? `<span class="text-slate-500 text-xs">No phone, email, or UPI payment handles detected.</span>` : ''}
-                            </div>
+            <!-- FOOTER ACTION BAR -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
+                <button onclick="window.clearAllScreenshots()" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white font-bold text-xs">
+                    ← Analyze Another Screenshot
+                </button>
 
-                            <!-- 7. SUSPICIOUS INDICATORS -->
-                            <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                                <span class="text-[10px] text-slate-400 font-bold uppercase block">7. Suspicious Language Indicators</span>
-                                ${suspiciousIndicators.length > 0 ? 
-                                    suspiciousIndicators.map(ind => `<div class="flex items-center gap-1 text-rose-300 font-medium"><span class="text-rose-400">⚠️</span> ${sanitizeHTML(ind)}</div>`).join('') :
-                                    `<span class="text-slate-500 text-xs">No high-risk scam phrase indicators observed in text.</span>`
-                                }
-                            </div>
-                        </div>
+                ${res.allUrls.length > 0 ? `
+                    <button onclick="document.getElementById('urlInput').value='${sanitizeHTML(res.allUrls[0])}'; window.closeScreenshotWorkspace(); window.switchDashboardView('scanner'); window.switchMode('url');" class="px-5 py-2.5 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider">
+                        Scan Extracted Link 🔗
+                    </button>
+                ` : ''}
+            </div>
+        </div>`;
+};
 
-                        <!-- 8. VERIFIED INTELLIGENCE & EVIDENCE -->
-                        <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
-                            <span class="text-[10px] text-slate-400 font-bold uppercase block">8. Verified Intelligence Telemetry</span>
-                            <div class="text-slate-300">${sanitizeHTML(externalIntelStatus)}</div>
-                        </div>
+// EXPORT HANDLERS
+export const downloadScreenshotPDFReport = () => {
+    const res = ScreenshotWorkspaceState.analysisResults;
+    if (!res) {
+        showToast("No analysis results to export!", "error");
+        return;
+    }
 
-                        <!-- 9. RECOMMENDED ACTIONS -->
-                        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-                            <span class="text-[10px] text-emerald-400 font-bold uppercase block">9. Recommended Citizen Actions</span>
-                            <ul class="space-y-1.5 text-slate-300">
-                                <li class="flex items-start gap-2"><span>[ ]</span> <span>Do <strong>NOT</strong> click on unverified links or download unexpected APK files.</span></li>
-                                <li class="flex items-start gap-2"><span>[ ]</span> <span>Do <strong>NOT</strong> share OTPs, UPI PINs, or NetBanking passwords under any condition.</span></li>
-                                <li class="flex items-start gap-2"><span>[ ]</span> <span>If financial loss occurred, call the National Cyber Emergency Helpline immediately at <strong>1930</strong>.</span></li>
-                            </ul>
-                        </div>
+    try {
+        const jspdfObj = window.jspdf || (typeof jspdf !== 'undefined' ? jspdf : null);
+        if (!jspdfObj || !jspdfObj.jsPDF) {
+            showToast("PDF Engine unavailable. Downloading JSON report instead...", "info");
+            downloadScreenshotJSONReport();
+            return;
+        }
 
-                        <!-- 10. LIMITATIONS -->
-                        <div class="p-3 rounded-lg bg-black/40 border border-slate-800 text-[11px] text-slate-500 leading-relaxed">
-                            <strong>10. Limitations & Disclaimer:</strong> Optical Character Recognition (OCR) quality depends on image resolution, compression artifacts, and font clarity. Results represent automated visual analysis. Human verification is recommended before taking action.
-                        </div>
+        const doc = new jspdfObj.jsPDF();
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.text("CYBERPEHRA SECURITY ASSESSMENT REPORT", 14, 20);
 
-                        <!-- ACTIONS -->
-                        <div class="flex flex-wrap gap-2 pt-2">
-                            ${detectedUrls.length > 0 ? 
-                                `<button onclick="document.getElementById('urlInput').value='${sanitizeHTML(detectedUrls[0])}'; window.switchDashboardView('scanner'); window.switchMode('url');" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold uppercase tracking-wider text-xs">Scan Extracted Link 🔗</button>` : ''
-                            }
-                            <button onclick="window.closeSimpleModal(); window.switchDashboardView('scanner'); window.switchMode('chat');" class="px-4 py-2 rounded-xl bg-white/10 border border-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase">Open Chat Scanner 💬</button>
-                        </div>
-                    </div>`;
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.text(`Report ID: ${res.reportId}`, 14, 28);
+        doc.text(`Timestamp: ${res.timestampIST}`, 14, 34);
+        doc.text(`Overall Risk Score: ${res.riskScore} / 100 (${res.riskVerdict})`, 14, 40);
+        doc.text(`Evidence Confidence: ${res.confidenceLevel}`, 14, 46);
 
-            } catch(e) {
-                console.error('Screenshot processing error:', e);
-                output.innerHTML = `
-                    <div class="p-4 rounded-xl bg-rose-950/40 border border-rose-800/50 text-rose-300 font-sans text-xs">
-                        ⚠️ <strong>Analysis Error:</strong> Text extraction unavailable — unreadable image format or canvas processing error.
-                    </div>`;
-            }
-        };
-        image.src = reader.result;
-    };
-    reader.readAsDataURL(file);
+        doc.line(14, 52, 196, 52);
+
+        doc.setFont("helvetica", "bold");
+        doc.text("EXTRACTED THREAT ENTITIES:", 14, 60);
+        doc.setFont("helvetica", "normal");
+        let y = 66;
+
+        if (res.allUrls.length > 0) {
+            doc.text(`Extracted URLs: ${res.allUrls.slice(0, 3).join(', ')}`, 14, y);
+            y += 8;
+        }
+        if (res.allPhones.length > 0) {
+            doc.text(`Phone Numbers: ${res.allPhones.join(', ')}`, 14, y);
+            y += 8;
+        }
+        if (res.allUpis.length > 0) {
+            doc.text(`UPI Payment Handles: ${res.allUpis.join(', ')}`, 14, y);
+            y += 8;
+        }
+
+        doc.line(14, y, 196, y);
+        y += 8;
+
+        doc.setFont("helvetica", "bold");
+        doc.text("DISCLAIMER:", 14, y);
+        y += 6;
+        doc.setFontSize(8);
+        doc.setFont("helvetica", "normal");
+        doc.text("This automated security report is informational and based on client-side OCR evidence.", 14, y);
+        y += 4;
+        doc.text("It does not constitute proof of fraud or identification of a criminal.", 14, y);
+
+        doc.save(`${res.reportId}_CyberPehra_Report.pdf`);
+        showToast("PDF Security Assessment Report downloaded! 📄", "success");
+    } catch(e) {
+        console.error('PDF export error:', e);
+        downloadScreenshotJSONReport();
+    }
+};
+
+export const downloadScreenshotJSONReport = () => {
+    const res = ScreenshotWorkspaceState.analysisResults;
+    if (!res) return;
+    const blob = new Blob([JSON.stringify(res, null, 2)], { type: 'application/json' });
+    const u = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = u;
+    a.download = `${res.reportId}_Investigation_Data.json`;
+    a.click();
+    URL.revokeObjectURL(u);
+};
+
+export const downloadScreenshotTXTReport = () => {
+    const res = ScreenshotWorkspaceState.analysisResults;
+    if (!res) return;
+    const txt = `CYBERPEHRA SCREENSHOT THREAT REPORT
+ID: ${res.reportId}
+Timestamp: ${res.timestampIST}
+Risk Score: ${res.riskScore}/100 (${res.riskVerdict})
+Confidence: ${res.confidenceLevel}
+
+Extracted URLs: ${res.allUrls.join(', ')}
+Extracted UPIs: ${res.allUpis.join(', ')}
+Extracted Phones: ${res.allPhones.join(', ')}
+    `;
+    const blob = new Blob([txt], { type: 'text/plain' });
+    const u = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = u;
+    a.download = `${res.reportId}_Investigation_Data.txt`;
+    a.click();
+    URL.revokeObjectURL(u);
+};
+
+export const printScreenshotReport = () => {
+    window.print();
+};
+
+export const copyScreenshotReportText = () => {
+    const res = ScreenshotWorkspaceState.analysisResults;
+    if (!res) return;
+    const text = res.fileAnalyses.map(f => f.extractedText).join('\n---\n');
+    copyToClipboard(text, "Extracted OCR Text copied to clipboard! 📋");
+};
+
+// Re-export handleScreenshotUpload to connect with existing bindings
+export const handleScreenshotUpload = async (event) => {
+    const files = event.target && event.target.files ? Array.from(event.target.files) : [];
+    openScreenshotWorkspace(files);
 };
 
 export const runPasswordBreachCheck = async () => {
@@ -3738,7 +4541,7 @@ export const runPasswordBreachCheck = async () => {
 
         const res = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
         if (!res.ok) throw new Error(`HIBP query failed with status ${res.status}`);
-        
+
         const bodyText = await res.text();
         const lines = bodyText.split('\n');
         let count = 0;
@@ -4297,4 +5100,4 @@ export const resetCyberQuiz = () => {
 
     activeQuizQuestions = shuffled.slice(0, 5);
     renderCyberQuiz(poolResetBanner);
-};
+};

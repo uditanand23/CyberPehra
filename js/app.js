@@ -2,7 +2,7 @@ import { State } from './state.js';
 import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, initLiveMeters, bootSequence, showToast, switchDashboardView, initShield3DEffect, initThreatGlobe } from './ui.js';
 import { applyLanguage, toggleLangMenu } from './language.js';
 import { switchScanMode, handleFileHash, executeScan, handleQrUpload } from './scanner.js';
-import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails, runWhoisLookup, runIpLookup, runDnsLookup, handleScreenshotUpload, runPasswordBreachCheck, renderCyberCellDetails, renderCyberQuiz, submitQuizAnswer, nextQuizQuestion, resetCyberQuiz } from './tools.js';
+import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails, runWhoisLookup, runIpLookup, runDnsLookup, handleScreenshotUpload, runPasswordBreachCheck, renderCyberCellDetails, renderCyberQuiz, submitQuizAnswer, nextQuizQuestion, resetCyberQuiz, openScreenshotWorkspace, closeScreenshotWorkspace, toggleWorkspaceLangMenu, renderScreenshotWorkspace, handleWorkspaceDrop, handleWorkspaceFileSelect, setActiveScreenshotIndex, clearAllScreenshots, adjustScreenshotZoom, rotateScreenshotCanvas, resetScreenshotCanvasView, toggleScreenshotRedactMode, clearScreenshotRedactions, cancelScreenshotScan, startScreenshotInvestigation, downloadScreenshotPDFReport, downloadScreenshotJSONReport, downloadScreenshotTXTReport, printScreenshotReport, copyScreenshotReportText } from './tools.js';
 import { initServiceWorker } from './utils.js';
 import { initIndiaThreatMap, openStateReportModal, closeStateReportModal } from './indiaMap.js';
 
@@ -27,6 +27,26 @@ window.runWhoisLookup = runWhoisLookup;
 window.runIpLookup = runIpLookup;
 window.runDnsLookup = runDnsLookup;
 window.handleScreenshotUpload = handleScreenshotUpload;
+window.openScreenshotWorkspace = openScreenshotWorkspace;
+window.closeScreenshotWorkspace = closeScreenshotWorkspace;
+window.toggleWorkspaceLangMenu = toggleWorkspaceLangMenu;
+window.renderScreenshotWorkspace = renderScreenshotWorkspace;
+window.handleWorkspaceDrop = handleWorkspaceDrop;
+window.handleWorkspaceFileSelect = handleWorkspaceFileSelect;
+window.setActiveScreenshotIndex = setActiveScreenshotIndex;
+window.clearAllScreenshots = clearAllScreenshots;
+window.adjustScreenshotZoom = adjustScreenshotZoom;
+window.rotateScreenshotCanvas = rotateScreenshotCanvas;
+window.resetScreenshotCanvasView = resetScreenshotCanvasView;
+window.toggleScreenshotRedactMode = toggleScreenshotRedactMode;
+window.clearScreenshotRedactions = clearScreenshotRedactions;
+window.cancelScreenshotScan = cancelScreenshotScan;
+window.startScreenshotInvestigation = startScreenshotInvestigation;
+window.downloadScreenshotPDFReport = downloadScreenshotPDFReport;
+window.downloadScreenshotJSONReport = downloadScreenshotJSONReport;
+window.downloadScreenshotTXTReport = downloadScreenshotTXTReport;
+window.printScreenshotReport = printScreenshotReport;
+window.copyScreenshotReportText = copyScreenshotReportText;
 window.runPasswordBreachCheck = runPasswordBreachCheck;
 window.renderCyberCellDetails = renderCyberCellDetails;
 window.renderCyberQuiz = renderCyberQuiz;
@@ -118,7 +138,7 @@ const bindEvents = () => {
     if (UI.brandLogoBtn) UI.brandLogoBtn.addEventListener('click', () => switchDashboardView('dashboard'));
     if (UI.langMenuToggle) UI.langMenuToggle.addEventListener('click', (e) => { e.stopPropagation(); toggleLangMenu(); });
     document.addEventListener('click', () => toggleLangMenu(true));
-    
+
     // Language selection
     UI.langBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -126,9 +146,9 @@ const bindEvents = () => {
             toggleLangMenu(true);
         });
     });
-    
+
     if(UI.mobileMenuBtn) UI.mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    
+
     // Scanner Tab switching
     UI.tabBtns.forEach((btn, index) => {
         btn.addEventListener('click', () => {
@@ -149,26 +169,26 @@ const bindEvents = () => {
     if(UI.fileHashInput) UI.fileHashInput.addEventListener('change', handleFileHash);
     if(UI.qrInput) UI.qrInput.addEventListener('change', handleQrUpload);
     if(UI.submitBtn) UI.submitBtn.addEventListener('click', executeScan);
-    
+
     // Tools
     if(UI.pwdInput) UI.pwdInput.addEventListener('input', checkPasswordStrength);
     if(UI.genPwdBtn) UI.genPwdBtn.addEventListener('click', generatePassword);
     if(UI.genQrBtn) UI.genQrBtn.addEventListener('click', generateQR);
     if(UI.startQuizBtn) UI.startQuizBtn.addEventListener('click', () => openModal('quiz'));
-    
+
     // Action Kit & Legal
     if(UI.evidenceBtn) UI.evidenceBtn.addEventListener('click', () => openModal('evidence'));
     if(UI.dontsBtn) UI.dontsBtn.addEventListener('click', () => openModal('donts'));
     if(document.getElementById('pdfDownloadBtn')) document.getElementById('pdfDownloadBtn').addEventListener('click', downloadPDFReport);
     UI.lawCaseBtns.forEach(btn => btn.addEventListener('click', (e) => openModal(`law-${e.target.dataset.case || 'money'}`)));
-    
+
     // Modals
     const openContact = () => openModal('contact');
     if(document.getElementById('floatingContactBtn')) document.getElementById('floatingContactBtn').addEventListener('click', openContact);
     if(document.getElementById('footerContactBtn')) document.getElementById('footerContactBtn').addEventListener('click', openContact);
     if(document.getElementById('footerPrivacyBtn')) document.getElementById('footerPrivacyBtn').addEventListener('click', () => openModal('privacy'));
     if(document.getElementById('footerTermsBtn')) document.getElementById('footerTermsBtn').addEventListener('click', () => openModal('terms'));
-    
+
     document.querySelectorAll('#closeSimpleModalBtnTop, #closeSimpleModalBtnBottom, #closeContactModalBtn').forEach(btn => {
         if(btn) btn.addEventListener('click', closeModals);
     });

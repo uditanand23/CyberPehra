@@ -289,7 +289,30 @@ export const Translations = {
         report_not_proves: "What This Result Does NOT Prove",
         report_methodology: "Scan Methodology",
         report_limitations: "Technical Limitations",
-        report_privacy: "Privacy & Zero Retention Guarantee"
+        report_privacy: "Privacy & Zero Retention Guarantee",
+
+        sw_title: "Visual Cyber Investigation Workspace",
+        sw_subtitle: "CyberPehra Threat Analysis Command Center",
+        sw_back: "Back",
+        sw_close: "Close Analysis",
+        sw_privacy_banner: "🔒 Privacy Guarantee: Screenshots are processed 100% locally inside browser memory. Zero image data is ever uploaded or saved on any server.",
+        sw_confidential_warning: "⚠️ Confidentiality Notice: Do NOT upload screenshots containing plain passwords, OTPs, UPI PINs, banking credentials, or recovery codes.",
+        sw_dropzone_title: "Drag & Drop Screenshot Images Here",
+        sw_dropzone_desc: "Or click to browse, paste with Ctrl+V, or take mobile photo. Supports PNG, JPG, WebP (Max 20MB, up to 5 images).",
+        sw_btn_browse: "Select Screenshots 📸",
+        sw_btn_scan: "Start Cyber Investigation 🚀",
+        sw_btn_add_more: "+ Add More",
+        sw_btn_clear_all: "Clear All",
+        sw_btn_zoom_in: "Zoom In +",
+        sw_btn_zoom_out: "Zoom Out -",
+        sw_btn_rotate: "Rotate 90°",
+        sw_btn_reset: "Reset View",
+        sw_btn_redact: "Create Privacy Mask ✏️",
+        sw_report_title: "CYBERPEHRA SCREENSHOT THREAT REPORT",
+        sw_export_pdf: "Download PDF Report 📄",
+        sw_export_json: "Export JSON 💾",
+        sw_export_txt: "Export Text 📝",
+        sw_export_print: "Print Report 🖨️"
     },
     hi: {
         // Boot screen
@@ -578,7 +601,101 @@ export const Translations = {
         report_not_proves: "यह परिणाम क्या साबित नहीं करता",
         report_methodology: "स्कैन कार्यप्रणाली",
         report_limitations: "तकनीकी सीमाएं",
-        report_privacy: "गोपनीयता एवं शून्य संचयन नीति"
+        report_privacy: "गोपनीयता एवं शून्य संचयन नीति",
+
+        sw_title: "विजुअल साइबर इन्वेस्टिगेशन वर्कस्पेस",
+        sw_subtitle: "साइबरपहरा थ्रेट एनालिसिस कमान सेंटर",
+        sw_back: "वापस",
+        sw_close: "विश्लेषण बंद करें",
+        sw_privacy_banner: "🔒 गोपनीयता गारंटी: स्क्रीनशॉट 100% स्थानीय रूप से ब्राउज़र मेमोरी में प्रोसेस किए जाते हैं। कोई इमेज डेटा कभी सर्वर पर अपलोड नहीं किया जाता।",
+        sw_confidential_warning: "⚠️ गोपनीयता चेतावनी: ऐसे स्क्रीनशॉट अपलोड न करें जिनमें पासवर्ड, ओटीपी, यूपीआई पिन, बैंकिंग क्रेडेंशियल या रिकवरी कोड हों।",
+        sw_dropzone_title: "स्क्रीनशॉट इमेज यहाँ खींचें और छोड़ें",
+        sw_dropzone_desc: "या क्लिक करके ब्राउज़ करें, Ctrl+V से पेस्ट करें। PNG, JPG, WebP समर्थित (अधिकतम 20MB, 5 इमेज तक)।",
+        sw_btn_browse: "स्क्रीनशॉट चुनें 📸",
+        sw_btn_scan: "साइबर जांच शुरू करें 🚀",
+        sw_btn_add_more: "+ और इमेज जोड़ें",
+        sw_btn_clear_all: "सब साफ़ करें",
+        sw_btn_zoom_in: "ज़ूम इन +",
+        sw_btn_zoom_out: "ज़ूम आउट -",
+        sw_btn_rotate: "90° घुमाएं",
+        sw_btn_reset: "रीसेट व्यू",
+        sw_btn_redact: "गोपनीयता मास्क बनाएं ✏️",
+        sw_report_title: "साइबरपहरा स्क्रीनशॉट थ्रेट रिपोर्ट",
+        sw_export_pdf: "पीडीएफ रिपोर्ट डाउनलोड करें 📄",
+        sw_export_json: "जेसन निर्यात 💾",
+        sw_export_txt: "टेक्स्ट निर्यात 📝",
+        sw_export_print: "प्रिंट रिपोर्ट 🖨️"
+    },
+    hinglish: {
+        boot_sys: "CYBERPEHRA SECURITY CORE",
+        boot_title: "CYBERPEHRA SOC v5.0",
+        boot_desc: "Analyze Risk Before It Compromises You",
+        boot_skip: "Skip Karein ↗",
+
+        nav_status: "SYSTEM ONLINE",
+        nav_version: "Neural SOC v5.0",
+        nav_emergency_sos: "🚨 Emergency SOS",
+        nav_cat_main: "MAIN MENU",
+        nav_cat_scanners: "SCANNERS",
+        nav_cat_intel: "THREAT INTEL",
+        nav_cat_tools: "SECURITY TOOLS",
+        nav_cat_response: "EMERGENCY HELP",
+
+        nav_home: "🏠 Home",
+        nav_scam_scanner: "🛡️ Scam Scanner",
+        nav_screenshot: "📸 Screenshot Analyzer",
+        nav_website_scanner: "🌐 Website Scanner",
+        nav_india_map: "🗺️ India Threat Map",
+        nav_intel_link: "🌍 Cyber Intelligence",
+        nav_scam_encyclopedia: "📖 Scam Encyclopedia",
+        nav_safety_dashboard: "📊 Safety Dashboard",
+        nav_pwd_checker: "🔑 Password Checker",
+        nav_whois: "🌐 WHOIS Lookup",
+        nav_ip_lookup: "🌍 IP Lookup",
+        nav_dns_lookup: "🔍 DNS Lookup",
+        nav_qr_gen: "▦ CyberPehra Tools",
+        nav_quiz: "🎮 Cyber Security Quiz",
+        nav_emergency_ctr: "🚨 Emergency Center",
+        nav_report_scam: "📢 Report Scam",
+
+        nav_dashboard: "Dashboard",
+        nav_scanner: "Threat Scanner",
+        nav_emergency: "🚨 Emergency Center",
+        nav_safety: "🛡️ Safety Dashboard",
+        nav_map: "🇮🇳 India Cyber Map",
+        nav_tools: "🛠️ Tools Center",
+
+        report_indicators: "Detected Security Indicators",
+        report_attribution: "Evidence Attribution",
+        report_rec_action: "Recommended Action",
+        report_means: "What This Result Means",
+        report_not_proves: "What This Result Does NOT Prove",
+        report_methodology: "Scan Methodology",
+        report_limitations: "Technical Limitations",
+        report_privacy: "Privacy & Zero Retention Guarantee",
+
+        sw_title: "Visual Cyber Investigation Workspace",
+        sw_subtitle: "CyberPehra Threat Analysis Command Center",
+        sw_back: "Wapas",
+        sw_close: "Analysis Close Karein",
+        sw_privacy_banner: "🔒 Privacy Guarantee: Screenshots 100% locally browser memory mein process hote hain. Koi image data kisi server par upload nahi hota.",
+        sw_confidential_warning: "⚠️ Confidentiality Notice: Aise screenshots upload na karein jinme passwords, OTP, UPI PIN ya banking credentials hon.",
+        sw_dropzone_title: "Drag & Drop Screenshot Images Yahan Karein",
+        sw_dropzone_desc: "Ya click karke select karein, Ctrl+V se paste karein. PNG, JPG, WebP supported (Max 20MB, up to 5 images).",
+        sw_btn_browse: "Screenshots Select Karein 📸",
+        sw_btn_scan: "Start Cyber Investigation 🚀",
+        sw_btn_add_more: "+ Aur Images Jodein",
+        sw_btn_clear_all: "Sab Clear Karein",
+        sw_btn_zoom_in: "Zoom In +",
+        sw_btn_zoom_out: "Zoom Out -",
+        sw_btn_rotate: "Rotate 90°",
+        sw_btn_reset: "Reset View",
+        sw_btn_redact: "Privacy Mask Banayein ✏️",
+        sw_report_title: "CYBERPEHRA SCREENSHOT THREAT REPORT",
+        sw_export_pdf: "PDF Report Download Karein 📄",
+        sw_export_json: "Export JSON 💾",
+        sw_export_txt: "Export Text 📝",
+        sw_export_print: "Report Print Karein 🖨️"
     }
 };
 
@@ -589,44 +706,49 @@ export const getTranslation = (key) => {
 };
 
 export const applyLanguage = (lang) => {
-    const safeLang = ['en', 'hi'].includes(lang) ? lang : 'en';
-    State.currentLang = safeLang; 
+    const safeLang = ['en', 'hi', 'hinglish'].includes(lang) ? lang : 'en';
+    State.currentLang = safeLang;
     localStorage.setItem('cyberpehra_lang', safeLang);
-    
+
     document.documentElement.lang = safeLang === 'hi' ? 'hi' : 'en';
 
-    document.querySelectorAll('[data-i18n]').forEach(el => { 
-        const key = el.getAttribute('data-i18n'); 
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
         const translation = (Translations[safeLang] && Translations[safeLang][key] !== undefined)
             ? Translations[safeLang][key]
             : Translations['en'][key];
-        if (translation !== undefined) { 
-            el.innerHTML = translation; 
-        } 
-    });
-    
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { 
-        const key = el.getAttribute('data-i18n-placeholder'); 
-        const translation = (Translations[safeLang] && Translations[safeLang][key] !== undefined)
-            ? Translations[safeLang][key]
-            : Translations['en'][key];
-        if (translation !== undefined) { 
-            el.placeholder = translation; 
-        } 
-    });
-    
-    UI.langBtns.forEach(btn => {
-        if (btn.dataset.lang === safeLang) { 
-            btn.classList.add('text-emerald-400', 'font-bold'); 
-            btn.classList.remove('text-slate-300'); 
-            if (UI.currentLangLabel) {
-                UI.currentLangLabel.innerText = safeLang === 'hi' ? 'HI' : 'EN'; 
-            }
-        } else { 
-            btn.classList.remove('text-emerald-400', 'font-bold'); 
-            btn.classList.add('text-slate-300'); 
+        if (translation !== undefined) {
+            el.innerHTML = translation;
         }
     });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const translation = (Translations[safeLang] && Translations[safeLang][key] !== undefined)
+            ? Translations[safeLang][key]
+            : Translations['en'][key];
+        if (translation !== undefined) {
+            el.placeholder = translation;
+        }
+    });
+
+    UI.langBtns.forEach(btn => {
+        if (btn.dataset.lang === safeLang) {
+            btn.classList.add('text-emerald-400', 'font-bold');
+            btn.classList.remove('text-slate-300');
+            if (UI.currentLangLabel) {
+                UI.currentLangLabel.innerText = safeLang === 'hi' ? 'HI' : (safeLang === 'hinglish' ? 'HINGLISH' : 'EN');
+            }
+        } else {
+            btn.classList.remove('text-emerald-400', 'font-bold');
+            btn.classList.add('text-slate-300');
+        }
+    });
+
+    const wsLangLabel = document.getElementById('workspaceCurrentLangLabel');
+    if (wsLangLabel) {
+        wsLangLabel.innerText = safeLang === 'hi' ? 'हिन्दी' : (safeLang === 'hinglish' ? 'Hinglish' : 'English');
+    }
 
     // Re-render dynamic modules to reflect language selection
     try {
@@ -634,6 +756,7 @@ export const applyLanguage = (lang) => {
         if (typeof window.renderSafetyDashboard === 'function') window.renderSafetyDashboard();
         if (typeof window.renderEmergencyCenter === 'function') window.renderEmergencyCenter();
         if (typeof window.renderCyberCellDetails === 'function') window.renderCyberCellDetails(State.selectedState || 'DL');
+        if (typeof window.renderScreenshotWorkspace === 'function') window.renderScreenshotWorkspace();
     } catch(e) {
         console.warn('Language dynamic re-render notice:', e);
     }
