@@ -1233,6 +1233,8 @@ export const executeRelatedScamTool = (toolType) => {
             if (window.switchMode) window.switchMode(toolType);
         });
         document.getElementById('scanner')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (toolType === 'browser') {
+        if (window.openBrowserCheckModal) window.openBrowserCheckModal();
     } else if (toolType === 'law') {
         document.getElementById('law-hub')?.scrollIntoView({ behavior: 'smooth' });
     }
@@ -1623,6 +1625,9 @@ export const resetSafetyDashboard = () => {
 export const executeFixTool = (toolId) => {
     if (toolId === 'tool_pwd') {
         if (window.switchDashboardView) window.switchDashboardView('tools');
+    } else if (toolId === 'tool_browser') {
+        if (window.openModal) window.openModal('browser');
+        if (window.runBrowserSecurityCheck) window.runBrowserSecurityCheck();
     } else if (toolId === 'tool_scams') {
         if (window.switchDashboardView) window.switchDashboardView('scams');
     }
@@ -1768,25 +1773,8 @@ export const updateSafetyChecklist = () => {
     renderSafetyDashboard();
 };
 
-// SPRINT 10 FEATURE: EMERGENCY RESPONSE CENTER (PRODUCTION GRADE - ALL 20+ INDIAN CYBER FRAUD TYPES)
+// SPRINT 10 FEATURE: EMERGENCY RESPONSE CENTER (PRODUCTION GRADE)
 export const EmergencyPlaybooks = {
-    upi: {
-        title: "UPI Fraud / Collect Request Incident Action Plan",
-        steps: [
-            "1. Disconnect UPI App immediately and do NOT enter any 4 or 6-digit UPI PIN.",
-            "2. Call National Cyber Crime Helpline 1930 immediately to freeze funds in destination bank accounts.",
-            "3. Report transaction fraud directly inside your UPI App (GPay/PhonePe/Paytm/BHIM > History > Report Fraud).",
-            "4. Contact your bank's 24x7 helpline to temporarily freeze NetBanking & UPI services.",
-            "5. Lodge a formal complaint on cybercrime.gov.in with UTR transaction IDs."
-        ],
-        evidence: [
-            "UPI Transaction ID / UTR Number",
-            "Screenshot of Collect Request / Payment approval screen",
-            "Bank SMS notification showing amount debited",
-            "Fraudster's VPA / UPI ID handle (e.g. buyer@okaxis)",
-            "Fraudster's Phone Number & Chat Screenshots"
-        ]
-    },
     upi_fraud: {
         title: "UPI Fraud / Collect Request Incident Action Plan",
         steps: [
@@ -1804,672 +1792,151 @@ export const EmergencyPlaybooks = {
             "Fraudster's Phone Number & Chat Screenshots"
         ]
     },
-    digital_arrest: {
-        title: "Digital Arrest / Fake CBI & ED Video Call Extortion Action Plan",
+    banking_fraud: {
+        title: "Banking Phishing / NetBanking Compromise Action Plan",
         steps: [
-            "1. Disconnect video call immediately—'Digital Arrest' has ZERO legal validity in India.",
-            "2. Do NOT transfer money to 'RBI verification accounts' or court clearance accounts.",
-            "3. Call National Cyber Crime Helpline 1930 instantly if funds were transferred under duress.",
-            "4. Report extortion call details to local police station or dial 112.",
-            "5. Submit detailed complaint on cybercrime.gov.in with caller screenshots & numbers."
+            "1. Call your bank's 24x7 customer care number immediately to block NetBanking, Debit/Credit Cards, and UPI VPA.",
+            "2. Call 1930 Helpline within the Golden Window (first 2-24 hours) to initiate bank account hold.",
+            "3. Change NetBanking passwords and email passwords from a separate, secure device.",
+            "4. Check for unauthorized beneficiary additions or scheduled transfer requests in NetBanking.",
+            "5. File a formal cyber complaint on cybercrime.gov.in and visit your local bank branch."
+        ],
+        evidence: [
+            "Phishing SMS / Link URL address",
+            "NetBanking transaction reference numbers",
+            "Bank Account Statement highlighting unauthorized debits",
+            "SMS alerts received from Bank",
+            "Device IP address & timestamp"
+        ]
+    },
+    qr_scam: {
+        title: "Malicious QR Code Money Drain Action Plan",
+        steps: [
+            "1. Do NOT scan any additional QR codes or enter UPI PINs to receive payments.",
+            "2. Call 1930 Helpline immediately with transaction reference details.",
+            "3. Report the fraudulent merchant/VPA in your payment app.",
+            "4. Call bank helpline to freeze UPI debit access.",
+            "5. Save QR code image & chat log to upload on cybercrime.gov.in."
+        ],
+        evidence: [
+            "Original QR code image / photo of fake merchant QR sticker",
+            "Decoded QR Link or UPI VPA",
+            "Transaction debit SMS with UTR number",
+            "WhatsApp / OLX Chat export with seller/buyer details"
+        ]
+    },
+    whatsapp_scam: {
+        title: "WhatsApp Account Hijack / Friend Emergency Action Plan",
+        steps: [
+            "1. Re-verify your WhatsApp number immediately by requesting a new SMS registration code.",
+            "2. Enable Two-Step Verification (6-digit PIN) in WhatsApp Settings > Account.",
+            "3. Call friends/relatives on phone calls to inform them your account was compromised and NOT to send money.",
+            "4. If money was sent by anyone, call 1930 Helpline immediately to initiate account freeze.",
+            "5. Report hijacked account to support@whatsapp.com."
+        ],
+        evidence: [
+            "SMS verification code messages received",
+            "WhatsApp chat screenshots asking for money",
+            "UPI VPA or Bank Account details where money was transferred",
+            "Phone numbers of affected contacts"
+        ]
+    },
+    telegram_scam: {
+        title: "Telegram Part-Time Task / Prepaid Investment Action Plan",
+        steps: [
+            "1. Stop transferring any more 'prepaid task fees' or 'tax clearance deposits' immediately.",
+            "2. Export Telegram chat logs and group member handles before admin deletes the group.",
+            "3. Call 1930 Helpline with all bank account numbers where funds were deposited.",
+            "4. Report fraud to your bank with transaction UTR numbers.",
+            "5. Submit detailed complaint on cybercrime.gov.in with bank account details of fraudsters."
+        ],
+        evidence: [
+            "Telegram group chat export & Admin handles",
+            "Bank UTR / IMPS transfer receipts for all deposits",
+            "Task website URL links & trading dashboard screenshots",
+            "Bank account numbers & IFSC codes of receiving fraudsters"
+        ]
+    },
+    digital_arrest: {
+        title: "Digital Arrest / Fake CBI Video Call Extortion Action Plan",
+        steps: [
+            "1. Disconnect Skype / WhatsApp video call immediately—'Digital Arrest' has NO legal validity in India.",
+            "2. Do NOT transfer any money to 'RBI verification accounts' or court clearance accounts.",
+            "3. If money was already transferred under duress, call 1930 Helpline instantly to freeze funds.",
+            "4. Call your local police station or Cyber Crime Cell to inform them of extortion attempt.",
+            "5. Save video call profile IDs, phone numbers, and caller screenshots for cybercrime.gov.in report."
         ],
         evidence: [
             "Caller phone numbers / Skype IDs / WhatsApp handles",
             "Screenshots of caller in fake uniform / fake arrest warrants received",
             "Bank transfer UTR receipts if money was sent",
-            "Call duration timestamps & IVR numbers",
-            "Audio or screen recording of the extortion call"
+            "Call duration timestamps & IVR numbers"
         ]
     },
-    stock_trading: {
-        title: "Fake Stock Market IPO & WhatsApp Investment Racket Action Plan",
+    fake_police: {
+        title: "Fake Police Call / Emergency Bail Scam Action Plan",
         steps: [
-            "1. Stop transferring any additional 'institutional IPO allocation' or 'tax clearance' deposits.",
-            "2. Export WhatsApp group chat history & trading dashboard screenshots.",
-            "3. Call 1930 Helpline immediately with all bank account numbers where funds were sent.",
-            "4. Contact your bank to request an immediate fraud lien freeze on beneficiary accounts.",
-            "5. File a formal complaint at cybercrime.gov.in and SEBI SCORES portal."
+            "1. Hang up caller and call your family member directly on their personal phone number.",
+            "2. Do NOT transfer money via UPI to unknown callers claiming to be police officers.",
+            "3. Ask caller for police station name and badge number; call local police control room (112) to verify.",
+            "4. Report phone number to 1930 Helpline and Sanchar Saathi Chakshu portal.",
+            "5. File an extortion complaint at your local police station."
         ],
         evidence: [
-            "WhatsApp trading group export & Admin phone numbers",
-            "Fake trading app APK / website URL address",
-            "Bank transaction UTR numbers for all money deposits",
-            "Fraudulent demat holding / allocation statements",
-            "Receiving bank account numbers & IFSC codes"
+            "Caller phone number & call timestamps",
+            "UPI VPA or bank account details demanded",
+            "Audio recording of call (if recorded by phone)",
+            "Text messages or payment links received"
         ]
     },
-    telegram_task: {
-        title: "Telegram Part-Time Rating Task & Prepaid Investment Action Plan",
+    fake_courier: {
+        title: "Fake FedEx / Customs Illegal Parcel Action Plan",
         steps: [
-            "1. Stop transferring prepaid 'task clearance' or 'withdrawal unlocking' fees immediately.",
-            "2. Export Telegram chat logs and group member handles before admin deletes the group.",
-            "3. Call 1930 Helpline with all bank account numbers where funds were deposited.",
-            "4. Report transaction fraud to your bank with transaction UTR numbers.",
-            "5. Submit detailed complaint on cybercrime.gov.in with bank details of fraudsters."
+            "1. Hang up IVR call—FedEx/Customs never transfer calls directly to police departments.",
+            "2. Do NOT click phishing links to pay small ₹5-₹25 delivery or address update fees.",
+            "3. If card/banking credentials were typed on link, call bank helpline immediately to block card.",
+            "4. If money was transferred to fake customs accounts, call 1930 Helpline immediately.",
+            "5. Report phishing URL on CyberPehra URL Scanner & cybercrime.gov.in."
         ],
         evidence: [
-            "Telegram group chat export & Admin handles",
-            "Bank UTR / IMPS transfer receipts for all deposits",
-            "Task website URL links & rating dashboard screenshots",
-            "Bank account numbers & IFSC codes of receiving fraudsters",
-            "Crypto wallet addresses if deposits were converted"
-        ]
-    },
-    sextortion: {
-        title: "Sextortion & Video Call Blackmail Emergency Action Plan",
-        steps: [
-            "1. Do NOT send money—blackmailers will continuously demand more payments.",
-            "2. Block the extortionist on WhatsApp/social media immediately.",
-            "3. Lock your Facebook & Instagram social media profiles to private mode.",
-            "4. Call National Cyber Crime Helpline 1930 to report sextortion extortion.",
-            "5. Lodge complaint on cybercrime.gov.in (Report Crime Against Women & Children section)."
-        ],
-        evidence: [
-            "Extortionist's phone number & social media profile links",
-            "Screenshots of extortion messages & payment demands",
-            "UPI VPA handles or bank details demanded for payment",
-            "Call timestamps & duration details",
-            "Bank transfer receipts if any payment was made"
+            "SMS message & shortened phishing URL",
+            "IVR phone call numbers",
+            "Fake parcel tracking ID numbers",
+            "Bank transaction UTR numbers if fee was paid"
         ]
     },
     loan_app: {
-        title: "Illegal Instant Loan App Spyware & Contact Blackmail Action Plan",
+        title: "Instant Loan App Extortion & Blackmail Action Plan",
         steps: [
-            "1. Revoke app permissions (Contacts, Gallery, Camera) in Android Settings > Apps.",
-            "2. Uninstall loan APK file immediately from your mobile device.",
-            "3. Do NOT pay blackmailers—they will continue extortion after payment.",
-            "4. Send a broadcast SMS/WhatsApp message to contacts warning your phone was targeted by loan spyware.",
-            "5. Call 1930 Helpline and file an extortion report on cybercrime.gov.in."
+            "1. Revoke app permissions (Contacts, Storage, Camera) in Android Settings > Apps.",
+            "2. Uninstall loan APK file immediately.",
+            "3. Do NOT pay blackmailers continuously—they will demand more money.",
+            "4. Inform family & contacts via broadcast message that your phone was targeted by illegal loan spyware.",
+            "5. Call 1930 Helpline and file an extortion report on cybercrime.gov.in with app details."
         ],
         evidence: [
             "Loan APK filename & app download link",
             "Harassment SMS & WhatsApp messages with morphed photos",
             "Bank account statement showing loan disbursal & payment receipts",
-            "Phone numbers of recovery callers & WhatsApp accounts",
-            "Screenshots of app permissions requested"
+            "Phone numbers of recovery callers"
         ]
     },
-    sim_swap: {
-        title: "SIM Swap & eSIM Unauthorized Hijacking Action Plan",
-        steps: [
-            "1. Contact your telecom operator (Jio/Airtel/Vi/BSNL) helpline from another phone to block SIM.",
-            "2. Visit nearest official telecom store with Aadhaar card to issue replacement SIM card.",
-            "3. Call your bank's 24x7 helpline to temporarily freeze NetBanking & UPI access.",
-            "4. Call 1930 Helpline to report unauthorized bank account drains.",
-            "5. Change passwords for primary email accounts and bank logins."
-        ],
-        evidence: [
-            "Telecom SMS notifications regarding SIM swap request",
-            "Bank SMS transaction alerts for unauthorized debits",
-            "Bank UTR numbers & beneficiary account details",
-            "Original SIM card number & IMSI details",
-            "Telecom operator complaint reference number"
-        ]
-    },
-    aeps_biometric: {
-        title: "Aadhaar AePS Biometric Skimming Cash Withdrawal Action Plan",
-        steps: [
-            "1. Lock your Aadhaar Biometrics immediately on UIDAI portal (mAadhaar app / uidai.gov.in).",
-            "2. Call your bank's helpline to report unauthorized AePS cash debits.",
-            "3. Call 1930 Helpline to initiate bank account lien freeze.",
-            "4. Visit bank branch to disable AePS facility on your account.",
-            "5. File a formal complaint at cybercrime.gov.in & local police station."
-        ],
-        evidence: [
-            "Bank SMS notification showing AePS cash withdrawal",
-            "Bank Account Statement highlighting transaction time & micro-ATM ID",
-            "Aadhaar card number & linked mobile number",
-            "Location details of recent property registration or land registry where fingerprint was given",
-            "Bank complaint token number"
-        ]
-    },
-    courier_customs: {
-        title: "Fake FedEx / Customs Illegal Parcel Extortion Action Plan",
-        steps: [
-            "1. Hang up call—courier companies never transfer calls to police or demand online clearance fees.",
-            "2. Do NOT click SMS links to pay small address update fees.",
-            "3. If credit card/banking details were entered on link, call bank helpline immediately to block card.",
-            "4. Call 1930 Helpline if money was transferred to fake customs accounts.",
-            "5. Report phishing URL & phone numbers on cybercrime.gov.in & Sanchar Saathi."
-        ],
-        evidence: [
-            "SMS message & shortened phishing URL",
-            "Caller phone numbers & IVR recordings",
-            "Fake parcel tracking ID numbers",
-            "Bank transaction UTR numbers if fee was paid",
-            "Screenshots of fake courier tracking portal"
-        ]
-    },
-    matrimonial: {
-        title: "Matrimonial & Overseas Doctor Gift Scam Action Plan",
-        steps: [
-            "1. Stop transferring money for 'customs clearance' of expensive overseas gifts.",
-            "2. Do NOT trust unverified profiles posing as overseas NRI doctors/engineers.",
-            "3. Call 1930 Helpline immediately with bank transfer reference details.",
-            "4. Report profile to matrimonial website admin (Shaadi/BharatMatrimony/Jeevansathi).",
-            "5. Submit complaint on cybercrime.gov.in with bank account details of fraudsters."
-        ],
-        evidence: [
-            "Matrimonial profile screenshots & registration ID",
-            "WhatsApp chat history & audio call logs",
-            "Fake airport customs agent phone numbers",
-            "Bank transfer UTR receipts & account details",
-            "Fake flight ticket or gift box images received"
-        ]
-    },
-    electricity_bill: {
-        title: "Electricity Bill Cutoff & Fake APK Update SMS Action Plan",
-        steps: [
-            "1. Do NOT click SMS links or call mobile numbers provided in electricity disconnection warnings.",
-            "2. Do NOT download APK apps (e.g. QuickSupport/PowerPay.apk) sent by caller.",
-            "3. Verify electricity bill status directly on your official state electricity board portal.",
-            "4. If card/banking details were typed on link, call bank helpline immediately to block card.",
-            "5. Report SMS sender number to 1930 Helpline & Sanchar Saathi Chakshu."
-        ],
-        evidence: [
-            "Original SMS text with sender header & phone number",
-            "Phishing website link or APK download URL",
-            "Bank transaction debit SMS with UTR number",
-            "Call duration & timestamp details",
-            "Screenshots of fake bill payment webpage"
-        ]
-    },
-    kbc_lottery: {
-        title: "Kaun Banega Crorepati WhatsApp Audio Lottery Racket Action Plan",
-        steps: [
-            "1. Ignore WhatsApp audio calls claiming you won ₹25 Lakh KBC lottery.",
-            "2. Do NOT pay 'tax clearance' or 'processing fees' to release lottery winnings.",
-            "3. Block WhatsApp number immediately.",
-            "4. Call 1930 Helpline if money was transferred to fraudster's bank account.",
-            "5. Report WhatsApp number on cybercrime.gov.in & Chakshu portal."
-        ],
-        evidence: [
-            "KBC fake poster image & audio message received",
-            "WhatsApp phone number of fraudster",
-            "UPI VPA or bank account details provided for tax deposit",
-            "Bank transaction UTR numbers if money was transferred",
-            "Screenshots of KBC letterhead fake certificate"
-        ]
-    },
-    fake_army: {
-        title: "Fake Army Officer OLX QR Buyer Scam Action Plan",
-        steps: [
-            "1. Never scan a QR code or enter UPI PIN to RECEIVE money.",
-            "2. Disconnect call if buyer asks you to scan QR code to receive advance payment.",
-            "3. Report fraudulent buyer profile on OLX / Facebook Marketplace.",
-            "4. Call 1930 Helpline immediately if money was debited from your account.",
-            "5. File complaint on cybercrime.gov.in with buyer's UPI ID."
-        ],
-        evidence: [
-            "Fake Army ID card image provided by scammer",
-            "OLX / Marketplace buyer chat screenshots",
-            "QR code image sent by buyer",
-            "UPI VPA / handle used by buyer",
-            "Bank transaction debit SMS with UTR number"
-        ]
-    },
-    remote_app: {
-        title: "Remote Screen Sharing App (AnyDesk/TeamViewer) Fraud Action Plan",
+    screen_sharing: {
+        title: "Remote Screen Sharing App Fraud Action Plan",
         steps: [
             "1. Turn OFF Wi-Fi / Mobile Data immediately or switch phone to Airplane Mode.",
             "2. Uninstall AnyDesk, TeamViewer, QuickSupport, or RustDesk from your device.",
             "3. Call bank helpline from another phone to freeze NetBanking & UPI access.",
             "4. Call 1930 Helpline to report live screen interception and freeze compromised accounts.",
-            "5. Lodge a complaint on cybercrime.gov.in."
+            "5. Run CyberPehra Browser Audit to verify device security."
         ],
         evidence: [
             "9-digit remote session code",
             "Name of screen sharing app installed",
             "Fake customer care phone number found on Google",
-            "Bank account UTR debit details",
-            "Call duration & timestamp"
-        ]
-    },
-    card_vishing: {
-        title: "Credit Card Limit Increase OTP Call Action Plan",
-        steps: [
-            "1. Disconnect call—banks NEVER ask for OTP, CVV, or card PIN over phone calls.",
-            "2. Call credit card customer care immediately to block card.",
-            "3. Call 1930 Helpline to report unauthorized card transactions.",
-            "4. Report caller phone number on Sanchar Saathi Chakshu portal.",
-            "5. File formal complaint on cybercrime.gov.in."
-        ],
-        evidence: [
-            "Caller phone number & call timestamp",
-            "SMS notification showing card OTP / transaction debit",
-            "Last 4 digits of compromised credit card",
-            "Merchant name where card was used",
-            "Bank complaint reference number"
-        ]
-    },
-    visa_consultancy: {
-        title: "Overseas Work Visa & Consultancy Scam Action Plan",
-        steps: [
-            "1. Verify visa consultancy registration on Ministry of External Affairs eMigrate portal.",
-            "2. Do NOT pay cash or unverified UPI deposits for guaranteed overseas job visas.",
-            "3. Call 1930 Helpline if money was transferred to fake consultancy accounts.",
-            "4. Report fraudulent agency to local police station.",
-            "5. File complaint on cybercrime.gov.in & eMigrate portal."
-        ],
-        evidence: [
-            "Fake job offer letter or visa copy",
-            "Consultancy office address & website URL",
-            "Bank transfer UTR receipts for fees paid",
-            "WhatsApp / Email conversation records",
-            "Passport copy provided to consultancy"
-        ]
-    },
-    crypto_pool: {
-        title: "Crypto Trading Pool & Staking Scam Action Plan",
-        steps: [
-            "1. Stop depositing funds into unverified crypto trading platforms or Telegram groups.",
-            "2. Export chat logs & transaction histories from trading platform.",
-            "3. Call 1930 Helpline with receiving bank account / crypto wallet details.",
-            "4. Report fraud to FIU-IND (Financial Intelligence Unit).",
-            "5. File complaint on cybercrime.gov.in."
-        ],
-        evidence: [
-            "Crypto platform URL address & Telegram handles",
-            "TRC-20 / ERC-20 Crypto wallet deposit addresses",
-            "Bank UTR receipts for INR crypto purchases",
-            "Dashboard profit statement screenshots",
-            "Withdrawal rejection error messages"
-        ]
-    },
-    ecommerce_store: {
-        title: "Fake Shopping Website Fraud Action Plan",
-        steps: [
-            "1. Stop waiting for unshipped items from unverified social media ad stores.",
-            "2. Call your bank to initiate chargeback on credit/debit card transaction.",
-            "3. Call 1930 Helpline to report fraudulent merchant payment gateway.",
-            "4. Report fake website URL on CyberPehra URL Scanner.",
-            "5. Submit complaint on cybercrime.gov.in & National Consumer Helpline (1915)."
-        ],
-        evidence: [
-            "Fake shopping website URL link",
-            "Payment receipt & payment gateway reference ID",
-            "Order confirmation SMS / Email received",
-            "Instagram / Facebook ad screenshot",
-            "Bank Account Statement showing debit"
-        ]
-    },
-    kyc_unblock: {
-        title: "Bank Account KYC Suspended Alert Action Plan",
-        steps: [
-            "1. Do NOT click SMS links claiming bank account will be suspended in 24 hours.",
-            "2. Do NOT enter NetBanking credentials or OTP on unverified links.",
-            "3. Visit your official bank branch or official bank app to check KYC status.",
-            "4. If credentials were typed, call bank helpline immediately to freeze NetBanking.",
-            "5. Call 1930 Helpline and report SMS number on Sanchar Saathi."
-        ],
-        evidence: [
-            "SMS message & phishing website URL",
-            "Sender phone number / header ID",
-            "Bank NetBanking user ID (do NOT share password)",
-            "Bank debit alert SMS if money was debited",
-            "Screenshots of fake bank KYC webpage"
-        ]
-    },
-    malware_apk: {
-        title: "Malicious Android APK Installation Trap Action Plan",
-        steps: [
-            "1. Turn OFF phone Wi-Fi & Mobile Data immediately.",
-            "2. Uninstall malicious APK app in Android Settings > Apps.",
-            "3. Call bank helpline from another phone to block NetBanking & UPI.",
-            "4. Call 1930 Helpline to report phone spyware and initiate bank hold.",
-            "5. Perform full factory reset of phone to purge embedded malware."
-        ],
-        evidence: [
-            "APK filename & download link URL",
-            "WhatsApp / SMS message where APK was received",
-            "App permissions granted list screenshot",
-            "Bank account debit alert SMS with UTR numbers",
-            "Device IMEI number & phone model"
+            "Bank account UTR debit details"
         ]
     }
-};
-
-// PRODUCTION STATE CYBER CELL DIRECTORY FOR ALL 36 INDIAN STATES & UTS
-export const StateCyberCellDB = {
-    MH: {
-        state: "Maharashtra",
-        hq: "Maharashtra Cyber Crime Police Headquarters, World Trade Centre, Cuffe Parade, Mumbai - 400005",
-        officer: "Superintendent of Police / Inspector General of Police (Cyber)",
-        phone: "1930 / 022-22160080",
-        email: "cybercell-mh@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    DL: {
-        state: "Delhi NCR",
-        hq: "Special Cell IFSO (Intelligence Fusion & Strategic Operations), Sector 16, Dwarka, New Delhi - 110078",
-        officer: "DCP Cyber Crime (IFSO), Delhi Police",
-        phone: "1930 / 011-20892633",
-        email: "dcp-cybercell-delhi@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    KA: {
-        state: "Karnataka",
-        hq: "CID Cyber Crime Division, Carlton House, Palace Road, Vasanth Nagar, Bengaluru - 560001",
-        officer: "SP Cyber Crime CID, Karnataka Police",
-        phone: "1930 / 080-22201026",
-        email: "ccps.cid@karnataka.gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    UP: {
-        state: "Uttar Pradesh",
-        hq: "UP Cyber Crime Police HQ, Signature Building, Gomti Nagar Extension, Lucknow - 226010",
-        officer: "SP Cyber Crime, UP Police",
-        phone: "1930 / 0522-2304155",
-        email: "cybercell-up@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    TG: {
-        state: "Telangana",
-        hq: "Telangana Cyber Security Bureau (TGCSB), Integrated Command Centre, Banjara Hills, Hyderabad - 500034",
-        officer: "Director TGCSB / SP Cyber Crime",
-        phone: "1930 / 040-27852418",
-        email: "tgcsb-hyd@telangana.gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    TN: {
-        state: "Tamil Nadu",
-        hq: "Cyber Crime Wing HQ, DGP Office Complex, Dr. Radhakrishnan Salai, Mylapore, Chennai - 600004",
-        officer: "ADGP / SP Cyber Crime Wing, Tamil Nadu Police",
-        phone: "1930 / 044-28447738",
-        email: "cyberwing-tn@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    WB: {
-        state: "West Bengal",
-        hq: "West Bengal CID Cyber Crime Division, Bhabani Bhavan, Alipore, Kolkata - 700027",
-        officer: "DIG / SP Cyber CID, West Bengal Police",
-        phone: "1930 / 033-24791330",
-        email: "cybercrime-wb@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    RJ: {
-        state: "Rajasthan",
-        hq: "State Cyber Crime Police Station HQ, Police Telecommunication Complex, Nehru Nagar, Jaipur - 302016",
-        officer: "SP Cyber Crime, Rajasthan Police",
-        phone: "1930 / 0141-2709193",
-        email: "sp-cyber-rj@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    GJ: {
-        state: "Gujarat",
-        hq: "Gujarat CID Cyber Crime Cell, Police Bhavan, Sector 18, Gandhinagar - 382018",
-        officer: "SP Cyber Crime CID, Gujarat Police",
-        phone: "1930 / 079-23254388",
-        email: "cc-cid@gujarat.gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    KL: {
-        state: "Kerala",
-        hq: "Kerala Police Cyberdome, Technopark Campus, Nila Building, Thiruvananthapuram - 695581",
-        officer: "ADGP / SP Cyberdome, Kerala Police",
-        phone: "1930 / 0471-2721568",
-        email: "cyberdome.pol@kerala.gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    BR: {
-        state: "Bihar",
-        hq: "Bihar Cyber Crime Division, Sardar Patel Bhavan, Jawaharlal Nehru Marg, Patna - 800023",
-        officer: "SP Cyber Crime, Bihar Police",
-        phone: "1930 / 0612-2217036",
-        email: "cybercell-bihar@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    MP: {
-        state: "Madhya Pradesh",
-        hq: "MP Cyber Crime Police HQ, Bhadbhada Road, TT Nagar, Bhopal - 462003",
-        officer: "ADGP / SP Cyber Crime, MP Police",
-        phone: "1930 / 0755-2770248",
-        email: "cybercell-mp@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    PB: {
-        state: "Punjab",
-        hq: "Punjab Police Cyber Crime Division, Phase 4, SAS Nagar, Mohali - 160059",
-        officer: "AIG Cyber Crime, Punjab Police",
-        phone: "1930 / 0172-2210340",
-        email: "cybercell.police@punjab.gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    HR: {
-        state: "Haryana",
-        hq: "State Cyber Police Station, Police Headquarters, Sector 6, Panchkula - 134109",
-        officer: "SP Cyber Crime, Haryana Police",
-        phone: "1930 / 0172-2584100",
-        email: "cybercrime-hry@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    AP: {
-        state: "Andhra Pradesh",
-        hq: "AP Cyber Crime Cell, State Police Headquarters, Mangalagiri, Amaravati - 522503",
-        officer: "SP Cyber Crime, Andhra Pradesh Police",
-        phone: "1930 / 0863-2340100",
-        email: "spcybercell@ap.gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    OD: {
-        state: "Odisha",
-        hq: "Odisha CID Cyber Crime Wing, Buxibazar, Cuttack - 753001",
-        officer: "SP Cyber Crime, Odisha CID",
-        phone: "1930 / 0671-2305485",
-        email: "cybercrime-odisha@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    AS: {
-        state: "Assam",
-        hq: "Assam CID Cyber Crime Cell, BK Kakati Road, Ulubari, Guwahati - 781007",
-        officer: "SSP Cyber Crime CID, Assam Police",
-        phone: "1930 / 0361-2521194",
-        email: "cybercrime-assam@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    JH: {
-        state: "Jharkhand",
-        hq: "Jharkhand Cyber Crime Police HQ, Police Line, Kanke Road, Ranchi - 834008",
-        officer: "SP Cyber Crime, Jharkhand Police",
-        phone: "1930 / 0651-2490046",
-        email: "cybercell-jharkhand@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    CT: {
-        state: "Chhattisgarh",
-        hq: "Chhattisgarh Cyber Crime HQ, Sector 19, Nawa Raipur, Atal Nagar - 492002",
-        officer: "SP Cyber Crime, Chhattisgarh Police",
-        phone: "1930 / 0771-2443800",
-        email: "cybercell-cg@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    HP: {
-        state: "Himachal Pradesh",
-        hq: "HP State Cyber Crime Police Station, CID Complex, Shimla - 171002",
-        officer: "SP Cyber Crime, Himachal Pradesh Police",
-        phone: "1930 / 0177-2621714",
-        email: "cyber-ps-hp@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    UT: {
-        state: "Uttarakhand",
-        hq: "Uttarakhand STF Cyber Crime Police Station, Near ISBT, Dehradun - 248001",
-        officer: "SP STF Cyber Crime, Uttarakhand Police",
-        phone: "1930 / 0135-2656202",
-        email: "cyber-stf.uk@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    GA: {
-        state: "Goa",
-        hq: "Goa Cyber Crime Police Station, Ribandar, Panaji - 403006",
-        officer: "SP Cyber Crime, Goa Police",
-        phone: "1930 / 0832-2443015",
-        email: "cybercell.goa@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    JK: {
-        state: "Jammu & Kashmir",
-        hq: "J&K Cyber Police Station, Shergarhi Police Complex, Srinagar - 190001 / Jammu Complex",
-        officer: "SP Cyber Crime, J&K Police",
-        phone: "1930 / 0194-2451552",
-        email: "cyberpolice-jk@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    CH: {
-        state: "Chandigarh",
-        hq: "Chandigarh Cyber Crime Investigation Cell, Central Police Station, Sector 17, Chandigarh - 160017",
-        officer: "DSP Cyber Crime, Chandigarh Police",
-        phone: "1930 / 0172-2740554",
-        email: "cybercrime-chd@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    PY: {
-        state: "Puducherry",
-        hq: "Puducherry Cyber Crime Cell, DGP Office Complex, Goubert Avenue, Puducherry - 605001",
-        officer: "SP Cyber Crime, Puducherry Police",
-        phone: "1930 / 0413-2231300",
-        email: "cybercell.py@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    SK: {
-        state: "Sikkim",
-        hq: "Sikkim Police Cyber Crime Cell, Police Headquarters, Gangtok - 737101",
-        officer: "SP Cyber Crime, Sikkim Police",
-        phone: "1930 / 03592-202042",
-        email: "cybercrime-sk@nic.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    MN: {
-        state: "Manipur",
-        hq: "Manipur Cyber Crime Police Station, Manipur Police HQ, Imphal - 795001",
-        officer: "SP Cyber Crime, Manipur Police",
-        phone: "1930 / 0385-2450214",
-        email: "cybercell-mn@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    ML: {
-        state: "Meghalaya",
-        hq: "Meghalaya Cyber Crime Wing, Additional Secretariat, Shillong - 793001",
-        officer: "SP Cyber Crime, Meghalaya Police",
-        phone: "1930 / 0364-2224400",
-        email: "cybercell-ml@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    MZ: {
-        state: "Mizoram",
-        hq: "Mizoram Cyber Crime Police Station, Police Headquarters, Aizawl - 796001",
-        officer: "SP Cyber Crime, Mizoram Police",
-        phone: "1930 / 0389-2334400",
-        email: "cybercell-mz@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    NL: {
-        state: "Nagaland",
-        hq: "Nagaland Cyber Police HQ, Police Complex, Kohima - 797001",
-        officer: "SP Cyber Crime, Nagaland Police",
-        phone: "1930 / 0370-2244400",
-        email: "cybercell-nl@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    TR: {
-        state: "Tripura",
-        hq: "Tripura Cyber Crime Police Station, Agartala - 799001",
-        officer: "SP Cyber Crime, Tripura Police",
-        phone: "1930 / 0381-2324400",
-        email: "cybercell-tr@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    AR: {
-        state: "Arunachal Pradesh",
-        hq: "Arunachal Cyber Crime Cell, Police HQ, Itanagar - 791111",
-        officer: "SP Cyber Crime, Arunachal Police",
-        phone: "1930 / 0360-2294400",
-        email: "cybercell-ar@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    LA: {
-        state: "Ladakh",
-        hq: "Ladakh Cyber Police Cell, District Police Lines, Leh - 194101",
-        officer: "SP Cyber Crime, Ladakh Police",
-        phone: "1930 / 01982-252400",
-        email: "cybercell-ladakh@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    AN: {
-        state: "Andaman & Nicobar Islands",
-        hq: "A&N Islands Cyber Crime Cell, Police HQ, Port Blair - 744101",
-        officer: "SP Cyber Crime, A&N Police",
-        phone: "1930 / 03192-232400",
-        email: "cybercell-an@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    DN: {
-        state: "Dadra & Nagar Haveli and Daman & Diu",
-        hq: "DNH & DD Cyber Crime Cell, Police Station, Moti Daman - 396220",
-        officer: "SP Cyber Crime, UT Police",
-        phone: "1930 / 0260-2232400",
-        email: "cybercell-dnh@gov.in",
-        portal: "https://cybercrime.gov.in"
-    },
-    LD: {
-        state: "Lakshadweep",
-        hq: "Lakshadweep Cyber Crime Unit, Police HQ, Kavaratti - 682555",
-        officer: "SP Cyber Crime, Lakshadweep Police",
-        phone: "1930 / 04896-262400",
-        email: "cybercell-ld@gov.in",
-        portal: "https://cybercrime.gov.in"
-    }
-};
-
-export const renderCyberCellDetails = (stateCode) => {
-    const container = document.getElementById('cyberCellDetailContainer');
-    if (!container) return;
-
-    const code = stateCode || 'MH';
-    const cell = StateCyberCellDB[code] || StateCyberCellDB.MH;
-
-    container.innerHTML = `
-        <div class="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 font-sans text-xs">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
-                <div>
-                    <h4 class="text-sm font-bold text-white font-display">🏛️ ${cell.state} Cyber Crime Police Headquarters</h4>
-                    <p class="text-[11px] text-emerald-400 font-semibold">${cell.officer}</p>
-                </div>
-                <span class="px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono text-[11px] font-bold">
-                    State Code: ${code}
-                </span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Official Headquarters Address</span>
-                    <p class="text-xs text-slate-200 leading-relaxed font-sans">${cell.hq}</p>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Emergency Helplines</span>
-                    <div class="text-sm font-bold text-rose-400 font-mono">📞 ${cell.phone}</div>
-                    <p class="text-[11px] text-slate-400">Call 1930 for immediate 24x7 financial lien freeze</p>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Official Nodal Email Desk</span>
-                    <div class="text-xs font-bold text-white font-mono">📧 ${cell.email}</div>
-                    <p class="text-[11px] text-slate-400">Official State Cyber Cell Contact</p>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">National Crime Reporting Portal</span>
-                    <div>
-                        <a href="${cell.portal}" target="_blank" rel="noopener" class="text-xs text-emerald-400 font-bold hover:underline inline-block">
-                            File Complaint at cybercrime.gov.in ↗
-                        </a>
-                    </div>
-                    <p class="text-[11px] text-slate-400">Official Ministry of Home Affairs Node</p>
-                </div>
-            </div>
-        </div>
-    `;
 };
 
 export const BankEmergencyDB = [
@@ -2522,10 +1989,9 @@ export const renderEmergencyCenter = () => {
 
     if (!playbookStepsEl) return;
 
-    // 1. Initial Incident Playbook & Evidence (default: upi)
-    const currentKey = (UI.emergencyIncidentSelect && UI.emergencyIncidentSelect.value) ? UI.emergencyIncidentSelect.value : 'upi';
+    // 1. Initial Incident Playbook & Evidence (default: upi_fraud)
+    const currentKey = (UI.emergencyIncidentSelect && UI.emergencyIncidentSelect.value) ? UI.emergencyIncidentSelect.value : 'upi_fraud';
     switchEmergencyIncident(currentKey);
-    renderCyberCellDetails(document.getElementById('cyberCellStateSelect')?.value || 'MH');
 
     // 2. Render Bank Emergency Hub
     if (bankGridEl && bankGridEl.children.length === 0) {
@@ -2800,7 +2266,135 @@ export const initCyberAlerts = async () => {
     }
 };
 
+// SPRINT 4 - FEATURE 1: BROWSER SECURITY CHECK (100% LOCAL BROWSER API AUDIT)
+export const runBrowserSecurityCheck = async () => {
+    const container = UI.browserReportContainer;
+    if (!container) return;
 
+    container.innerHTML = `<div class="text-slate-400 font-sans text-xs animate-pulse p-4">Performing 100% local browser security audit...</div>`;
+
+    const isHttps = window.location.protocol === 'https:';
+    const ua = navigator.userAgent || '';
+    
+    let browserName = "Browser";
+    if (ua.includes("Firefox/")) browserName = "Mozilla Firefox";
+    else if (ua.includes("Edg/")) browserName = "Microsoft Edge";
+    else if (ua.includes("Chrome/")) browserName = "Google Chrome";
+    else if (ua.includes("Safari/")) browserName = "Apple Safari";
+    else if (ua.includes("OPR/") || ua.includes("Opera/")) browserName = "Opera";
+
+    let browserVersion = "Unavailable";
+    const verMatch = ua.match(/(Firefox|Edg|Chrome|Safari|OPR)\/([\d.]+)/);
+    if (verMatch && verMatch[2]) browserVersion = verMatch[2];
+
+    const platform = navigator.platform || navigator.userAgentData?.platform || "Unavailable";
+    const lang = navigator.language || "Unavailable";
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "Unavailable";
+    const cookiesEnabled = navigator.cookieEnabled ? "Enabled" : "Disabled";
+    const jsActive = "Active";
+    const localStorageSupport = typeof window.localStorage !== 'undefined' ? "Available" : "Unavailable";
+    const sessionStorageSupport = typeof window.sessionStorage !== 'undefined' ? "Available" : "Unavailable";
+    const serviceWorkerSupport = ('serviceWorker' in navigator) ? "Supported" : "Unavailable";
+    const pwaInstalled = window.matchMedia('(display-mode: standalone)').matches ? "Yes (Installed PWA)" : "Browser Tab";
+    const notifPermission = typeof Notification !== 'undefined' ? Notification.permission : "Unavailable";
+    const clipSupport = navigator.clipboard ? "Supported" : "Unavailable";
+
+    let cameraPerm = "Unavailable";
+    let micPerm = "Unavailable";
+    try {
+        if (navigator.permissions && navigator.permissions.query) {
+            const cRes = await navigator.permissions.query({ name: 'camera' }).catch(() => null);
+            if (cRes) cameraPerm = cRes.state;
+            const mRes = await navigator.permissions.query({ name: 'microphone' }).catch(() => null);
+            if (mRes) micPerm = mRes.state;
+        }
+    } catch(e) {}
+
+    const onlineStatus = navigator.onLine ? "Online" : "Offline";
+    const darkModePref = window.matchMedia('(prefers-color-scheme: dark)').matches ? "Dark Mode" : "Light Mode";
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? "Enabled" : "Standard";
+    const touchSupport = ('ontouchstart' in window || navigator.maxTouchPoints > 0) ? "Supported" : "No Touch";
+    const devMemory = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : "Unavailable";
+    const hardwareConcurrency = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency} CPU Cores` : "Unavailable";
+
+    let summaryStatus = "Good";
+    if (!isHttps || notifPermission === 'denied' || localStorageSupport === 'Unavailable') {
+        summaryStatus = "Needs Attention";
+    } else if (isHttps && serviceWorkerSupport === 'Supported') {
+        summaryStatus = "Excellent";
+    }
+
+    const summaryBadgeClass = summaryStatus === "Excellent"
+        ? "bg-emerald-950 text-emerald-400 border-emerald-800"
+        : summaryStatus === "Good"
+        ? "bg-sky-950 text-sky-400 border-sky-800"
+        : "bg-amber-950 text-amber-400 border-amber-800";
+
+    container.innerHTML = `
+        <div class="space-y-5 font-sans text-xs text-slate-300">
+            <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <span class="text-slate-500 text-[10px] uppercase block">Audit Overall Summary</span>
+                    <h4 class="font-bold text-white text-base font-display">Browser Security Rating</h4>
+                </div>
+                <span class="px-3.5 py-1.5 rounded-full font-bold border text-sm uppercase tracking-wider ${summaryBadgeClass}">
+                    ${summaryStatus}
+                </span>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-green-400 font-bold uppercase text-[11px]">1. Browser Information</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Browser Name</span><strong class="text-slate-200">${browserName}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Browser Version</span><strong class="text-slate-200">${browserVersion}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Platform</span><strong class="text-slate-200">${platform}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Language</span><strong class="text-slate-200">${lang}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Time Zone</span><strong class="text-slate-200">${timezone}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Online Status</span><strong class="${onlineStatus === 'Online' ? 'text-emerald-400' : 'text-amber-400'}">${onlineStatus}</strong></div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-green-400 font-bold uppercase text-[11px]">2. Security & Web Capabilities</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">HTTPS Connection</span><strong class="${isHttps ? 'text-emerald-400' : 'text-rose-400'}">${isHttps ? 'Secure (HTTPS)' : 'Insecure (HTTP)'}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">JavaScript Execution</span><strong class="text-emerald-400">${jsActive}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Service Worker API</span><strong class="text-slate-200">${serviceWorkerSupport}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">PWA Display Mode</span><strong class="text-slate-200">${pwaInstalled}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Clipboard API</span><strong class="text-slate-200">${clipSupport}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Cookies Status</span><strong class="text-slate-200">${cookiesEnabled}</strong></div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-green-400 font-bold uppercase text-[11px]">3. Permissions & Local Storage</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Notification Permission</span><strong class="text-slate-200">${notifPermission}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Camera Permission</span><strong class="text-slate-200">${cameraPerm}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Microphone Permission</span><strong class="text-slate-200">${micPerm}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Local Storage</span><strong class="text-slate-200">${localStorageSupport}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Session Storage</span><strong class="text-slate-200">${sessionStorageSupport}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Device Memory</span><strong class="text-slate-200">${devMemory}</strong></div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-green-400 font-bold uppercase text-[11px]">4. Hardware & User Preferences</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Hardware Concurrency</span><strong class="text-slate-200">${hardwareConcurrency}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Color Scheme Pref</span><strong class="text-slate-200">${darkModePref}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Reduced Motion</span><strong class="text-slate-200">${reducedMotion}</strong></div>
+                    <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800"><span class="text-slate-500 block text-[10px]">Touch Interface</span><strong class="text-slate-200">${touchSupport}</strong></div>
+                </div>
+            </div>
+
+            <div class="p-3.5 bg-emerald-950/30 border border-emerald-800/60 rounded-xl space-y-1 text-[11px]">
+                <strong class="text-emerald-400 flex items-center gap-1.5">🔒 Privacy Guarantee:</strong>
+                <p class="text-slate-300 leading-relaxed">This audit was executed 100% locally inside your browser memory using Web Standard APIs. Zero telemetry or device data was transmitted to any server.</p>
+            </div>
+        </div>
+    `;
+};
 
 // SPRINT 5: CYBER INTELLIGENCE CENTER (REAL-TIME TRUSTED THREAT FEED WITH 30-MIN CACHING)
 export const fetchCyberIntelligence = async (forceRefresh = false) => {
@@ -3795,506 +3389,139 @@ export const runPasswordBreachCheck = async () => {
     }
 };
 
-// UNLIMITED NON-REPEATING CYBER SECURITY READINESS QUIZ ENGINE
-export const CyberQuizMasterBank = [
-    {
-        id: "q_bank_vishing",
-        question: "A caller claiming to be a bank manager says your debit card is blocked and demands an OTP to unblock it. What should you do?",
-        options: [
-            "A) Share the 6-digit OTP quickly so your account isn't blocked.",
-            "B) Hang up immediately! Banks NEVER ask for OTPs over phone calls.",
-            "C) Ask the caller for their employee ID and then give the OTP.",
-            "D) Transfer money to another account for safety."
-        ],
-        correct: 1,
-        explanation: "💡 Banks NEVER ask for OTP, PIN, or password over call. Sharing OTP allows scammers to drain your bank account!"
-    },
-    {
-        id: "q_upi_qr",
-        question: "An OLX buyer sends a QR code and asks you to scan it and enter your UPI PIN to RECEIVE ₹10,000. What will happen?",
-        options: [
-            "A) ₹10,000 will be instantly credited to your bank account.",
-            "B) ₹10,000 will be DEBITED (stolen) from your account!",
-            "C) The QR code will verify your Aadhaar card identity.",
-            "D) Nothing will happen."
-        ],
-        correct: 1,
-        explanation: "💡 Entering your UPI PIN is STRICTLY for PAYING money. You NEVER enter a UPI PIN to receive money!"
-    },
-    {
-        id: "q_digital_arrest",
-        question: "A video caller in police uniform claims you are under 'Digital Arrest' for an illegal parcel and demands ₹50,000. What should you do?",
-        options: [
-            "A) Pay ₹50,000 immediately to avoid court proceedings.",
-            "B) Disconnect video call! 'Digital Arrest' has ZERO legal validity in India.",
-            "C) Show your Aadhaar card and passport on video.",
-            "D) Transfer 50% clearance fee."
-        ],
-        correct: 1,
-        explanation: "💡 Police/CBI/Customs NEVER arrest anyone via video call or demand money online. Disconnect and dial 1930!"
-    },
-    {
-        id: "q_telegram_task",
-        question: "A Telegram group promises ₹3,000/day for liking YouTube videos, but asks for ₹1,000 'prepaid deposit' first. What is this?",
-        options: [
-            "A) Genuine part-time work from home job.",
-            "B) Fraudulent Prepaid Task Investment Scam!",
-            "C) Government authorized digital marketing job.",
-            "D) Official YouTube partner program."
-        ],
-        correct: 1,
-        explanation: "💡 Real companies NEVER ask you to deposit money to work. Once you pay prepaid deposits, scammers block you or demand higher amounts!"
-    },
-    {
-        id: "q_electricity_bill",
-        question: "An SMS warns electricity will be cut off tonight at 9:30 PM unless you update your bill via a provided APK app link. What is true?",
-        options: [
-            "A) Click the link and install the APK app immediately.",
-            "B) Call the mobile number given in the SMS.",
-            "C) Ignore link & SMS. Check bill only on official Electricity Board web portal.",
-            "D) Share your card details on WhatsApp."
-        ],
-        correct: 2,
-        explanation: "💡 Electricity boards never send mobile numbers or APK app download links in SMS. Installing unknown APK apps infects your phone with banking malware!"
-    },
-    {
-        id: "q_sextortion",
-        question: "You receive a WhatsApp video call from an unknown number. After answering, a nude image is morphed with your face and blackmailers demand ₹25,000. What should you do?",
-        options: [
-            "A) Send ₹25,000 quickly so they don't leak it.",
-            "B) Do NOT pay! Block them immediately, lock social profiles, & report to 1930 / cybercrime.gov.in.",
-            "C) Delete your WhatsApp account forever.",
-            "D) Negotiate to pay ₹2,000."
-        ],
-        correct: 1,
-        explanation: "💡 Never pay blackmailers—they will demand more money endlessly. Block, lock social profiles, and report to 1930!"
-    },
-    {
-        id: "q_loan_app",
-        question: "An instant loan app asks for permissions to access your Contacts, Photos, and Camera before granting a ₹5,000 loan. What is the risk?",
-        options: [
-            "A) It is standard procedure for instant loans.",
-            "B) It is illegal loan spyware that will steal your contact list and blackmail your family!",
-            "C) It speeds up Aadhaar verification.",
-            "D) No risk at all."
-        ],
-        correct: 1,
-        explanation: "💡 Illegal loan apps use spyware permissions to steal your contact list and photos, then blackmail your contacts with morphed images!"
-    },
-    {
-        id: "q_sim_swap",
-        question: "Your mobile network suddenly shows 'No Service' for hours after you received a call asking for a SIM 20-digit number. What could be happening?",
-        options: [
-            "A) Regular telecom network maintenance.",
-            "B) A SIM Swap attack! Fraudsters duplicated your SIM card to intercept bank OTPs.",
-            "C) Phone battery is low.",
-            "D) SIM card expired."
-        ],
-        correct: 1,
-        explanation: "💡 If network suddenly drops without reason, contact telecom operator immediately. Fraudsters use SIM Swap to intercept NetBanking OTPs!"
-    },
-    {
-        id: "q_aeps_biometric",
-        question: "An unauthorized ₹10,000 cash debit SMS arrives from your bank via 'AePS Withdrawal', but you didn't visit any ATM. What should you do?",
-        options: [
-            "A) Wait 48 hours to see if bank auto-refunds.",
-            "B) Lock your Aadhaar Biometrics on UIDAI (mAadhaar app) immediately and call 1930.",
-            "C) Change NetBanking password.",
-            "D) Delete the bank SMS."
-        ],
-        correct: 1,
-        explanation: "💡 Biometric skimming on AePS allows fraudsters to withdraw cash using stolen Aadhaar fingerprints. Lock Aadhaar biometrics on UIDAI immediately!"
-    },
-    {
-        id: "q_courier_customs",
-        question: "An automated call claims a FedEx parcel in your name containing passports & drugs was seized in Mumbai and transfers you to 'police'. What is this?",
-        options: [
-            "A) Genuine Customs clearance alert.",
-            "B) Fake FedEx Parcel Trap scam to extort money!",
-            "C) Postal department survey.",
-            "D) Airport baggage lost alert."
-        ],
-        correct: 1,
-        explanation: "💡 Courier companies and police NEVER transfer calls directly to each other or ask for online clearance money!"
-    },
-    {
-        id: "q_kbc_lottery",
-        question: "You receive a WhatsApp audio message with a poster claiming you won ₹25 Lakh in KBC Lottery, asking for ₹12,500 'GST tax' deposit. What is true?",
-        options: [
-            "A) You won ₹25 Lakhs, pay ₹12,500 tax quickly.",
-            "B) 100% Fake WhatsApp Lottery Racket. KBC never conducts lotteries via WhatsApp!",
-            "C) Pay GST via GPay.",
-            "D) Send bank account passbook photo."
-        ],
-        correct: 1,
-        explanation: "💡 KBC and official organizations NEVER conduct lotteries on WhatsApp or ask for GST tax advance deposits!"
-    },
-    {
-        id: "q_remote_anydesk",
-        question: "A fake customer care caller asks you to install 'AnyDesk' or 'TeamViewer' on your phone to resolve a ₹500 refund. What will happen?",
-        options: [
-            "A) Refund will be credited smoothly.",
-            "B) Fraudster will see your live phone screen, view bank OTPs, & drain your account!",
-            "C) Phone storage will be cleaned.",
-            "D) Wi-Fi speed will increase."
-        ],
-        correct: 1,
-        explanation: "💡 AnyDesk/TeamViewer apps share your live phone screen. Fraudsters use them to read your PINs and OTPs live!"
-    },
-    {
-        id: "q_card_limit",
-        question: "A caller claiming to be from your credit card company offers to double your credit card limit and asks for card CVV & OTP. What should you do?",
-        options: [
-            "A) Share CVV and OTP to get higher limit.",
-            "B) Hang up! Banks never call asking for CVV or OTP to increase credit limit.",
-            "C) Share CVV but not OTP.",
-            "D) Give card expiry date."
-        ],
-        correct: 1,
-        explanation: "💡 CVV and OTP are secret authorization codes for transactions. Sharing CVV & OTP enables fraudsters to make online purchases with your card!"
-    },
-    {
-        id: "q_public_wifi",
-        question: "You connect to a free unsecured public Wi-Fi at a railway station and open your NetBanking account. Is this safe?",
-        options: [
-            "A) Yes, railway Wi-Fi is 100% encrypted.",
-            "B) No! Hackers on open Wi-Fi can intercept your unencrypted banking session & credentials.",
-            "C) Safe if using Google Chrome.",
-            "D) Safe if phone battery is full."
-        ],
-        correct: 1,
-        explanation: "💡 Open public Wi-Fi networks can be spoofed by attackers (Man-In-The-Middle attack). Never perform banking on open public Wi-Fi!"
-    },
-    {
-        id: "q_1930_golden_hour",
-        question: "What is the 'Golden Hour' in cybercrime financial fraud reporting?",
-        options: [
-            "A) Reporting fraud within 2 to 24 hours to 1930 Helpline to freeze stolen money in destination accounts.",
-            "B) Time taken to file FIR at police station after 7 days.",
-            "C) Bank working hours from 10 AM to 4 PM.",
-            "D) Time taken to change email password."
-        ],
-        correct: 0,
-        explanation: "💡 Calling 1930 Helpline within the first 2-24 hours (Golden Hour) allows cyber police to freeze stolen funds before fraudsters cash out!"
-    },
-    {
-        id: "q_sanchar_saathi",
-        question: "Which official Indian government portal allows citizens to report suspected spam calls, SMS, and check mobile connections registered in their name?",
-        options: [
-            "A) Sanchar Saathi (Chakshu Portal / TAFCOP)",
-            "B) Income Tax e-Filing Portal",
-            "C) Passport Seva Portal",
-            "D) Aadhaar Portal"
-        ],
-        correct: 0,
-        explanation: "💡 Sanchar Saathi (sancharsaathi.gov.in) is the Department of Telecommunications portal to report spam & disconnect fake mobile connections!"
-    },
-    {
-        id: "q_kyc_unblock",
-        question: "An SMS states: 'Dear Customer, your SBI account is suspended today. Update PAN via this link immediately'. What is the safest action?",
-        options: [
-            "A) Click link and enter PAN & NetBanking password.",
-            "B) Do NOT click link! Log in only via official bank website / app or visit branch.",
-            "C) Forward SMS to 10 friends.",
-            "D) Reply to SMS with PAN card photo."
-        ],
-        correct: 1,
-        explanation: "💡 Banks never send third-party links in SMS for KYC updates. Always use official bank apps or visit official branches!"
-    },
-    {
-        id: "q_malware_apk",
-        question: "A WhatsApp contact forwards a file named 'PM_Yojana_Free_Recharge.apk'. What happens if you tap and install it?",
-        options: [
-            "A) You get 3 months free mobile recharge.",
-            "B) Malware installs quietly, steals SMS OTPs, and forwards them to scammers!",
-            "C) Phone wallpaper changes.",
-            "D) WhatsApp updates automatically."
-        ],
-        correct: 1,
-        explanation: "💡 APK files downloaded outside Google Play Store can contain Android Trojans that read your SMS OTPs in the background!"
-    },
-    {
-        id: "q_2fa_auth",
-        question: "Why is an Authenticator App (Google/Microsoft) safer for 2FA than SMS OTP?",
-        options: [
-            "A) SMS OTP can be intercepted via SIM Swap attacks, while Authenticator codes stay offline on device.",
-            "B) Authenticator apps require high-speed internet.",
-            "C) SMS OTP costs money.",
-            "D) Authenticator apps change passwords daily."
-        ],
-        correct: 0,
-        explanation: "💡 Authenticator app codes are generated locally on your phone and cannot be stolen through SIM Swap or network interception!"
-    },
-    {
-        id: "q_fake_army",
-        question: "A person claiming to be an Army officer posted in your city wants to buy your sofa on OLX and sends an advance receipt via QR code. What is this?",
-        options: [
-            "A) Honest Army officer transaction.",
-            "B) Classic Fake Army Officer OLX QR Buyer Scam!",
-            "C) Defence Forces subsidy program.",
-            "D) Canteen Store Department (CSD) purchase."
-        ],
-        correct: 1,
-        explanation: "💡 Scammers frequently impersonate military personnel using stolen ID cards to gain trust and trick victims into scanning QR codes!"
-    },
-    {
-        id: "q_pass_reuse",
-        question: "What is the danger of using the same password for your Email, Instagram, GPay, and Amazon accounts?",
-        options: [
-            "A) If one website suffers a data breach, hackers will unlock ALL your other accounts!",
-            "B) Password will expire in 30 days.",
-            "C) Browser speed will slow down.",
-            "D) Phone storage will fill up."
-        ],
-        correct: 0,
-        explanation: "💡 Credential Stuffing attacks use leaked passwords from one breach to automatically unlock your accounts across all other services!"
-    },
-    {
-        id: "q_crypto_pool",
-        question: "A website promises 10% DAILY guaranteed return on crypto staking deposits. Is this legitimate?",
-        options: [
-            "A) Yes, crypto markets give high guaranteed returns.",
-            "B) 100% Fraudulent Ponzi / Crypto Pool Scam. Guaranteed high daily returns do not exist!",
-            "C) Legitimate if registered in Dubai.",
-            "D) Government backed crypto scheme."
-        ],
-        correct: 1,
-        explanation: "💡 No legitimate investment offers guaranteed 10% daily returns. High guaranteed return promises are 100% Ponzi scams!"
-    },
-    {
-        id: "q_matrimonial",
-        question: "An online matrimonial match claiming to be an overseas UK doctor says he sent a gift box of £50,000 cash, but 'Delhi Airport Customs' calls demanding ₹85,000 duty fee. What is this?",
-        options: [
-            "A) Pay ₹85,000 duty fee to clear gift.",
-            "B) Fraudulent Matrimonial Customs Gift Scam!",
-            "C) Real airport customs procedure.",
-            "D) British Embassy parcel service."
-        ],
-        correct: 1,
-        explanation: "💡 Customs officials never call individuals to collect cash duty for overseas gift boxes. This is a classic romance gift fraud!"
-    },
-    {
-        id: "q_fake_store",
-        question: "An Instagram ad advertises brand new ₹80,000 smartphones for ₹2,999 on a site named 'super-deals-shop.online'. What is true?",
-        options: [
-            "A) Buy 2 phones at discount price.",
-            "B) Fake E-Commerce Store designed to steal credit card details & money!",
-            "C) Clearance sale by brand manufacturer.",
-            "D) Government festive scheme."
-        ],
-        correct: 1,
-        explanation: "💡 If a deal looks too good to be true, it is almost certainly a fake e-commerce trap created to harvest credit card details!"
-    },
-    {
-        id: "q_visa_job",
-        question: "An unverified job agency demands ₹50,000 cash deposit for a guaranteed work visa in Canada without any interview. What should you do?",
-        options: [
-            "A) Pay ₹50,000 cash.",
-            "B) Verify agency registration on Ministry of External Affairs eMigrate portal before paying any fee.",
-            "C) Give original passport.",
-            "D) Pay via gift cards."
-        ],
-        correct: 1,
-        explanation: "💡 Always verify overseas job agencies on official Ministry of External Affairs eMigrate portal (emigrate.gov.in) before paying!"
-    }
-];
-
-export const getAnsweredQuestionIds = () => {
-    try {
-        const raw = localStorage.getItem('cyberpehra_quiz_answered_ids');
-        return raw ? JSON.parse(raw) : [];
-    } catch(e) {
-        return [];
-    }
+export const CYBER_CELL_DIRECTORY = {
+  "DL": {
+    name: "Delhi Cyber Crime Headquarters (Special Cell / IFSO)",
+    nodalOfficer: "DCP / IFSO Special Cell",
+    address: "IFSO Office, Sector 16, Dwarka, New Delhi - 110078",
+    phone: "011-20892634 / 011-20892635",
+    email: "dcp-ifso-dl@nic.in",
+    helpline: "1930",
+    website: "https://cyber.delhipolice.gov.in"
+  },
+  "MH": {
+    name: "Maharashtra Cyber Headquarters (Mumbai)",
+    nodalOfficer: "SP Cyber Maharashtra",
+    address: "3rd Floor, World Trade Centre, Cuffe Parade, Mumbai - 400005",
+    phone: "022-22160080",
+    email: "mahacyber@mahapolice.gov.in",
+    helpline: "1930",
+    website: "https://mahacyber.gov.in"
+  },
+  "KA": {
+    name: "Karnataka CID Cyber Crime Division (Bengaluru)",
+    nodalOfficer: "SP Cyber Crime CID",
+    address: "CID Complex, Carlton House, Palace Road, Bengaluru - 560001",
+    phone: "080-22094550",
+    email: "ccps.cid@ksp.gov.in",
+    helpline: "1930",
+    website: "https://ksp.karnataka.gov.in"
+  },
+  "TN": {
+    name: "Tamil Nadu Cyber Crime Wing (Chennai)",
+    nodalOfficer: "ADGP Cyber Crime Wing",
+    address: "Police Headquarters, Dr. Radhakrishnan Salai, Mylapore, Chennai - 600004",
+    phone: "044-28447700",
+    email: "cybercrime-tn@gov.in",
+    helpline: "1930",
+    website: "https://cybercrime.tn.gov.in"
+  },
+  "UP": {
+    name: "Uttar Pradesh Cyber Crime Police Headquarters (Lucknow)",
+    nodalOfficer: "SP Cyber Crime UP",
+    address: "Cyber Crime Police Station, Gomti Nagar, Lucknow - 226010",
+    phone: "0522-2304141",
+    email: "sp-cyber.lu@up.gov.in",
+    helpline: "1930",
+    website: "https://uppolice.gov.in"
+  },
+  "WB": {
+    name: "West Bengal Cyber Crime Headquarters (Kolkata)",
+    nodalOfficer: "OC Cyber Crime CID",
+    address: "Bhabani Bhawan, 3rd Floor, Alipore, Kolkata - 700027",
+    phone: "033-24791330",
+    email: "cybercrime-cid@wb.gov.in",
+    helpline: "1930",
+    website: "https://cidwestbengal.gov.in"
+  },
+  "GJ": {
+    name: "Gujarat CID Cyber Crime Cell (Gandhinagar)",
+    nodalOfficer: "SP Cyber Crime CID",
+    address: "Police Bhavan, Sector 18, Gandhinagar - 382018",
+    phone: "079-23254402",
+    email: "cc-cid@gujarat.gov.in",
+    helpline: "1930",
+    website: "https://cidcrime.gujarat.gov.in"
+  },
+  "TS": {
+    name: "Telangana Cyber Security Bureau (Hyderabad)",
+    nodalOfficer: "Director TGCSB",
+    address: "Integrated Command Control Centre, Road No. 12, Banjara Hills, Hyderabad - 500034",
+    phone: "040-27852445",
+    email: "tgcsb@tspolice.gov.in",
+    helpline: "1930",
+    website: "https://tspolice.gov.in"
+  },
+  "RJ": {
+    name: "Rajasthan Cyber Crime Headquarters (Jaipur)",
+    nodalOfficer: "SP Cyber Crime Rajasthan",
+    address: "Police Headquarters, Lalkothi, Jaipur - 302015",
+    phone: "0141-2740926",
+    email: "ccps.jaipur@rajpolice.gov.in",
+    helpline: "1930",
+    website: "https://police.rajasthan.gov.in"
+  },
+  "KL": {
+    name: "Kerala Cyberdome & Cyber Crime Police Station (Thiruvananthapuram)",
+    nodalOfficer: "ADGP Cyberdome Kerala",
+    address: "Police Headquarters, Vazhuthacaud, Thiruvananthapuram - 695010",
+    phone: "0471-2721547",
+    email: "cybercrime.pol@kerala.gov.in",
+    helpline: "1930",
+    website: "https://keralapolice.gov.in"
+  }
 };
 
-export const markQuestionAsAnswered = (id) => {
-    if (!id) return;
-    try {
-        const ids = getAnsweredQuestionIds();
-        if (!ids.includes(id)) {
-            ids.push(id);
-            localStorage.setItem('cyberpehra_quiz_answered_ids', JSON.stringify(ids));
-        }
-    } catch(e) {}
-};
-
-let activeQuizQuestions = [];
-let currentQuizIndex = 0;
-let quizScore = 0;
-let userAnswers = [];
-
-export const renderCyberQuiz = (wasReset = false) => {
-    const container = document.getElementById('quizContainer') || document.getElementById('modalBody');
+export const renderCyberCellDetails = (stateCode) => {
+    const container = document.getElementById('cyberCellDetailContainer');
     if (!container) return;
-
-    if (activeQuizQuestions.length === 0) {
-        resetCyberQuiz();
-        return;
-    }
-
-    if (currentQuizIndex >= activeQuizQuestions.length) {
-        renderQuizScorecard(container);
-        return;
-    }
-
-    const q = activeQuizQuestions[currentQuizIndex];
-    const progressPct = Math.round(((currentQuizIndex) / activeQuizQuestions.length) * 100);
-    const answeredCount = getAnsweredQuestionIds().length;
-    const totalBankCount = CyberQuizMasterBank.length;
+    const cellData = CYBER_CELL_DIRECTORY[stateCode] || CYBER_CELL_DIRECTORY["DL"];
 
     container.innerHTML = `
-        <div class="space-y-5 font-sans text-xs animate-fadeIn">
-            ${wasReset ? `
-                <div class="p-3 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-300 text-[11px] font-bold flex items-center gap-2">
-                    <span>🎉 Outstanding! You answered ALL ${totalBankCount} questions in CyberPehra Database. Resetting question history for fresh practice!</span>
+        <div class="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 font-sans text-xs animate-fadeIn">
+            <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+                <div class="space-y-0.5">
+                    <h4 class="text-base font-bold text-white font-display">${sanitizeHTML(cellData.name)}</h4>
+                    <span class="text-[11px] text-emerald-400 font-semibold">Official Nodal Designation: ${sanitizeHTML(cellData.nodalOfficer)}</span>
                 </div>
-            ` : ''}
+                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800 uppercase">
+                    Verified Directory
+                </span>
+            </div>
 
-            <!-- Progress Bar -->
-            <div class="space-y-1.5">
-                <div class="flex justify-between text-[11px] text-slate-400 font-bold">
-                    <span>Scenario Question ${currentQuizIndex + 1} of ${activeQuizQuestions.length}</span>
-                    <span class="text-emerald-400 font-mono">${answeredCount} / ${totalBankCount} Mastered</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-300">
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">🏢 Official Nodal Office Address</span>
+                    <p class="text-xs text-slate-200 leading-relaxed">${sanitizeHTML(cellData.address)}</p>
                 </div>
-                <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
-                    <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-300" style="width: ${progressPct}%"></div>
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">📞 Contact Number & Email</span>
+                    <div class="text-xs font-bold text-white font-mono">${sanitizeHTML(cellData.phone)}</div>
+                    <div class="text-[11px] text-emerald-400 font-mono">${sanitizeHTML(cellData.email)}</div>
                 </div>
             </div>
 
-            <!-- Question Card -->
-            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
-                <h4 class="text-sm font-bold text-white leading-snug font-display">${sanitizeHTML(q.question)}</h4>
-            </div>
-
-            <!-- Options Grid -->
-            <div class="space-y-2.5">
-                ${q.options.map((opt, idx) => `
-                    <button onclick="window.submitQuizAnswer(${idx})" class="w-full text-left p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-emerald-500/50 hover:bg-slate-900 transition flex items-center justify-between group cursor-pointer">
-                        <span class="font-medium text-xs leading-relaxed">${sanitizeHTML(opt)}</span>
-                        <span class="text-xs text-slate-500 group-hover:text-emerald-400 transition font-bold font-mono">➜</span>
-                    </button>
-                `).join('')}
-            </div>
-
-            <!-- Footer Info -->
-            <div class="flex items-center justify-between pt-2 border-t border-slate-800 text-[10px] text-slate-500">
-                <span>🛡️ Non-Repeating Scenario Engine</span>
-                <span>Score: <strong class="text-emerald-400 font-mono">${quizScore} / ${activeQuizQuestions.length}</strong></span>
+            <div class="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-rose-950/30 border border-rose-800/60">
+                <div class="space-y-0.5">
+                    <div class="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+                        <span>🚨 Immediate Helpline Action</span>
+                    </div>
+                    <div class="text-[11px] text-slate-300">Report financial fraud within 24h Golden Hour directly to National Cyber Helpline.</div>
+                </div>
+                <a href="tel:1930" class="px-4 py-2 rounded-xl bg-[#FF3B5C] text-white font-bold text-xs uppercase shadow-[0_0_15px_rgba(255,59,92,0.4)] flex items-center gap-1.5">
+                    📞 Call 1930 Now
+                </a>
             </div>
         </div>
     `;
-};
-
-export const submitQuizAnswer = (selectedIndex) => {
-    const q = activeQuizQuestions[currentQuizIndex];
-    if (!q) return;
-
-    const isCorrect = (selectedIndex === q.correct);
-    if (isCorrect) quizScore++;
-    userAnswers.push({ question: q.question, selected: selectedIndex, correct: q.correct, isCorrect });
-
-    // Mark question as answered in localStorage so it NEVER repeats for this user!
-    markQuestionAsAnswered(q.id);
-
-    const container = document.getElementById('quizContainer') || document.getElementById('modalBody');
-    if (!container) return;
-
-    container.innerHTML = `
-        <div class="space-y-5 font-sans text-xs animate-fadeIn">
-            <div class="p-4 rounded-2xl ${isCorrect ? 'bg-emerald-950/60 border border-emerald-800/80 text-emerald-300' : 'bg-rose-950/60 border border-rose-800/80 text-rose-300'} space-y-2">
-                <div class="flex items-center gap-2 font-bold text-sm">
-                    <span>${isCorrect ? '✅ CORRECT ANSWER!' : '❌ INCORRECT ACTION!'}</span>
-                </div>
-                <p class="text-xs leading-relaxed font-sans text-slate-200">${sanitizeHTML(q.explanation)}</p>
-            </div>
-
-            <button onclick="window.nextQuizQuestion()" class="w-full py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs font-sans uppercase tracking-wider hover:bg-emerald-400 transition cursor-pointer">
-                Next Scenario Question ➔
-            </button>
-        </div>
-    `;
-};
-
-export const nextQuizQuestion = () => {
-    currentQuizIndex++;
-    renderCyberQuiz();
-};
-
-export const renderQuizScorecard = (container) => {
-    const total = activeQuizQuestions.length;
-    const pct = Math.round((quizScore / total) * 100);
-    const totalMastered = getAnsweredQuestionIds().length;
-    const totalBankCount = CyberQuizMasterBank.length;
-
-    let badgeTitle = "🏆 Cyber Guardian Master";
-    let badgeColor = "text-emerald-400 border-emerald-800 bg-emerald-950/60";
-    let message = "Outstanding! You have exceptional cyber awareness and are well-protected against common Indian cyber frauds.";
-
-    if (quizScore < 3) {
-        badgeTitle = "⚠️ High Vulnerability Warning";
-        badgeColor = "text-rose-400 border-rose-800 bg-rose-950/60";
-        message = "You are vulnerable to online scams and extortion techniques. We strongly recommend reading our Scam Encyclopedia & Emergency Playbooks!";
-    } else if (quizScore < 5) {
-        badgeTitle = "🛡️ Cyber Aware Defender";
-        badgeColor = "text-amber-400 border-amber-800 bg-amber-950/60";
-        message = "Good cyber security awareness! Review the missed scenarios to stay completely safe.";
-    }
-
-    container.innerHTML = `
-        <div class="space-y-5 text-center font-sans text-xs animate-fadeIn py-2">
-            <div class="p-6 rounded-3xl border ${badgeColor} space-y-3">
-                <div class="text-3xl">${quizScore >= 4 ? '🏆' : (quizScore >= 3 ? '🛡️' : '⚠️')}</div>
-                <h3 class="text-lg font-bold text-white font-display">${badgeTitle}</h3>
-                <div class="text-2xl font-bold font-mono text-emerald-400">${quizScore} / ${total} Score (${pct}%)</div>
-                <div class="text-[11px] text-slate-400 font-mono">Total Scenarios Mastered: ${totalMastered} / ${totalBankCount}</div>
-                <p class="text-xs text-slate-300 leading-relaxed font-sans">${message}</p>
-            </div>
-
-            <div class="flex gap-3">
-                <button onclick="window.resetCyberQuiz()" class="flex-1 py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider hover:bg-emerald-400 transition cursor-pointer">
-                    ⚡ Play 5 Fresh Unseen Questions
-                </button>
-                <button onclick="window.closeSimpleModal()" class="px-5 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white font-bold text-xs uppercase hover:bg-slate-800 transition cursor-pointer">
-                    Close
-                </button>
-            </div>
-        </div>
-    `;
-};
-
-export const resetCyberQuiz = () => {
-    currentQuizIndex = 0;
-    quizScore = 0;
-    userAnswers = [];
-
-    const answeredIds = getAnsweredQuestionIds();
-    let unAnswered = CyberQuizMasterBank.filter(q => !answeredIds.includes(q.id));
-
-    let poolResetBanner = false;
-    if (unAnswered.length < 5) {
-        if (unAnswered.length === 0) {
-            try {
-                localStorage.removeItem('cyberpehra_quiz_answered_ids');
-            } catch(e) {}
-            unAnswered = [...CyberQuizMasterBank];
-            poolResetBanner = true;
-        } else {
-            // Fill up remaining slots with randomly chosen answered questions
-            const answeredList = CyberQuizMasterBank.filter(q => answeredIds.includes(q.id));
-            const need = 5 - unAnswered.length;
-            const extra = answeredList.slice(0, need);
-            unAnswered = [...unAnswered, ...extra];
-        }
-    }
-
-    // Shuffle unAnswered array (Fisher-Yates)
-    const shuffled = [...unAnswered];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-
-    activeQuizQuestions = shuffled.slice(0, 5);
-    renderCyberQuiz(poolResetBanner);
 };

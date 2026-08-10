@@ -1,22 +1,14 @@
 import { State } from './state.js';
 import { UI } from './ui.js';
 import { sanitizeHTML } from './utils.js';
-import { getTranslation } from './language.js';
 
 export const switchScanMode = (mode) => {
     State.currentMode = mode;
     
     UI.tabBtns.forEach(btn => {
-        const isActive = (btn.dataset.mode === mode);
+        const isActive = btn.dataset.mode === mode;
         btn.setAttribute('aria-selected', String(isActive));
         btn.setAttribute('tabindex', isActive ? "0" : "-1");
-        if (isActive) {
-            btn.classList.add('active', 'bg-[#00FF88]', 'text-black', 'shadow-[0_0_20px_rgba(0,255,136,0.35)]', 'font-bold');
-            btn.classList.remove('text-slate-400');
-        } else {
-            btn.classList.remove('active', 'bg-[#00FF88]', 'text-black', 'shadow-[0_0_20px_rgba(0,255,136,0.35)]', 'font-bold');
-            btn.classList.add('text-slate-400');
-        }
     });
     
     UI.scanPanels.forEach(panel => panel.classList.remove('active'));
@@ -364,7 +356,7 @@ const updateResultUI = (isError, riskScore, malicious, total, domainOrHash, stat
         UI.gaugeArc.style.stroke = "#F59E0B"; 
         UI.gaugeArc.style.strokeDashoffset = 251 - (riskScore / 100) * 251; 
         UI.gaugeValue.innerText = (State.currentMode === 'file') ? `${malicious}/${total}` : `${riskScore}%`; 
-        UI.resultText.innerHTML = `<strong class="text-amber-400">Moderate Risk Flags:</strong> Security indicators exist for <code>${safeTarget}</code>. Exercise caution.`; 
+        UI.resultText.innerHTML = `<strong class="text-amber-400">Moderate Risk Flags:</strong> Minor warnings exist for <code>${safeTarget}</code>. Proceed with caution.`; 
         UI.govGuide.classList.add('hidden');
     } else {
         UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-emerald-950 text-emerald-400 border-emerald-800"; 
@@ -374,143 +366,6 @@ const updateResultUI = (isError, riskScore, malicious, total, domainOrHash, stat
         UI.gaugeValue.innerText = (State.currentMode === 'file') ? `0/${total}` : "0%"; 
         UI.resultText.innerHTML = `<strong class="text-emerald-400">No Malicious Indicators Found:</strong> Security vendors did not flag <code>${safeTarget}</code>.`; 
         UI.govGuide.classList.add('hidden');
-    }
-
-    renderDetailedThreatReport(isError, riskScore, malicious, total, domainOrHash, status, []);
-};
-
-const renderDetailedThreatReport = (isError, riskScore, malicious, total, domainOrHash, status, flags = []) => {
-    const container = document.getElementById('detailedThreatReportContainer');
-    if (!container) return;
-
-    if (isError) {
-        container.classList.add('hidden');
-        return;
-    }
-    container.classList.remove('hidden');
-
-    const scanId = 'CP-2026-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-    const rptIdEl = document.getElementById('reportScanId');
-    if (rptIdEl) rptIdEl.innerText = scanId;
-
-    const now = new Date();
-    const formattedDate = now.toLocaleString('en-IN', {
-        day: '2-digit', month: 'short', year: 'numeric',
-        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
-    }) + ' IST';
-    const rptTimeEl = document.getElementById('reportTimestamp');
-    if (rptTimeEl) rptTimeEl.innerText = formattedDate;
-
-    const modeLabel = State.currentMode === 'url' ? 'Link Verification'
-        : State.currentMode === 'file' ? 'File SHA-256 Hash Analysis'
-        : State.currentMode === 'chat' ? 'Scam Conversation Text'
-        : 'QR Code Payload Analysis';
-
-    const rptScanType = document.getElementById('rptScanType');
-    if (rptScanType) rptScanType.innerText = modeLabel;
-
-    const rptOrigInput = document.getElementById('rptOrigInput');
-    if (rptOrigInput) rptOrigInput.innerText = domainOrHash || 'Not available / Not checked';
-
-    let normTarget = domainOrHash || 'Not available / Not checked';
-    let protocolStr = 'Not available / Not checked';
-    let hostStr = 'Not available / Not checked';
-
-    if (State.currentMode === 'url') {
-        const norm = normalizeAndValidateUrl(domainOrHash);
-        if (norm.valid) {
-            normTarget = norm.normalizedUrl;
-            protocolStr = norm.parsedUrl ? norm.parsedUrl.protocol : 'https:';
-            hostStr = norm.parsedUrl ? norm.parsedUrl.hostname : domainOrHash;
-        }
-    } else if (State.currentMode === 'file') {
-        protocolStr = 'SHA-256 (Web Crypto)';
-        hostStr = 'Local Client File';
-    } else if (State.currentMode === 'chat') {
-        protocolStr = 'Text Payload';
-        hostStr = 'Message Input';
-    } else if (State.currentMode === 'qr') {
-        protocolStr = 'QR Decoded Payload';
-        hostStr = 'Image Payload';
-    }
-
-    const rptNormInput = document.getElementById('rptNormInput');
-    if (rptNormInput) rptNormInput.innerText = normTarget;
-
-    const rptProtocol = document.getElementById('rptProtocol');
-    if (rptProtocol) rptProtocol.innerText = protocolStr;
-
-    const rptHost = document.getElementById('rptHost');
-    if (rptHost) rptHost.innerText = hostStr;
-
-    const rptIpInfo = document.getElementById('rptIpInfo');
-    if (rptIpInfo) rptIpInfo.innerText = "Not available / Not checked";
-
-    const rptVtResult = document.getElementById('rptVtResult');
-    if (rptVtResult) {
-        rptVtResult.innerText = total > 0 ? `${malicious}/${total} AV Engines (${malicious > 0 ? 'Detections Found' : 'Clean'})` : 'Unconfigured / Offline (Local Fallback)';
-    }
-
-    const rptGsbResult = document.getElementById('rptGsbResult');
-    if (rptGsbResult) {
-        rptGsbResult.innerText = (status && status.includes('Safe Browsing')) ? status : (riskScore === 0 ? 'Clean (No threats found)' : 'Unconfigured / Offline');
-    }
-
-    const rptHeuristicsResult = document.getElementById('rptHeuristicsResult');
-    if (rptHeuristicsResult) {
-        rptHeuristicsResult.innerText = flags.length > 0 ? `${flags.length} Heuristic Flags Triggered` : 'Passed Heuristic Checks (0 Flags)';
-    }
-
-    const rptRiskScore = document.getElementById('rptRiskScore');
-    if (rptRiskScore) rptRiskScore.innerText = `${riskScore}%`;
-
-    const rptRiskClass = document.getElementById('rptRiskClass');
-    if (rptRiskClass) {
-        if (riskScore >= 40 || malicious > 0) {
-            rptRiskClass.className = "text-xs font-bold text-rose-400 mt-0.5";
-            rptRiskClass.innerText = "HIGH RISK // SUSPICIOUS";
-        } else if (riskScore > 0) {
-            rptRiskClass.className = "text-xs font-bold text-amber-400 mt-0.5";
-            rptRiskClass.innerText = "CAUTION ADVISED";
-        } else {
-            rptRiskClass.className = "text-xs font-bold text-[#00FF88] mt-0.5";
-            rptRiskClass.innerText = "SECURE // SAFE";
-        }
-    }
-
-    const rptIndicatorList = document.getElementById('rptIndicatorList');
-    if (rptIndicatorList) {
-        if (flags.length > 0) {
-            rptIndicatorList.innerHTML = flags.map(f => `<div class="flex items-center gap-2 text-amber-300"><span>⚠️</span> <span>${sanitizeHTML(f)}</span></div>`).join('');
-        } else {
-            rptIndicatorList.innerHTML = `<div class="text-[#00FF88] font-medium flex items-center gap-2"><span>✓</span> <span>No malicious or suspicious indicators detected.</span></div>`;
-        }
-    }
-
-    const rptRecAction = document.getElementById('rptRecAction');
-    if (rptRecAction) {
-        if (riskScore >= 40 || malicious > 0) {
-            rptRecAction.className = "p-3.5 rounded-xl bg-rose-950/40 border border-rose-800/80 text-rose-300 text-xs font-semibold leading-relaxed";
-            rptRecAction.innerText = "DO NOT open this link, download files, share OTPs, or transfer money. If financial loss occurred, call 1930 immediately.";
-        } else if (riskScore > 0) {
-            rptRecAction.className = "p-3.5 rounded-xl bg-amber-950/40 border border-amber-800/80 text-amber-300 text-xs font-semibold leading-relaxed";
-            rptRecAction.innerText = "Exercise caution. Verify the domain and sender identity before making any payment or sharing personal credentials.";
-        } else {
-            rptRecAction.className = "p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-800/60 text-emerald-300 text-xs font-semibold leading-relaxed";
-            rptRecAction.innerText = "No threat indicators detected. Proceed normally, but always maintain standard cybersecurity hygiene.";
-        }
-    }
-
-    const rptWhatMeans = document.getElementById('rptWhatMeans');
-    if (rptWhatMeans) {
-        rptWhatMeans.innerText = riskScore > 0
-            ? "Security indicators or vendor detections were matched against this target. Potential security risks were identified."
-            : "The target item was evaluated against client-side URL pattern rules, domain registration heuristics, and available security databases. No known scam or threat markers matched.";
-    }
-
-    const rptWhatNotProves = document.getElementById('rptWhatNotProves');
-    if (rptWhatNotProves) {
-        rptWhatNotProves.innerText = "This result is an automated risk metric based on technical telemetry. It is not a legal determination, guarantee of permanent safety, or proof of criminal activity. Always exercise independent caution.";
     }
 };
 
@@ -581,18 +436,13 @@ export const runLocalUrlHeuristicFallback = async (urlInput, vtStatus, gsbStatus
         score += 30;
     }
 
-    // 5. Sensitive Keyword & Brand Spoofing Analysis
+    // 5. Insecure HTTP Connection on Credential / Payment Keywords
     const hasHttp = parsedUrl.protocol === 'http:';
-    const sensitiveKeywords = ['login', 'bank', 'verify', 'account', 'signin', 'update', 'secure', 'pay', 'wallet', 'kyc', 'paypal', 'security', 'check'];
-    const domainLower = domain.toLowerCase();
-    const matchedKeywords = sensitiveKeywords.filter(kw => domainLower.includes(kw));
-
-    if (hasHttp && matchedKeywords.length > 0) {
-        flags.push(`⚠️ Insecure HTTP connection containing sensitive keyword(s): '${matchedKeywords.join("', '")}'`);
+    const sensitiveKeywords = ['login', 'bank', 'verify', 'account', 'signin', 'update', 'secure', 'pay', 'wallet', 'kyc'];
+    const matchedKeyword = sensitiveKeywords.find(kw => urlInput.toLowerCase().includes(kw));
+    if (hasHttp && matchedKeyword) {
+        flags.push(`⚠️ Insecure HTTP connection asking for '${matchedKeyword}' keyword`);
         score += 35;
-    } else if (matchedKeywords.length >= 2) {
-        flags.push(`⚠️ Suspicious keyword stacking in domain name ('${matchedKeywords.join("', '")}')`);
-        score += 25;
     }
 
     // 6. Live RDAP Domain Age Check
@@ -650,8 +500,8 @@ export const runLocalUrlHeuristicFallback = async (urlInput, vtStatus, gsbStatus
         `;
     }
 
-    const finalScore = flags.length === 0 ? 0 : Math.min(score, 99);
-    updateResultUI(false, finalScore, flags.length, 0, domain, flags.length === 0 ? 'Passed Heuristics' : 'Heuristic Risk Flags', domainAgeText);
+    const finalScore = flags.length === 0 ? 12 : Math.min(score, 99);
+    updateResultUI(false, finalScore, flags.length, 5, domain, flags.length === 0 ? 'Passed Heuristics' : 'Heuristic Risk Flags', domainAgeText);
 };
 
 export function normalizeAndValidateUrl(rawInput) {
@@ -924,8 +774,8 @@ export const runFileScan = async () => {
     }
 };
 
-export const runChatScan = (overrideText) => {
-    const text = typeof overrideText === 'string' ? overrideText.trim() : (UI.chatInputArea ? (UI.chatInputArea.querySelector('textarea')?.value || UI.chatInputArea.value || '') : '');
+export const runChatScan = () => {
+    const text = UI.chatInputArea.value;
     if(!text) { 
         updateResultUI(true, 0, 0, 0, "", "No text provided. Paste a message to scan.", "");
         return; 
@@ -945,7 +795,7 @@ export const runChatScan = (overrideText) => {
     State.lastScanResult = {
         mode: 'chat',
         target: text.length > 40 ? text.substring(0, 40) + '...' : text,
-        riskScore: flags.length === 0 ? 0 : Math.min(score, 99),
+        riskScore: flags.length === 0 ? 12 : Math.min(score, 99),
         malicious: flags.length,
         total: 5,
         flags,
@@ -957,8 +807,8 @@ export const runChatScan = (overrideText) => {
         UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-emerald-950 text-emerald-400 border-emerald-800"; 
         UI.badgeStatus.innerText = "NO FLAGS FOUND"; 
         UI.gaugeArc.style.stroke = "#34D399"; 
-        UI.gaugeArc.style.strokeDashoffset = 251; 
-        UI.gaugeValue.innerText = "0%"; 
+        UI.gaugeArc.style.strokeDashoffset = 251 - (0.12 * 251); 
+        UI.gaugeValue.innerText = "12%"; 
         UI.resultText.innerHTML = `<strong class="text-emerald-400">No obvious scam markers found.</strong> However, always verify the sender's identity independently.`;
     } else {
         UI.badgeStatus.className = "text-xs font-bold px-3 py-1 rounded-full border uppercase font-sans bg-rose-950 text-rose-400 border-rose-800 animate-pulse"; 
@@ -973,8 +823,8 @@ export const runChatScan = (overrideText) => {
         UI.resultText.innerHTML = msg;
     }
 
-    renderScamExplainAi('chat', text, flags.length, 5, flags.length === 0 ? 0 : Math.min(score, 99), flags.length === 0 ? 'Passed Heuristics' : 'Scam Markers Detected', flags);
-    renderAiIncidentAssistant('chat', text, flags.length, 5, flags.length === 0 ? 0 : Math.min(score, 99), flags.length === 0 ? 'Passed Heuristics' : 'Scam Markers Detected', flags, false);
+    renderScamExplainAi('chat', text, flags.length, 5, flags.length === 0 ? 12 : Math.min(score, 99), flags.length === 0 ? 'Passed Heuristics' : 'Scam Markers Detected', flags);
+    renderAiIncidentAssistant('chat', text, flags.length, 5, flags.length === 0 ? 12 : Math.min(score, 99), flags.length === 0 ? 'Passed Heuristics' : 'Scam Markers Detected', flags, false);
 
     // Update Trust Section for Chat Scan
     if (UI.trustSource) UI.trustSource.innerText = "Local Heuristic Engine";
@@ -1007,93 +857,46 @@ export const runChatScan = (overrideText) => {
             checklistHtml += `<li><span class="text-rose-400">[ ]</span> Block the sender profile immediately</li>`;
             checklistHtml += `<li><span class="text-rose-400">[ ]</span> Report suspicious financial fraud to 1930 Helpline</li>`;
         } else {
+            checklistHtml += `<li><span class="text-emerald-400">[ ]</span> Always verify sender identity independently</li>`;
             checklistHtml += `<li><span class="text-emerald-400">[ ]</span> Never transfer money to unknown accounts</li>`;
         }
         actionList.innerHTML = checklistHtml;
     }
 };
 
-let scanHudTimerInterval = null;
-let scanHudStartTime = 0;
-
-const startScanHudTimer = () => {
-    scanHudStartTime = performance.now();
-    const timerEl = document.getElementById('hudTimer');
-    const hudOverlay = document.getElementById('scanHudOverlay');
-    const statusBadge = document.getElementById('hudStatusBadge');
-    const corePulse = document.getElementById('hudCorePulse');
-    const coreIcon = document.getElementById('hudCoreIcon');
-    const ring1 = document.getElementById('hudRing1');
-    const ring2 = document.getElementById('hudRing2');
-
-    if (hudOverlay) hudOverlay.classList.remove('hidden');
-    if (statusBadge) {
-        statusBadge.className = "px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold uppercase tracking-wider text-[10px]";
-        statusBadge.innerText = getTranslation('hud_started');
-    }
-    if (corePulse) {
-        corePulse.className = "w-8 h-8 rounded-full bg-[#00FF88]/20 border border-[#00FF88] flex items-center justify-center shadow-[0_0_20px_rgba(0,255,136,0.6)] animate-pulse";
-    }
-    if (coreIcon) coreIcon.innerText = "⚡";
-    if (ring1) ring1.classList.add('animate-spin');
-    if (ring2) ring2.classList.add('animate-spin');
-
-    if (scanHudTimerInterval) clearInterval(scanHudTimerInterval);
-    scanHudTimerInterval = setInterval(() => {
-        if (timerEl) {
-            const elapsed = ((performance.now() - scanHudStartTime) / 1000).toFixed(1);
-            timerEl.innerText = `${elapsed}s`;
-        }
-    }, 50);
-};
-
-const updateScanHudStage = (stageNum, isError = false, statusText = '') => {
-    const activeText = document.getElementById('hudActiveStageText');
-    const percentEl = document.getElementById('hudProgressPercent');
-    const barEl = document.getElementById('hudProgressBar');
-    const stageGrid = document.getElementById('hudStageGrid');
-    const statusBadge = document.getElementById('hudStatusBadge');
-
-    const stateBadgeKeys = [
-        'hud_started',
-        'hud_scanning',
-        'hud_scanning',
-        'hud_analyzing',
-        'hud_querying',
-        'hud_querying',
-        'hud_finalizing',
-        'hud_finalizing'
-    ];
-
-    if (statusBadge && !isError) {
-        const badgeKey = stateBadgeKeys[stageNum - 1] || 'hud_scanning';
-        statusBadge.innerText = getTranslation(badgeKey);
-    }
+const renderScanStage = (stageNum, statusText, isError = false) => {
+    const consoleBox = document.getElementById('scanStagesConsole');
+    if (!consoleBox) return;
+    consoleBox.classList.remove('hidden');
 
     const stageNames = [
-        getTranslation('hud_stage1'),
-        getTranslation('hud_stage2'),
-        getTranslation('hud_stage3'),
-        getTranslation('hud_stage4'),
-        getTranslation('hud_stage5'),
-        getTranslation('hud_stage6'),
-        getTranslation('hud_stage7'),
-        getTranslation('hud_stage8')
+        "1. Initializing Connection & Context",
+        "2. Parsing Input Format & Parameters",
+        "3. Domain / Hash Telemetry Extraction",
+        "4. Executing Local Client Heuristic Scan",
+        "5. Querying VirusTotal & Intelligence Nodes",
+        "6. Aggregating Security Vendor Reports",
+        "7. Finalizing Verdict & Risk Metrics"
     ];
 
-    if (activeText) {
-        activeText.innerHTML = isError
-            ? `<span class="text-rose-400 font-bold">❌ ${stageNames[stageNum-1] || 'Error'}: ${sanitizeHTML(statusText)}</span>`
-            : `<span class="text-emerald-400 font-bold">${stageNames[stageNum-1] || 'Processing'}:</span> <span class="text-slate-300">${sanitizeHTML(statusText)}</span>`;
+    const nodesContainer = document.getElementById('scanStageNodes');
+    const stageLogText = document.getElementById('scanStageLogText');
+    const stageBar = document.getElementById('scanStageProgressBar');
+
+    if (stageLogText) {
+        stageLogText.innerHTML = isError 
+            ? `<span class="text-rose-400 font-bold">❌ Stage ${stageNum} Error: ${sanitizeHTML(statusText)}</span>`
+            : `<span class="text-emerald-400 font-bold">⚡ Stage ${stageNum}/7 Active:</span> <span class="text-slate-300">${sanitizeHTML(statusText)}</span>`;
     }
 
-    const percent = Math.round((stageNum / 8) * 100);
-    if (percentEl) percentEl.innerText = `${percent}%`;
-    if (barEl) barEl.style.width = `${percent}%`;
+    if (stageBar) {
+        const percent = Math.round((stageNum / 7) * 100);
+        stageBar.style.width = `${percent}%`;
+    }
 
-    if (stageGrid) {
+    if (nodesContainer) {
         let html = '';
-        for (let i = 1; i <= 8; i++) {
+        for (let i = 1; i <= 7; i++) {
             const isDone = i < stageNum;
             const isActive = i === stageNum;
             const isErr = isActive && isError;
@@ -1110,51 +913,14 @@ const updateScanHudStage = (stageNum, isError = false, statusText = '') => {
                 badgeClass = "bg-emerald-500/20 text-[#00FF88] border-[#00FF88]/60 shadow-[0_0_15px_rgba(0,255,136,0.3)] animate-pulse";
             }
 
-            const shortTitle = (stageNames[i-1] || '').split('. ')[1] || `Stage ${i}`;
             html += `
-                <div class="flex items-center gap-1.5 px-2 py-1 rounded-lg border font-sans text-[10px] ${badgeClass}">
-                    <span class="font-bold font-mono">${icon}</span>
-                    <span class="truncate">${shortTitle}</span>
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-xl border font-sans text-[10px] ${badgeClass}">
+                    <span class="font-bold">${icon}</span>
+                    <span class="hidden sm:inline">${stageNames[i-1].split('. ')[1]}</span>
                 </div>
             `;
         }
-        stageGrid.innerHTML = html;
-    }
-};
-
-const completeScanHud = (isError = false, reason = '') => {
-    if (scanHudTimerInterval) clearInterval(scanHudTimerInterval);
-    const statusBadge = document.getElementById('hudStatusBadge');
-    const corePulse = document.getElementById('hudCorePulse');
-    const coreIcon = document.getElementById('hudCoreIcon');
-    const ring1 = document.getElementById('hudRing1');
-    const ring2 = document.getElementById('hudRing2');
-    const percentEl = document.getElementById('hudProgressPercent');
-    const barEl = document.getElementById('hudProgressBar');
-
-    if (ring1) ring1.classList.remove('animate-spin');
-    if (ring2) ring2.classList.remove('animate-spin');
-
-    if (isError) {
-        if (statusBadge) {
-            statusBadge.className = "px-2.5 py-0.5 rounded-full bg-rose-950 text-rose-300 border border-rose-800 font-bold uppercase tracking-wider text-[10px]";
-            statusBadge.innerText = getTranslation('hud_failed');
-        }
-        if (corePulse) {
-            corePulse.className = "w-8 h-8 rounded-full bg-rose-950 border border-rose-500 flex items-center justify-center shadow-[0_0_20px_rgba(244,63,94,0.6)]";
-        }
-        if (coreIcon) coreIcon.innerText = "✕";
-    } else {
-        if (statusBadge) {
-            statusBadge.className = "px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold uppercase tracking-wider text-[10px]";
-            statusBadge.innerText = getTranslation('hud_completed');
-        }
-        if (corePulse) {
-            corePulse.className = "w-8 h-8 rounded-full bg-[#00FF88]/30 border border-[#00FF88] flex items-center justify-center shadow-[0_0_25px_rgba(0,255,136,0.8)]";
-        }
-        if (coreIcon) coreIcon.innerText = "✓";
-        if (percentEl) percentEl.innerText = "100%";
-        if (barEl) barEl.style.width = "100%";
+        nodesContainer.innerHTML = html;
     }
 };
 
@@ -1164,25 +930,24 @@ export const executeScan = async () => {
     
     UI.submitBtn.disabled = true;
     UI.submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
-    if (UI.resultBox) UI.resultBox.classList.add('hidden');
+    if (UI.resultBox) UI.resultBox.classList.remove('hidden');
     if (UI.scanBeamEl) UI.scanBeamEl.classList.remove('hidden');
+    if (UI.resultText) UI.resultText.innerHTML = '<span class="text-slate-400 animate-pulse">Establishing secure connection... Executing 7-stage risk analysis...</span>';
     
-    startScanHudTimer();
-
     try {
-        updateScanHudStage(1, false, "Establishing secure connection & context...");
+        renderScanStage(1, "Initializing connection & cryptographic context...");
         await new Promise(r => setTimeout(r, 80));
 
-        updateScanHudStage(2, false, "Parsing input format & protocol parameters...");
+        renderScanStage(2, "Parsing input format & protocol parameters...");
         await new Promise(r => setTimeout(r, 80));
 
-        updateScanHudStage(3, false, "Extracting target domain / hash telemetry...");
+        renderScanStage(3, "Extracting target domain / hash telemetry...");
         await new Promise(r => setTimeout(r, 80));
 
-        updateScanHudStage(4, false, "Executing local client heuristic analysis...");
+        renderScanStage(4, "Executing local client heuristic analysis...");
         await new Promise(r => setTimeout(r, 80));
 
-        updateScanHudStage(5, false, "Querying VirusTotal & intelligence nodes...");
+        renderScanStage(5, "Querying VirusTotal & global threat intelligence nodes...");
 
         if (State.currentMode === 'url') {
             const val = UI.urlInputArea ? UI.urlInputArea.querySelector('input')?.value.trim() : '';
@@ -1191,44 +956,25 @@ export const executeScan = async () => {
             await runFileScan();
         } else if (State.currentMode === 'chat') {
             const txt = UI.chatInputArea ? (UI.chatInputArea.querySelector('textarea')?.value || UI.chatInputArea.value) : '';
-            runChatScan(txt);
+            runChatScan();
         } else if (State.currentMode === 'qr') {
             const qrText = UI.qrIndicator ? UI.qrIndicator.innerText : '';
-            if (qrText.includes('Decoded: ')) {
-                const payload = qrText.replace(/^Decoded:\s*/, '').trim();
-                const norm = normalizeAndValidateUrl(payload);
-                if (norm.valid) {
-                    await runURLScan(payload);
-                } else {
-                    runChatScan(payload);
-                }
+            if (qrText.includes('Decoded: http')) {
+                const link = qrText.split('Decoded: ')[1].trim();
+                await runURLScan(link);
+            } else if (qrText.includes('Decoded: ')) {
+                runChatScan();
             } else {
                 updateResultUI(true, 0, 0, 0, "", "No decoded QR code payload found. Please upload a clear QR code image first.", "");
             }
         }
 
-        updateScanHudStage(6, false, "Checking Google Safe Browsing threat nodes...");
+        renderScanStage(6, "Processing vendor consensus & threat indicators...");
         await new Promise(r => setTimeout(r, 80));
 
-        updateScanHudStage(7, false, "Aggregating security vendor consensus reports...");
-        await new Promise(r => setTimeout(r, 80));
-
-        updateScanHudStage(8, false, "Finalizing verdict & generating threat assessment report...");
-        await new Promise(r => setTimeout(r, 80));
-
-        completeScanHud(false);
-        if (UI.resultBox) UI.resultBox.classList.remove('hidden');
-
+        renderScanStage(7, "Finalizing assessment verdict & action checklist.");
     } catch(err) {
-        updateScanHudStage(5, true, err.message || "Execution error");
-        completeScanHud(true, err.message);
-        if (UI.resultBox) UI.resultBox.classList.remove('hidden');
-    } finally {
-        if (UI.scanBeamEl) UI.scanBeamEl.classList.add('hidden');
-        UI.submitBtn.disabled = false;
-        State.isScanning = false;
-    }
-};rue);
+        renderScanStage(5, err.message || "Execution error", true);
     } finally {
         if (UI.scanBeamEl) UI.scanBeamEl.classList.add('hidden');
         UI.submitBtn.disabled = false;
