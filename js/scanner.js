@@ -1225,14 +1225,10 @@ export const executeScan = async () => {
         if (UI.resultBox) UI.resultBox.classList.remove('hidden');
     } finally {
         if (UI.scanBeamEl) UI.scanBeamEl.classList.add('hidden');
-        UI.submitBtn.disabled = false;
-        State.isScanning = false;
-    }
-};rue);
-    } finally {
-        if (UI.scanBeamEl) UI.scanBeamEl.classList.add('hidden');
-        UI.submitBtn.disabled = false;
-        UI.submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        if (UI.submitBtn) {
+            UI.submitBtn.disabled = false;
+            UI.submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
         State.isScanning = false;
     }
 };
