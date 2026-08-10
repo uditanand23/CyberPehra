@@ -198,19 +198,11 @@ export const openModal = (type) => {
             break;
         case 'quiz':
             title.innerText = "🎮 Cyber Security Scenario Assessment";
-            body.innerHTML = `
-                <div class="space-y-4">
-                    <p class="text-xs text-slate-300">Evaluate your cyber risk awareness in 3 quick scenarios:</p>
-                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                        <div class="font-bold text-emerald-400 text-xs">Q1: A caller claiming to be from your bank asks for an OTP to stop a fraud transaction. What do you do?</div>
-                        <div class="text-[11px] text-slate-300 font-sans">✅ Disconnect immediately and call the official bank helpline on the back of your debit card. Banks NEVER ask for OTPs over phone calls.</div>
-                    </div>
-                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-                        <div class="font-bold text-emerald-400 text-xs">Q2: Someone sends a QR code claiming you will RECEIVE ₹5,000 after scanning. What is true?</div>
-                        <div class="text-[11px] text-slate-300 font-sans">✅ Entering your UPI PIN is strictly for PAYING money, NEVER for receiving money. Scanning a QR code with a PIN prompt will debit your account.</div>
-                    </div>
-                </div>
-            `;
+            if (typeof window.resetCyberQuiz === 'function') {
+                window.resetCyberQuiz();
+            } else {
+                body.innerHTML = `<div id="quizContainer">Loading interactive quiz...</div>`;
+            }
             break;
         case 'whois':
             title.innerText = "🌐 WHOIS Domain Lookup Tool";
@@ -307,7 +299,7 @@ export const closeModals = () => {
 
 export const switchDashboardView = (viewId) => {
     const views = document.querySelectorAll('.dashboard-view');
-    const navLinks = document.querySelectorAll('.sidebar-nav-link, .mobile-nav-link');
+    const navLinks = document.querySelectorAll('.sidebar-nav-link, .mobile-nav-link, .mobile-dock-item');
     
     let targetView = document.getElementById(`view-${viewId}`);
     if (!targetView) {
@@ -325,14 +317,21 @@ export const switchDashboardView = (viewId) => {
         targetView.classList.add('animate-fadeIn');
     }
 
+    // Fix Black Screen Bug: Scroll window and document to top immediately on view switch
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
     navLinks.forEach(link => {
-        const isMatch = link.dataset.view === viewId;
+        const isMatch = (link.dataset.view === viewId);
         if (isMatch) {
-            link.classList.add('bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'font-bold');
-            link.classList.remove('text-slate-400', 'hover:bg-white/5');
+            link.classList.add('bg-[#00FF88]/15', 'text-[#00FF88]', 'border', 'border-[#00FF88]/50', 'shadow-[0_0_20px_rgba(0,255,136,0.25)]', 'font-bold');
+            link.classList.remove('text-slate-400', 'text-slate-300', 'hover:bg-white/5');
         } else {
-            link.classList.remove('bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'font-bold');
-            link.classList.add('text-slate-400');
+            link.classList.remove('bg-[#00FF88]/15', 'text-[#00FF88]', 'border', 'border-[#00FF88]/50', 'shadow-[0_0_20px_rgba(0,255,136,0.25)]', 'bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'font-bold');
+            if (link.dataset.view !== 'emergency') {
+                link.classList.add('text-slate-300');
+            }
         }
     });
 
