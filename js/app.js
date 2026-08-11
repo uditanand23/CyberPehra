@@ -2,7 +2,7 @@ import { State } from './state.js';
 import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, initLiveMeters, bootSequence, showToast, switchDashboardView, initShield3DEffect, initThreatGlobe } from './ui.js';
 import { applyLanguage, toggleLangMenu } from './language.js';
 import { switchScanMode, handleFileHash, executeScan, handleQrUpload } from './scanner.js';
-import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails, runWhoisLookup, runIpLookup, runDnsLookup, handleScreenshotUpload, runPasswordBreachCheck, renderCyberCellDetails, renderCyberQuiz, submitQuizAnswer, nextQuizQuestion, resetCyberQuiz, openScreenshotWorkspace, closeScreenshotWorkspace, toggleWorkspaceLangMenu, renderScreenshotWorkspace, handleWorkspaceDrop, handleWorkspaceFileSelect, setActiveScreenshotIndex, clearAllScreenshots, adjustScreenshotZoom, rotateScreenshotCanvas, resetScreenshotCanvasView, toggleScreenshotRedactMode, clearScreenshotRedactions, cancelScreenshotScan, startScreenshotInvestigation, downloadScreenshotPDFReport, downloadScreenshotJSONReport, downloadScreenshotTXTReport, printScreenshotReport, copyScreenshotReportText } from './tools.js';
+import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails, runWhoisLookup, runIpLookup, runDnsLookup, handleScreenshotUpload, runPasswordBreachCheck, renderCyberCellDetails, renderCyberQuiz, submitQuizAnswer, nextQuizQuestion, resetCyberQuiz, openScreenshotWorkspace, closeScreenshotWorkspace, toggleWorkspaceLangMenu, renderScreenshotWorkspace, handleWorkspaceDrop, handleWorkspaceFileSelect, setActiveScreenshotIndex, clearAllScreenshots, adjustScreenshotZoom, rotateScreenshotCanvas, resetScreenshotCanvasView, toggleScreenshotRedactMode, clearScreenshotRedactions, cancelScreenshotScan, startScreenshotInvestigation, downloadScreenshotPDFReport, copyScreenshotReportText } from './tools.js';
 import { initServiceWorker } from './utils.js';
 import { initIndiaThreatMap, openStateReportModal, closeStateReportModal } from './indiaMap.js';
 
@@ -43,9 +43,6 @@ window.clearScreenshotRedactions = clearScreenshotRedactions;
 window.cancelScreenshotScan = cancelScreenshotScan;
 window.startScreenshotInvestigation = startScreenshotInvestigation;
 window.downloadScreenshotPDFReport = downloadScreenshotPDFReport;
-window.downloadScreenshotJSONReport = downloadScreenshotJSONReport;
-window.downloadScreenshotTXTReport = downloadScreenshotTXTReport;
-window.printScreenshotReport = printScreenshotReport;
 window.copyScreenshotReportText = copyScreenshotReportText;
 window.runPasswordBreachCheck = runPasswordBreachCheck;
 window.renderCyberCellDetails = renderCyberCellDetails;
