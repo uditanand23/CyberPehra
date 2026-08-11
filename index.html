@@ -261,12 +261,11 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_main">MAIN</div>
         <button data-view="dashboard" onclick="window.switchDashboardView('dashboard'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_home">🏠 Home</button>
-        <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_scam_scanner">🛡️ Scam Scanner</button>
     </div>
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_scanners">SCANNERS</div>
+        <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_scam_scanner">🛡️ Scam Scanner</button>
         <button onclick="window.openModal('screenshot'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_screenshot">📸 Screenshot Analyzer</button>
-        <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_website_scanner">🌐 Website Scanner</button>
     </div>
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_intel">INTELLIGENCE</div>
@@ -301,18 +300,15 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
             <button data-view="dashboard" onclick="window.switchDashboardView('dashboard');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_home">
                 🏠 Home
             </button>
-            <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_scam_scanner">
-                🛡️ Scam Scanner
-            </button>
         </div>
 
         <div class="space-y-1">
             <div class="px-3 text-[10px] font-sans tracking-widest text-slate-500 uppercase font-bold" data-i18n="nav_cat_scanners">SCANNERS</div>
+            <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_scam_scanner">
+                🛡️ Scam Scanner
+            </button>
             <button onclick="window.openModal('screenshot');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_screenshot">
                 📸 Screenshot Analyzer
-            </button>
-            <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_website_scanner">
-                🌐 Website Scanner
             </button>
         </div>
 
