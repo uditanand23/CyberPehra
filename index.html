@@ -1110,113 +1110,18 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
         </section>
 
         <!-- VIEW 5: 🇮🇳 INTERACTIVE INDIA CYBER THREAT MAP -->
-        <section id="view-map" class="dashboard-view hidden space-y-8">
-            <!-- Header with Title & Tab Controls -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 gap-4">
-                <div class="space-y-1">
+        <section id="view-map" class="dashboard-view hidden space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <div>
                     <h2 class="text-2xl font-extrabold text-white tracking-wide font-display flex items-center gap-2" data-i18n="map_title">
-                        <span>🇮🇳</span> Live Cyber Threat Map – India
+                        <span>🇮🇳</span> India 3D Cyber Threat Map
                     </h2>
-                    <p class="text-xs text-slate-400 font-sans" data-i18n="map_desc">Real-time cyber attacks across India • Click any state to view telemetry report</p>
-                </div>
-                <div class="flex items-center gap-2 bg-[#050806] p-1.5 rounded-xl border border-white/10 self-start sm:self-auto font-sans text-xs">
-                    <button id="mapTabIndia" class="px-3.5 py-1.5 rounded-lg bg-[#00FF88] text-black font-bold shadow-[0_0_20px_rgba(0,255,136,0.3)] transition" data-i18n="map_tab_india">
-                        🇮🇳 India View
-                    </button>
-                    <button id="mapTabGlobal" class="px-3.5 py-1.5 rounded-lg text-slate-400 hover:bg-white/5 transition" data-i18                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 font-sans text-xs">
-                    <div class="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-wider">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#00FF88] glow-dot"></span>
-                        <span data-i18n="map_radar_label">Interactive 36 States & UT Radar Map</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[11px] text-slate-400">
-                        <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
-                            <button id="btn3dToggle" onclick="window.setMapPerspective(true)" class="px-2.5 py-1 rounded bg-[#00FF88]/20 text-[#00FF88] border border-[#00FF88]/40 font-bold transition flex items-center gap-1">
-                                <span>🎲</span> <span data-i18n="map_3d_btn">3D Isometric</span>
-                            </button>
-                            <button id="btn2dToggle" onclick="window.setMapPerspective(false)" class="px-2.5 py-1 rounded text-slate-400 hover:text-white transition flex items-center gap-1">
-                                <span>🗺️</span> <span data-i18n="map_2d_btn">2D Flat</span>
-                            </button>
-                        </div>
-                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-semibold hidden sm:inline-block" data-i18n="map_ncrb_sync">
-                            NCRB / I4C Telemetry Sync
-                        </span>
-                    </div>
-                </div>
-
-                <!-- SVG Vector Map Render Wrapper -->
-                <div id="indiaSvgMapWrapper" class="relative w-full min-h-[520px] flex items-center justify-center py-2">
-                    <!-- Dynamic SVG vector map rendered by js/indiaMap.js -->
-                </div>
-
-                <!-- 36 States & UT Quick Access Grid -->
-                <div class="space-y-2 pt-2 border-t border-white/10">
-                    <div class="flex items-center justify-between text-xs font-sans text-slate-400">
-                        <span class="font-bold text-white flex items-center gap-1.5" data-i18n="map_quick_select">
-                            <span>📍</span> Regional Quick Select (All 36 States & UTs):
-                        </span>
-                        <span class="text-[10px]" data-i18n="map_quick_hint">Click any region for instant telemetry report</span>
-                    </div>
-                    <div id="stateQuickSelectorWrapper" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 max-h-48 overflow-y-auto pr-1">
-                        <!-- Rendered dynamically by js/indiaMap.js -->
-                    </div>
-                </div>
-
-                <!-- Fixed Bottom-Left Legend -->
-                <div class="flex flex-wrap items-center gap-4 pt-2 border-t border-white/10 font-sans text-xs">
-                    <span class="text-slate-400 font-bold uppercase tracking-wider text-[10px]" data-i18n="map_legend_title">Severity Legend:</span>
-                    <div class="flex items-center gap-1.5">
-                        <span class="w-3 h-3 rounded-full bg-[#FF3B5C] shadow-[0_0_8px_#FF3B5C]"></span>
-                        <span class="text-slate-200" data-i18n="map_legend_high">🔴 High Attacks</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <span class="w-3 h-3 rounded-full bg-[#FF9F43] shadow-[0_0_8px_#FF9F43]"></span>
-                        <span class="text-slate-200" data-i18n="map_legend_med">🟠 Medium Attacks</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <span class="w-3 h-3 rounded-full bg-[#00FF88] shadow-[0_0_8px_#00FF88]"></span>
-                        <span class="text-slate-200" data-i18n="map_legend_low">🟢 Low Attacks</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        <span class="w-3 h-3 rounded-full bg-slate-600"></span>
-                        <span class="text-slate-400" data-i18n="map_legend_pending">⚪ Data Pending</span>
-                    </div>
+                    <p class="text-xs text-slate-400 font-sans" data-i18n="map_desc">Authoritative 3D Administrative Boundary Intelligence • 28 States & 8 UTs • Multi-Level Drilldown</p>
                 </div>
             </div>
 
-            <!-- Global View Tab Canvas (Hidden by default) -->
-            <div id="globalMapContainer" class="hidden glass-card p-8 rounded-2xl border border-white/10 space-y-6 text-center">
-                <div class="max-w-md mx-auto space-y-3">
-                    <span class="text-4xl">🌍</span>
-                    <h3 class="text-xl font-bold text-white font-display">Global Cyber Threat Stream</h3>
-                    <p class="text-xs text-slate-400 font-sans leading-relaxed">
-                        Monitoring international attack vectors targeting Indian digital infrastructure. Switch to India View for state-by-state intelligence.
-                    </p>
-                    <button onclick="document.getElementById('mapTabIndia').click()" class="px-5 py-2.5 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(0,255,136,0.3)]">
-                        Switch to India Vector Map ➔
-                    </button>
-                </div>
-            </div>
-
-            <!-- Live Stats Footer Strip (3 Cards) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-sans">
-                <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-1">
-                    <span class="text-xs text-slate-400 font-medium">Total Active Alerts</span>
-                    <div id="statTotalAlerts" class="text-3xl font-extrabold text-white font-display">0</div>
-                    <span class="text-[10px] text-emerald-400">Live aggregated from 36 regions</span>
-                </div>
-
-                <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-1">
-                    <span class="text-xs text-slate-400 font-medium">States/UTs Affected</span>
-                    <div id="statStatesAffected" class="text-3xl font-extrabold text-amber-400 font-display">0 / 36</div>
-                    <span class="text-[10px] text-amber-300">High & Medium threat level zones</span>
-                </div>
-
-                <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-1">
-                    <span class="text-xs text-slate-400 font-medium">Critical Alerts</span>
-                    <div id="statCriticalAlerts" class="text-3xl font-extrabold text-[#FF3B5C] font-display">0</div>
-                    <span class="text-[10px] text-rose-400">High severity attack clusters</span>
-                </div>
-            </div>
+            <!-- CONTAINER RENDERED DYNAMICALLY BY JS/INDIAMAP.JS -->
+            <div id="indiaMapContainer" class="w-full space-y-6"></div>
         </section>
 
         <!-- VIEW 6: 🛠️ SECURITY TOOLS SUITE -->
@@ -1522,6 +1427,26 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     <span>Client SHA-256 Hashing Engine</span>
                     <span class="text-emerald-400 font-bold">LOCAL (0-DAY RETENTION)</span>
                 </div>
+            </div>
+        </section>
+
+        <!-- VIEW 14: 📰 FULL INCIDENT INTELLIGENCE REPORT VIEW -->
+        <section id="view-incident-report" class="dashboard-view hidden space-y-6">
+            <!-- BACK BUTTON & HEADER BAR -->
+            <div class="flex items-center justify-between gap-4 border-b border-white/10 pb-4 flex-wrap">
+                <button onclick="window.switchDashboardView('map');" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2 cursor-pointer shadow-lg">
+                    <span>← Back to India Threat Map</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold text-[11px] flex items-center gap-1.5">
+                        🟢 Official Verified Incident Intelligence Briefing
+                    </span>
+                </div>
+            </div>
+
+            <!-- CONTAINER FOR POPULATED REPORT -->
+            <div id="fullIncidentReportContainer" class="space-y-6">
+                <!-- Dynamically populated by window.openFullNewsReportPage(newsId) -->
             </div>
         </section>
     </main>

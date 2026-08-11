@@ -2141,7 +2141,7 @@ export const StateCyberCellDB = {
         portal: "https://cybercrime.gov.in"
     },
     DL: {
-        state: "Delhi NCR",
+        state: "National Capital Territory of Delhi (NCT of Delhi)",
         hq: "Special Cell IFSO (Intelligence Fusion & Strategic Operations), Sector 16, Dwarka, New Delhi - 110078",
         officer: "DCP Cyber Crime (IFSO), Delhi Police",
         phone: "1930 / 011-20892633",
@@ -3053,9 +3053,9 @@ export const IndiaStateThreatDB = {
         contact: "1930 Cyber Helpline • Maharashtra Cyber Cell (cybercell.mh@gov.in)"
     },
     "DL": {
-        name: "Delhi NCR",
+        name: "National Capital Territory of Delhi (NCT of Delhi)",
         risk: "HIGH THREAT ALERT",
-        summary: "Increased reports of AI Voice Cloning extortion, Fake Challan SMS, and Loan App Spyware in Delhi NCR.",
+        summary: "Increased reports of AI Voice Cloning extortion, Fake Challan SMS, and Loan App Spyware in National Capital Territory of Delhi (NCT of Delhi).",
         alerts: [
             "Fake Traffic Challan SMS with malicious link (echallan-parivahan-fake.apk).",
             "Emergency accident extortion using AI voice clones of family members.",

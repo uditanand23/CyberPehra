@@ -320,7 +320,7 @@ export const Translations = {
     },
     hi: {
         // Boot screen
-        boot_sys: "साइबर-पहरा सिक्योरिटी कोर",
+        boot_sys: "CyberPehra Security Core",
         boot_title: "CYBERPEHRA SOC v5.0",
         boot_desc: "रिस्क को एनालाइज करें, नुकसान होने से पहले",
         boot_skip: "स्किप करें ↗",
@@ -347,7 +347,7 @@ export const Translations = {
         nav_whois: "🌐 WHOIS जांच",
         nav_ip_lookup: "🌍 IP लुकअप",
         nav_dns_lookup: "🔍 DNS लुकअप",
-        nav_qr_gen: "▦ साइबरपहरा टूल्स",
+        nav_qr_gen: "▦ CyberPehra Tools",
         nav_quiz: "🎮 साइबर सुरक्षा क्विज",
         nav_emergency_ctr: "🚨 इमरजेंसी सेंटर",
         nav_report_scam: "📢 स्कैम रिपोर्ट करें",
@@ -448,70 +448,67 @@ export const Translations = {
         how_step1_desc: "कोई भी संदिग्ध URL, मैसेज डालें या APK फाइल का लोकल SHA-256 हैश जनरेट करें।",
         how_step2_title: "2. थ्रेट इंटेलिजेंस",
         how_step2_desc: "हमारा सिस्टम VirusTotal और Google Safe Browsing से सटीक जानकारी निकालता है।",
-        how_step3_title: "3. असली रिज़ल्ट पाएं",
-        how_step3_desc: "तुरंत जानें कि यह सुरक्षित है या स्कैम। कोई नकली डिफ़ॉल्ट स्कोर नहीं।",
+        how_step3_title: "3. सत्यापित निर्णय",
+        how_step3_desc: "सुरक्षा असेसमेंट रिपोर्ट, वेंडर रेशियो और आपातकालीन गाइड प्राप्त करें।",
 
         // Emergency Response
         em_banner_badge: "गोल्डन आवर इमरजेंसी रिस्पॉन्स",
-        em_banner_title: "पैसे लूटे गए हैं या ब्लैकमेल हो रहे हैं?",
+        em_banner_title: "पैसे चोरी हुए या एक्टिव ब्लैकमेलिंग हो रही है?",
         em_banner_desc: "खाता फ्रीज करवाने के लिए तुरंत राष्ट्रीय साइबर हेल्पलाइन 1930 पर कॉल करें।",
-        em_btn_call: "📞 अभी 1930 पर कॉल करें",
-        em_btn_playbooks: "गाइडबुक देखें 📖",
+        em_btn_call: "📞 1930 पर तुरंत कॉल करें",
+        em_btn_playbooks: "प्लेबुक देखें 📖",
 
         em_cmd_badge: "गोल्डन आवर रिस्पॉन्स सेंटर",
-        em_cmd_title: "आपातकालीन प्रतिक्रिया केंद्र",
+        em_cmd_title: "इमरजेंसी रिस्पॉन्स कमान",
         em_cmd_desc: "यदि वित्तीय नुकसान या साइबर जबरन वसूली हुई है, तो तुरंत आधिकारिक संसाधनों का उपयोग करके कार्रवाई करें।",
-        em_playbook_select: "📖 अपनी घटना के अनुसार गाइड चुनें",
+        em_playbook_select: "📖 अपनी घटना के अनुसार प्लेबुक चुनें",
 
         // Safety Dashboard
         safety_title: "🛡️ नागरिक सुरक्षा डैशबोर्ड",
-        safety_desc: "आपकी डिजिटल स्वच्छता और सुरक्षा जांच प्रणाली",
-        btn_dl_hygiene: "सुरक्षा रिपोर्ट डाउनलोड करें 📄",
-        safety_checklist_title: "सुरक्षा एक्शन चेकलिस्ट",
+        safety_desc: "ऐप्पल हेल्थ एवं माइक्रोसॉफ्ट डिफेंडर से प्रेरित डिजिटल सुरक्षा प्रणाली",
+        btn_dl_hygiene: "हाइजीन रिपोर्ट डाउनलोड करें 📄",
+        safety_checklist_title: "सुरक्षा जांच सूची",
         filter_all: "सभी",
-        filter_pending: "बकाया",
+        filter_pending: "लंबित",
         filter_completed: "पूर्ण",
-        safety_completed_lbl: "पूर्ण सुरक्षा जांच",
-        safety_pending_lbl: "बकाया कदम",
+        safety_completed_lbl: "पूर्ण जांच",
+        safety_pending_lbl: "लंबित कदम",
         safety_next_lbl: "अनुशंसित अगला कदम:",
 
         // Map Section
         map_title: "🇮🇳 लाइव साइबर थ्रेट मैप – भारत",
         map_desc: "भारत भर में साइबर हमलों की लाइव स्थिति • विस्तृत रिपोर्ट के लिए राज्य पर क्लिक करें",
-        map_tab_india: "🇮🇳 भारत मैप",
-        map_tab_global: "🌍 ग्लोबल मैप",
-        map_radar_label: "इंटरएक्टिव 36 राज्य एवं केंद्र शासित प्रदेश मैप",
-        map_3d_btn: "🎲 3D व्यू",
-        map_2d_btn: "🗺️ 2D फ्लैट व्यू",
+        map_tab_india: "🇮🇳 भारत व्यू",
+        map_tab_global: "🌍 ग्लोबल व्यू",
+        map_radar_label: "इंटरएक्टिव 36 राज्य एवं UT राडार मैप",
+        map_3d_btn: "🎲 3D आइसोमेट्रिक",
+        map_2d_btn: "🗺️ 2D फ़्लैट",
         map_ncrb_sync: "NCRB / I4C डेटा सिंक",
-        map_quick_select: "📍 राज्य चुनें (सभी 36 राज्य एवं UT):",
-        map_quick_hint: "तुरंत रिपोर्ट देखने के लिए किसी भी राज्य पर क्लिक करें",
+        map_quick_select: "📍 राज्य एवं केंद्र शासित प्रदेश (36 राज्य/UT):",
+        map_quick_hint: "त्वरित रिपोर्ट के लिए किसी भी राज्य पर क्लिक करें",
         map_legend_title: "गंभीरता संकेतक:",
         map_legend_high: "🔴 उच्च साइबर हमले",
         map_legend_med: "🟠 मध्यम साइबर हमले",
         map_legend_low: "🟢 कम साइबर हमले",
-        map_legend_pending: "⚪ डेटा लंबित",
+        map_legend_pending: "⚪ डेटा प्रक्रियाधीन",
 
         // Security Tools
         tools_title: "🛠️ सुरक्षा टूल्स",
         tools_desc: "आपकी डिजिटल सुरक्षा के लिए मुफ़्त टूल्स - पासवर्ड जांचें, QR बनाएं और साइबर ज्ञान परखें।",
-        tool_pwd: "पासवर्ड एंट्रॉपी विश्लेषक",
-        ph_pwd: "पासवर्ड मजबूती जांचें...",
+        tool_pwd: "पासवर्ड मजबूती विश्लेषक",
+        ph_pwd: "जांचने के लिए पासवर्ड दर्ज करें...",
         btn_gen_pwd: "16-अक्षर का पासवर्ड बनाएं ⚡",
         btn_copy: "कॉपी करें 📋",
 
-        tool_pwned_title: "पासवर्ड लीक चेकर",
-        tool_pwned_guarantee: "k-Anonymity प्राइवेसी सुरक्षा",
-        tool_pwned_desc: "जांचें कि क्या आपका पासवर्ड किसी सार्वजनिक डेटा लीक में आया है। आपका पासवर्ड कभी भी भेजा नहीं जाता।",
-        ph_pwned: "जांचने के लिए पासवर्ड डालें...",
+        tool_pwned_title: "पासवर्ड डेटा ब्रीच चेकर",
+        tool_pwned_guarantee: "k-Anonymity गोपनीयता गारंटी",
+        tool_pwned_desc: "जांचें कि आपका पासवर्ड किसी लीक हुए डेटाबेस में तो नहीं है। आपका पूरा पासवर्ड कभी ट्रांसमिट नहीं होता।",
+        ph_pwned: "डेटाबेस में जांचने के लिए पासवर्ड दर्ज करें...",
         btn_check_breach: "लीक जांचें 🔍",
 
         tool_cell_title: "आधिकारिक साइबर क्राइम सेल निर्देशिका",
-        tool_cell_badge: "राज्य नोडल अधिकारी डायरेक्टरी",
+        tool_cell_badge: "राज्य नोडल अधिकारी निर्देशिका",
         tool_cell_desc: "अपने राज्य/UT का चयन करके आधिकारिक साइबर क्राइम सेल का पता और फोन नंबर प्राप्त करें।",
-        tool_cell_label: "अपना राज्य / केंद्र शासित प्रदेश चुनें:",
-
-        tool_qr: "साइबरपहरा टूल्स (सुरक्षित QR जनरेटर)",
         ph_qr_gen: "लिंक या टेक्स्ट डालें...",
         btn_gen_qr: "QR कोड बनाएं ▦",
         btn_copy_text: "टेक्स्ट कॉपी करें 📋",
@@ -584,7 +581,7 @@ export const Translations = {
         hud_stage7: "7. सुरक्षा वेंडर रिपोर्ट एकत्रीकरण",
         hud_stage8: "8. अंतिम निर्णय एवं रिपोर्ट तैयार",
 
-        report_title: "साइबर-पहरा थ्रेट असेसमेंट रिपोर्ट",
+        report_title: "CyberPehra थ्रेट असेसमेंट रिपोर्ट",
         report_scan_id: "स्कैन आईडी",
         report_timestamp: "समय",
         report_scan_type: "स्कैन प्रकार",
@@ -607,7 +604,7 @@ export const Translations = {
         report_limitations: "तकनीकी सीमाएं",
         report_privacy: "गोपनीयता एवं शून्य संचयन नीति",
 
-        sw_title: "विजुअल साइबर इन्वेस्टिगेशन वर्कस्पेस",
+        sw_title: "Visual Cyber Investigation Workspace",
         sw_subtitle: "लोकल-फर्स्ट विजुअल थ्रेट इंटेलिजेंस और फॉरेंसिक विश्लेषण",
         sw_back: "वापस",
         sw_close: "विश्लेषण बंद करें",
@@ -624,12 +621,12 @@ export const Translations = {
         sw_btn_rotate: "90° घुमाएं",
         sw_btn_reset: "रीसेट व्यू",
         sw_btn_redact: "गोपनीयता मास्क बनाएं ✏️",
-        sw_report_title: "साइबरपहरा विजुअल इन्वेस्टिगेशन रिपोर्ट",
+        sw_report_title: "CyberPehra विजुअल इन्वेस्टिगेशन रिपोर्ट",
         sw_export_pdf: "इन्वेस्टिगेशन पीडीएफ निर्यात करें 📄",
         sw_evidence_inventory: "साक्ष्य सूची (इन्वेंट्री)",
         sw_evidence_trace: "साक्ष्य पता लगाने की मैट्रिक्स",
         sw_exec_summary: "कार्यकारी जांच सारांश",
-        sw_methodology: "साइबरपहरा फॉरेंसिक कार्यप्रणाली",
+        sw_methodology: "CyberPehra फॉरेंसिक कार्यप्रणाली",
         sw_disclaimer: "स्वचालित विश्लेषण एवं कानूनी अस्वीकरण",
         sw_threat_intel: "लाइव थ्रेट इंटेलिजेंस टेलीमेट्री",
         sw_rec_actions: "अनुशंसित नागरिक सुरक्षा कदम"
@@ -762,13 +759,16 @@ export const applyLanguage = (lang) => {
         wsLangLabel.innerText = safeLang === 'hi' ? 'हिन्दी' : (safeLang === 'hinglish' ? 'Hinglish' : 'English');
     }
 
-    // Re-render dynamic modules to reflect language selection
+    // Re-render dynamic modules to reflect language selection across the entire website
     try {
+        if (typeof window.initIndiaThreatMap === 'function') window.initIndiaThreatMap();
         if (typeof window.renderScamEncyclopedia === 'function') window.renderScamEncyclopedia();
         if (typeof window.renderSafetyDashboard === 'function') window.renderSafetyDashboard();
         if (typeof window.renderEmergencyCenter === 'function') window.renderEmergencyCenter();
         if (typeof window.renderCyberCellDetails === 'function') window.renderCyberCellDetails(State.selectedState || 'DL');
         if (typeof window.renderScreenshotWorkspace === 'function') window.renderScreenshotWorkspace();
+        if (typeof window.renderToolsView === 'function') window.renderToolsView();
+        if (typeof window.renderFounderVision === 'function') window.renderFounderVision();
     } catch(e) {
         console.warn('Language dynamic re-render notice:', e);
     }
