@@ -292,7 +292,7 @@ export const Translations = {
         report_privacy: "Privacy & Zero Retention Guarantee",
 
         sw_title: "Visual Cyber Investigation Workspace",
-        sw_subtitle: "CyberPehra Threat Analysis Command Center",
+        sw_subtitle: "Local-First Visual Threat Intelligence & Forensic Analysis",
         sw_back: "Back",
         sw_close: "Close Analysis",
         sw_privacy_banner: "🔒 Privacy Guarantee: Screenshots are processed 100% locally inside browser memory. Zero image data is ever uploaded or saved on any server.",
@@ -308,11 +308,15 @@ export const Translations = {
         sw_btn_rotate: "Rotate 90°",
         sw_btn_reset: "Reset View",
         sw_btn_redact: "Create Privacy Mask ✏️",
-        sw_report_title: "CYBERPEHRA SCREENSHOT THREAT REPORT",
-        sw_export_pdf: "Download PDF Report 📄",
-        sw_export_json: "Export JSON 💾",
-        sw_export_txt: "Export Text 📝",
-        sw_export_print: "Print Report 🖨️"
+        sw_report_title: "CYBERPEHRA VISUAL INVESTIGATION REPORT",
+        sw_export_pdf: "Export Investigation PDF 📄",
+        sw_evidence_inventory: "Evidence Inventory",
+        sw_evidence_trace: "Evidence Traceability Matrix",
+        sw_exec_summary: "Executive Investigation Summary",
+        sw_methodology: "CyberPehra Forensic Methodology",
+        sw_disclaimer: "Automated Analysis & Legal Disclaimer",
+        sw_threat_intel: "Live Threat Intelligence Telemetry",
+        sw_rec_actions: "Recommended Citizen Actions"
     },
     hi: {
         // Boot screen
@@ -604,7 +608,7 @@ export const Translations = {
         report_privacy: "गोपनीयता एवं शून्य संचयन नीति",
 
         sw_title: "विजुअल साइबर इन्वेस्टिगेशन वर्कस्पेस",
-        sw_subtitle: "साइबरपहरा थ्रेट एनालिसिस कमान सेंटर",
+        sw_subtitle: "लोकल-फर्स्ट विजुअल थ्रेट इंटेलिजेंस और फॉरेंसिक विश्लेषण",
         sw_back: "वापस",
         sw_close: "विश्लेषण बंद करें",
         sw_privacy_banner: "🔒 गोपनीयता गारंटी: स्क्रीनशॉट 100% स्थानीय रूप से ब्राउज़र मेमोरी में प्रोसेस किए जाते हैं। कोई इमेज डेटा कभी सर्वर पर अपलोड नहीं किया जाता।",
@@ -620,11 +624,15 @@ export const Translations = {
         sw_btn_rotate: "90° घुमाएं",
         sw_btn_reset: "रीसेट व्यू",
         sw_btn_redact: "गोपनीयता मास्क बनाएं ✏️",
-        sw_report_title: "साइबरपहरा स्क्रीनशॉट थ्रेट रिपोर्ट",
-        sw_export_pdf: "पीडीएफ रिपोर्ट डाउनलोड करें 📄",
-        sw_export_json: "जेसन निर्यात 💾",
-        sw_export_txt: "टेक्स्ट निर्यात 📝",
-        sw_export_print: "प्रिंट रिपोर्ट 🖨️"
+        sw_report_title: "साइबरपहरा विजुअल इन्वेस्टिगेशन रिपोर्ट",
+        sw_export_pdf: "इन्वेस्टिगेशन पीडीएफ निर्यात करें 📄",
+        sw_evidence_inventory: "साक्ष्य सूची (इन्वेंट्री)",
+        sw_evidence_trace: "साक्ष्य पता लगाने की मैट्रिक्स",
+        sw_exec_summary: "कार्यकारी जांच सारांश",
+        sw_methodology: "साइबरपहरा फॉरेंसिक कार्यप्रणाली",
+        sw_disclaimer: "स्वचालित विश्लेषण एवं कानूनी अस्वीकरण",
+        sw_threat_intel: "लाइव थ्रेट इंटेलिजेंस टेलीमेट्री",
+        sw_rec_actions: "अनुशंसित नागरिक सुरक्षा कदम"
     },
     hinglish: {
         boot_sys: "CYBERPEHRA SECURITY CORE",
@@ -675,7 +683,7 @@ export const Translations = {
         report_privacy: "Privacy & Zero Retention Guarantee",
 
         sw_title: "Visual Cyber Investigation Workspace",
-        sw_subtitle: "CyberPehra Threat Analysis Command Center",
+        sw_subtitle: "Local-First Visual Threat Intelligence & Forensic Analysis",
         sw_back: "Wapas",
         sw_close: "Analysis Close Karein",
         sw_privacy_banner: "🔒 Privacy Guarantee: Screenshots 100% locally browser memory mein process hote hain. Koi image data kisi server par upload nahi hota.",
@@ -691,11 +699,15 @@ export const Translations = {
         sw_btn_rotate: "Rotate 90°",
         sw_btn_reset: "Reset View",
         sw_btn_redact: "Privacy Mask Banayein ✏️",
-        sw_report_title: "CYBERPEHRA SCREENSHOT THREAT REPORT",
-        sw_export_pdf: "PDF Report Download Karein 📄",
-        sw_export_json: "Export JSON 💾",
-        sw_export_txt: "Export Text 📝",
-        sw_export_print: "Report Print Karein 🖨️"
+        sw_report_title: "CYBERPEHRA VISUAL INVESTIGATION REPORT",
+        sw_export_pdf: "Export Investigation PDF 📄",
+        sw_evidence_inventory: "Evidence Inventory",
+        sw_evidence_trace: "Evidence Traceability Matrix",
+        sw_exec_summary: "Executive Investigation Summary",
+        sw_methodology: "CyberPehra Forensic Methodology",
+        sw_disclaimer: "Automated Analysis & Legal Disclaimer",
+        sw_threat_intel: "Live Threat Intelligence Telemetry",
+        sw_rec_actions: "Recommended Citizen Actions"
     }
 };
 
