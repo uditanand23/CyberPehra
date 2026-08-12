@@ -3564,12 +3564,11 @@ const renderScreenshotIntakeCenter = (container) => {
                 </div>
             </div>
 
-            <!-- DRAG & DROP INTAKE BOX -->
             <div id="workspaceDropzone"
                 ondragover="event.preventDefault(); this.classList.add('border-emerald-400', 'bg-emerald-950/20');"
                 ondragleave="this.classList.remove('border-emerald-400', 'bg-emerald-950/20');"
                 ondrop="window.handleWorkspaceDrop(event)"
-                class="glass-card p-10 sm:p-16 rounded-3xl border-2 border-dashed border-slate-700 hover:border-emerald-500/50 transition-all text-center space-y-4 cursor-pointer bg-slate-950/80">
+                class="glass-card p-5 sm:p-10 sm:p-16 rounded-3xl border-2 border-dashed border-slate-700 hover:border-emerald-500/50 transition-all text-center space-y-4 cursor-pointer bg-slate-950/80">
 
                 <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto text-3xl shadow-[0_0_30px_rgba(0,255,136,0.2)]">
                     📸

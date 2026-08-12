@@ -3,10 +3,11 @@ import { UI, toggleMobileMenu, openModal, closeModals, initCanvasAnimation, init
 import { applyLanguage, toggleLangMenu } from './language.js';
 import { switchScanMode, handleFileHash, executeScan, handleQrUpload } from './scanner.js';
 import { checkPasswordStrength, generatePassword, generateQR, downloadPDFReport, copyToClipboard, ScamEncyclopediaDB, updateSafetyChecklist, initCyberAlerts, fetchCyberIntelligence, renderScamEncyclopedia, filterScamsCategory, filterScams, clearScamSearch, openScamDetails, executeRelatedScamTool, renderSafetyDashboard, toggleChecklistItem, toggleSelectAllChecklist, filterChecklistCategory, resetSafetyDashboard, executeFixTool, downloadCyberHygienePDFReport, renderEmergencyCenter, switchEmergencyIncident, downloadEmergencyActionPDF, renderStateThreatDetails, runWhoisLookup, runIpLookup, runDnsLookup, handleScreenshotUpload, runPasswordBreachCheck, renderCyberCellDetails, renderCyberQuiz, submitQuizAnswer, nextQuizQuestion, resetCyberQuiz, openScreenshotWorkspace, closeScreenshotWorkspace, toggleWorkspaceLangMenu, renderScreenshotWorkspace, handleWorkspaceDrop, handleWorkspaceFileSelect, setActiveScreenshotIndex, clearAllScreenshots, adjustScreenshotZoom, rotateScreenshotCanvas, resetScreenshotCanvasView, toggleScreenshotRedactMode, clearScreenshotRedactions, cancelScreenshotScan, startScreenshotInvestigation, downloadScreenshotPDFReport, copyScreenshotReportText } from './tools.js';
-import { initServiceWorker } from './utils.js';
+import { initServiceWorker, triggerPWAInstall } from './utils.js';
 import { initIndiaThreatMap, openStateReportModal, closeStateReportModal } from './indiaMap.js';
 
 // Expose global window methods for inline HTML onclick attributes
+window.triggerPWAInstall = triggerPWAInstall;
 window.switchDashboardView = switchDashboardView;
 window.initIndiaThreatMap = initIndiaThreatMap;
 window.selectIndiaState = (code) => {

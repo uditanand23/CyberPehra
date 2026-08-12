@@ -329,13 +329,34 @@ export const switchDashboardView = (viewId) => {
 
     navLinks.forEach(link => {
         const isMatch = (link.dataset.view === viewId);
-        if (isMatch) {
-            link.classList.add('bg-[#00FF88]/15', 'text-[#00FF88]', 'border', 'border-[#00FF88]/50', 'shadow-[0_0_20px_rgba(0,255,136,0.25)]', 'font-bold');
-            link.classList.remove('text-slate-400', 'text-slate-300', 'hover:bg-white/5');
+        const isDockItem = link.classList.contains('mobile-dock-item');
+
+        if (isDockItem) {
+            if (isMatch) {
+                if (link.dataset.view === 'emergency') {
+                    link.classList.add('bg-[#FF3B5C]/25', 'text-rose-300', 'border-[#FF3B5C]/60', 'shadow-[0_0_15px_rgba(255,59,92,0.35)]', 'font-extrabold', 'scale-[1.03]');
+                    link.classList.remove('bg-[#FF3B5C]/10', 'text-rose-400', 'border-[#FF3B5C]/30', 'text-slate-400');
+                } else {
+                    link.classList.add('text-[#00FF88]', 'font-bold', 'scale-[1.03]');
+                    link.classList.remove('text-slate-400', 'text-slate-300');
+                }
+            } else {
+                link.classList.remove('text-[#00FF88]', 'font-bold', 'scale-[1.03]', 'bg-[#FF3B5C]/25', 'text-rose-300', 'border-[#FF3B5C]/60', 'shadow-[0_0_15px_rgba(255,59,92,0.35)]', 'font-extrabold');
+                if (link.dataset.view === 'emergency') {
+                    link.classList.add('bg-[#FF3B5C]/10', 'text-rose-400', 'border', 'border-[#FF3B5C]/30');
+                } else {
+                    link.classList.add('text-slate-400');
+                }
+            }
         } else {
-            link.classList.remove('bg-[#00FF88]/15', 'text-[#00FF88]', 'border', 'border-[#00FF88]/50', 'shadow-[0_0_20px_rgba(0,255,136,0.25)]', 'bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'font-bold');
-            if (link.dataset.view !== 'emergency') {
-                link.classList.add('text-slate-300');
+            if (isMatch) {
+                link.classList.add('bg-[#00FF88]/15', 'text-[#00FF88]', 'border', 'border-[#00FF88]/50', 'shadow-[0_0_20px_rgba(0,255,136,0.25)]', 'font-bold');
+                link.classList.remove('text-slate-400', 'text-slate-300', 'hover:bg-white/5');
+            } else {
+                link.classList.remove('bg-[#00FF88]/15', 'text-[#00FF88]', 'border', 'border-[#00FF88]/50', 'shadow-[0_0_20px_rgba(0,255,136,0.25)]', 'bg-emerald-500/10', 'text-emerald-400', 'border-emerald-500/30', 'font-bold');
+                if (link.dataset.view !== 'emergency') {
+                    link.classList.add('text-slate-300');
+                }
             }
         }
     });

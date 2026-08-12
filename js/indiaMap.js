@@ -216,7 +216,7 @@ function renderMapInterface(container) {
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <!-- MAP CANVAS CONTAINER -->
-        <div class="lg:col-span-8 glass-card p-4 rounded-3xl border border-white/10 flex flex-col items-center justify-center bg-slate-950 min-h-[480px] sm:min-h-[550px] relative overflow-hidden shadow-2xl">
+        <div class="lg:col-span-8 glass-card p-3 sm:p-4 rounded-3xl border border-white/10 flex flex-col items-center justify-center bg-slate-950 min-h-[320px] xs:min-h-[380px] sm:min-h-[550px] relative overflow-hidden shadow-2xl">
           
           <!-- MAP CONTROLS OVERLAY -->
           <div class="absolute top-4 left-4 z-20 flex items-center gap-2 flex-wrap">
@@ -761,8 +761,9 @@ function initMapCanvasRenderer() {
 
   const ctx = canvas.getContext('2d');
   const parent = canvas.parentElement;
-  const w = Math.min(880, parent.clientWidth || 740);
-  const h = 580;
+  const isMobile = window.innerWidth < 640;
+  const w = Math.min(880, parent.clientWidth || (isMobile ? 340 : 740));
+  const h = isMobile ? Math.min(380, Math.max(300, Math.round(w * 1.05))) : 580;
 
   // High-DPI Retina Screen Resolution Scaling
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -773,6 +774,7 @@ function initMapCanvasRenderer() {
 
   let isDragging = false;
   let startX = 0, startY = 0;
+  let touchStartDist = 0;
   let hoveredStateCode = null;
   let pulseAngle = 0;
   let animFrameId = null;
@@ -911,7 +913,7 @@ function initMapCanvasRenderer() {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       
-      const fontSize = isSelected || isHovered ? 12 : 10;
+      const fontSize = isSelected || isHovered ? (isMobile ? 10 : 12) : (isMobile ? 8 : 10);
       ctx.font = `bold ${fontSize}px "Segoe UI", Outfit, sans-serif`;
 
       ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
@@ -937,6 +939,7 @@ function initMapCanvasRenderer() {
   };
   animateLoop();
 
+  // Mouse Listeners
   canvas.onmousedown = (e) => {
     isDragging = true;
     startX = e.clientX - MapState.panX;
@@ -999,6 +1002,66 @@ function initMapCanvasRenderer() {
     if (targetCode) {
       window.selectStateView(targetCode);
     }
+  };
+
+  // Touch Support for Mobile Devices
+  canvas.ontouchstart = (e) => {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      startX = e.touches[0].clientX - MapState.panX;
+      startY = e.touches[0].clientY - MapState.panY;
+    } else if (e.touches.length === 2) {
+      isDragging = false;
+      touchStartDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    }
+  };
+
+  canvas.ontouchmove = (e) => {
+    if (e.touches.length === 1 && isDragging) {
+      MapState.panX = e.touches[0].clientX - startX;
+      MapState.panY = e.touches[0].clientY - startY;
+      e.preventDefault();
+    } else if (e.touches.length === 2 && touchStartDist > 0) {
+      const currentDist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const scale = currentDist / touchStartDist;
+      MapState.zoomLevel = Math.max(0.6, Math.min(2.5, MapState.zoomLevel * (scale > 1 ? 1.03 : 0.97)));
+      touchStartDist = currentDist;
+      e.preventDefault();
+    }
+  };
+
+  canvas.ontouchend = (e) => {
+    if (isDragging && e.changedTouches.length === 1) {
+      const rect = canvas.getBoundingClientRect();
+      const tx = e.changedTouches[0].clientX - rect.left;
+      const ty = e.changedTouches[0].clientY - rect.top;
+
+      let targetCode = null;
+      let minDist = 50;
+
+      Object.keys(STATE_CENTROIDS).forEach(code => {
+        const cent = STATE_CENTROIDS[code];
+        const offsetZ = MapState.is3DTilt ? 8 : 0;
+        const [px, py] = project(cent.lon, cent.lat, offsetZ);
+        const dist = Math.hypot(tx - px, ty - py);
+        if (dist < minDist) {
+          minDist = dist;
+          targetCode = code;
+        }
+      });
+
+      if (targetCode) {
+        window.selectStateView(targetCode);
+      }
+    }
+    isDragging = false;
+    touchStartDist = 0;
   };
 }
 
