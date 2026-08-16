@@ -1,7 +1,7 @@
 const { getCorsHeaders } = require('../../backend/config/security.js');
 const { isValidDomainInput } = require('../../backend/middleware/ssrfGuard.js');
 const { parseAndValidateJsonBody, sanitizeString } = require('../../backend/middleware/validateInput.js');
-const { checkRateLimit, getClientIp } = require('../../backend/middleware/rateLimiter.js');
+const { checkDistributedRateLimit, getClientIp } = require('../../backend/middleware/rateLimiter.js');
 
 exports.handler = async (event) => {
   const origin = event.headers ? (event.headers.origin || event.headers.Origin) : '';
@@ -22,7 +22,7 @@ exports.handler = async (event) => {
 
   // Rate limit check
   const clientIp = getClientIp(event);
-  const rateLimit = checkRateLimit(clientIp, 'whois', 10, 60000);
+  const rateLimit = await checkDistributedRateLimit(clientIp, 'whois', 10, 60000);
   if (rateLimit.limited) {
     return {
       statusCode: 429,

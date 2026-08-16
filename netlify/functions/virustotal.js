@@ -1,26 +1,7 @@
 const MAX_BODY_SIZE = 1024 * 1024;
 
-// Simple in-memory sliding window rate limiter (Free Tier: 4 requests per 60 seconds)
-const requestLog = [];
-const RATE_LIMIT_MAX = 4;
-const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const { checkDistributedRateLimit, getClientIp } = require('../../backend/middleware/rateLimiter.js');
 
-function checkRateLimit() {
-  const now = Date.now();
-  // Remove timestamps outside the 60-second window
-  while (requestLog.length > 0 && requestLog[0] <= now - RATE_LIMIT_WINDOW_MS) {
-    requestLog.shift();
-  }
-
-  if (requestLog.length >= RATE_LIMIT_MAX) {
-    const oldest = requestLog[0];
-    const retryAfterSeconds = Math.ceil((oldest + RATE_LIMIT_WINDOW_MS - now) / 1000);
-    return { limited: true, retryAfter: Math.max(1, retryAfterSeconds) };
-  }
-
-  requestLog.push(now);
-  return { limited: false, retryAfter: 0 };
-}
 
 function buildJsonResponse(statusCode, body) {
   return {
@@ -90,8 +71,9 @@ exports.handler = async (event) => {
     });
   }
 
-  // Rate Limit check for VirusTotal free tier (4 req / min)
-  const rateLimitStatus = checkRateLimit();
+  // Rate Limit check for VirusTotal free tier (4 req / min per IP)
+  const clientIp = getClientIp(event);
+  const rateLimitStatus = await checkDistributedRateLimit(clientIp, 'virustotal', 4, 60000);
   if (rateLimitStatus.limited) {
     return buildJsonResponse(429, {
       error: "VirusTotal API rate limit reached (4 req/min free tier)",

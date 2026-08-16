@@ -1,3 +1,5 @@
+const { checkDistributedRateLimit, getClientIp } = require('../../backend/middleware/rateLimiter.js');
+
 const MAX_BODY_SIZE = 1024 * 1024;
 
 function buildJsonResponse(statusCode, body) {
@@ -14,6 +16,17 @@ function buildJsonResponse(statusCode, body) {
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return buildJsonResponse(405, { error: "Method Not Allowed" });
+  }
+
+  // Rate Limit check for Google Safe Browsing (15 req / min per IP)
+  const clientIp = getClientIp(event);
+  const rateLimitStatus = await checkDistributedRateLimit(clientIp, 'safebrowsing', 15, 60000);
+  if (rateLimitStatus.limited) {
+    return buildJsonResponse(429, {
+      error: "Google Safe Browsing lookup rate limit reached. Please try again later.",
+      rateLimited: true,
+      retryAfter: rateLimitStatus.retryAfter
+    });
   }
 
   if (event.body && event.body.length > MAX_BODY_SIZE) {

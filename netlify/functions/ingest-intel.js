@@ -1,6 +1,6 @@
 const { getCorsHeaders } = require('../../backend/config/security.js');
 const { parseAndValidateJsonBody } = require('../../backend/middleware/validateInput.js');
-const { checkRateLimit, getClientIp } = require('../../backend/middleware/rateLimiter.js');
+const { checkDistributedRateLimit, getClientIp } = require('../../backend/middleware/rateLimiter.js');
 const { ingestSourceFeed } = require('../../backend/ingestion/feedIngestor.js');
 
 exports.handler = async (event) => {
@@ -21,7 +21,7 @@ exports.handler = async (event) => {
 
   // Rate Limiting
   const clientIp = getClientIp(event);
-  const rateLimit = checkRateLimit(clientIp, 'ingest_intel', 5, 60000);
+  const rateLimit = await checkDistributedRateLimit(clientIp, 'ingest_intel', 5, 60000);
   if (rateLimit.limited) {
     return {
       statusCode: 429,
@@ -31,6 +31,13 @@ exports.handler = async (event) => {
         retryAfter: rateLimit.retryAfter
       })
     };
+  }
+
+  // Authentication check
+  const secretKey = process.env.INGEST_SECRET_KEY;
+  const providedKey = event.headers ? (event.headers['x-internal-key'] || event.headers['X-Internal-Key']) : null;
+  if (!secretKey || !providedKey || providedKey !== secretKey) {
+    return { statusCode: 403, headers, body: JSON.stringify({ error: "Forbidden" }) };
   }
 
   const validation = parseAndValidateJsonBody(event);
