@@ -1,0 +1,68 @@
+const { getCorsHeaders } = require('../../backend/config/security.js');
+const { parseAndValidateJsonBody } = require('../../backend/middleware/validateInput.js');
+const { checkRateLimit, getClientIp } = require('../../backend/middleware/rateLimiter.js');
+const { ingestSourceFeed } = require('../../backend/ingestion/feedIngestor.js');
+
+exports.handler = async (event) => {
+  const origin = event.headers ? (event.headers.origin || event.headers.Origin) : '';
+  const headers = getCorsHeaders(origin);
+
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers, body: "" };
+  }
+
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ error: "Method Not Allowed" })
+    };
+  }
+
+  // Rate Limiting
+  const clientIp = getClientIp(event);
+  const rateLimit = checkRateLimit(clientIp, 'ingest_intel', 5, 60000);
+  if (rateLimit.limited) {
+    return {
+      statusCode: 429,
+      headers,
+      body: JSON.stringify({
+        error: "Ingestion endpoint rate limit reached",
+        retryAfter: rateLimit.retryAfter
+      })
+    };
+  }
+
+  const validation = parseAndValidateJsonBody(event);
+  if (!validation.valid) {
+    return {
+      statusCode: validation.statusCode,
+      headers,
+      body: JSON.stringify({ error: validation.error })
+    };
+  }
+
+  const sourceKey = (validation.payload.sourceKey || 'CERT_IN').toUpperCase();
+
+  try {
+    const ingestResult = await ingestSourceFeed(sourceKey);
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        ok: true,
+        sourceKey,
+        isLiveVerified: ingestResult.isLiveVerified,
+        count: ingestResult.incidents.length,
+        incidents: ingestResult.incidents
+      })
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: err.message || "Threat ingestion pipeline error" })
+    };
+  }
+};

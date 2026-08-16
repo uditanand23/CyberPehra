@@ -1,0 +1,157 @@
+/**
+ * CYBERPEHRA STATIC PRODUCTION STYLESHEET (PHASE 18 HARDENED)
+ * Complete standalone CSS stylesheet replacing cdn.tailwindcss.com runtime script.
+ * Preserves 100% visual layout, dark cyber theme, responsive grids, and neon accents.
+ */
+
+:root {
+  --bg-dark: #020403;
+  --bg-card: rgba(6, 12, 9, 0.85);
+  --border-neon: rgba(0, 255, 136, 0.25);
+  --border-glow: rgba(0, 255, 136, 0.5);
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --cyber-green: #00ff88;
+  --cyber-cyan: #00e5ff;
+  --cyber-red: #ff3366;
+  --cyber-amber: #ffaa00;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #020403;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 136, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 136, 0.6);
+}
+
+/* Cyber Canvas & Card Layouts */
+.cyber-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-neon);
+  backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cyber-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+/* Badges & Indicators */
+.cyber-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cyber-badge-official {
+  background-color: rgba(0, 255, 136, 0.15);
+  color: var(--cyber-green);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+}
+
+.cyber-badge-news {
+  background-color: rgba(0, 229, 255, 0.15);
+  color: var(--cyber-cyan);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+}
+
+.cyber-badge-unverified {
+  background-color: rgba(148, 163, 184, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+/* Buttons & Interactive Elements */
+.cyber-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+}
+
+.cyber-btn-primary {
+  background: linear-gradient(135deg, #00ff88 0%, #00b359 100%);
+  color: #020403;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+.cyber-btn-primary:hover {
+  background: linear-gradient(135deg, #33ff9e 0%, #00e673 100%);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
+  transform: translateY(-1px);
+}
+
+.cyber-btn-secondary {
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--text-main);
+  border: 1px solid var(--border-neon);
+}
+
+.cyber-btn-secondary:hover {
+  border-color: var(--cyber-green);
+  color: var(--cyber-green);
+}
+
+/* Flex & Grid Layout Helpers */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.grid { display: grid; }
+.hidden { display: none !important; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+
+/* Responsive Utility Wrappers */
+@media (min-width: 768px) {
+  .md\:flex-row { flex-direction: row; }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

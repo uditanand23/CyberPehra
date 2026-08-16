@@ -7,9 +7,11 @@
 
 import { State } from './state.js';
 import { sanitizeHTML } from './utils.js';
+import { getTimeFilteredIntel, getSourceTrustDirectory } from './intelService.js';
 
 let cyberData = null;
 let geoData = null;
+let liveIntelData = null;
 
 // Map State Engine
 export const MapState = {
@@ -133,6 +135,12 @@ export async function initIndiaThreatMap() {
 
   await loadCyberData();
   await loadIndiaGeoJSON();
+
+  try {
+    liveIntelData = await getTimeFilteredIntel(MapState.timeFilter, MapState.selectedStateCode);
+  } catch (err) {
+    console.warn('[CyberPehra Map] Live intel fetch warning, serving local telemetry.');
+  }
 
   renderMapInterface(container);
 }
@@ -331,6 +339,16 @@ function renderMapInterface(container) {
   setTimeout(initMapCanvasRenderer, 60);
 }
 
+function renderTrustBadge(classification) {
+  if (classification === 'VERIFIED_OFFICIAL') {
+    return `<span class="px-2 py-0.5 rounded bg-emerald-950/90 text-emerald-300 border border-emerald-800 text-[10px] font-bold">🏛️ Verified Official Source</span>`;
+  }
+  if (classification === 'HIGH_CONFIDENCE_NEWS') {
+    return `<span class="px-2 py-0.5 rounded bg-sky-950/90 text-sky-300 border border-sky-800 text-[10px] font-bold">📰 Accredited News</span>`;
+  }
+  return `<span class="px-2 py-0.5 rounded bg-amber-950/90 text-amber-300 border border-amber-800 text-[10px] font-bold">⚠️ Unverified Alert</span>`;
+}
+
 // Render Sidebar Detail Panel
 function renderDetailPanelContent() {
   if (MapState.level === 'DISTRICT' && MapState.selectedDistrictName && MapState.selectedStateCode) {
@@ -339,13 +357,17 @@ function renderDetailPanelContent() {
 
     if (!dist || !dist.hasData) {
       return `
-        <div class="space-y-3">
+        <div class="space-y-4">
           <div class="flex items-center justify-between border-b border-white/10 pb-2">
             <span class="font-bold text-white text-xs">📍 ${sanitizeHTML(MapState.selectedDistrictName)} District</span>
             <span class="px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-700 text-[10px]">⚪ No verified data</span>
           </div>
-          <p class="text-slate-400 text-xs">No verified recent cybercrime data available for this specific district.</p>
-          <button onclick="window.selectStateView('${MapState.selectedStateCode}')" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white">
+          <div class="p-6 text-center text-slate-400 font-sans text-xs bg-slate-950/80 rounded-2xl border border-slate-800 space-y-2">
+            <span class="text-3xl block">⚪</span>
+            <span class="font-bold text-slate-200 block">No verified recent data available in window (${MapState.timeFilter})</span>
+            <p class="text-[11px] text-slate-500">No verified threat advisories or reported incidents logged for this administrative area.</p>
+          </div>
+          <button onclick="window.selectStateView('${MapState.selectedStateCode}')" class="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white transition">
             ← Return to ${sanitizeHTML(MapState.selectedStateName)} State
           </button>
         </div>
