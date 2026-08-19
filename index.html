@@ -208,8 +208,8 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                 <span class="text-[10px] text-slate-400">▼</span>
             </button>
             <div id="langMenu" class="hidden absolute right-0 mt-2 w-36 py-1.5 glass-card rounded-xl border border-white/10 shadow-2xl z-50 font-sans text-xs space-y-0.5">
-                <button class="lang-btn w-full text-left px-3 py-1.5 hover:bg-white/10 transition" data-lang="en" onclick="window.setLanguage('en'); window.toggleLangMenu(true);">🇬🇧 English</button>
-                <button class="lang-btn w-full text-left px-3 py-1.5 hover:bg-white/10 transition" data-lang="hi" onclick="window.setLanguage('hi'); window.toggleLangMenu(true);">🇮🇳 हिन्दी</button>
+                <button class="lang-btn w-full text-left px-3 py-1.5 hover:bg-white/10 transition" data-lang="en" data-action="setLanguageDesktop" data-arg="en">🇬🇧 English</button>
+                <button class="lang-btn w-full text-left px-3 py-1.5 hover:bg-white/10 transition" data-lang="hi" data-action="setLanguageDesktop" data-arg="hi">🇮🇳 हिन्दी</button>
             </div>
         </div>
 
@@ -224,33 +224,33 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 <div id="mobileMenu" class="hidden md:hidden fixed inset-x-0 top-20 bg-[#050806]/98 backdrop-blur-2xl border-b border-white/10 p-6 space-y-4 z-40 max-h-[calc(100vh-5rem)] overflow-y-auto font-sans text-xs">
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_main">MAIN</div>
-        <button data-view="dashboard" onclick="window.switchDashboardView('dashboard'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_home">🏠 Home</button>
+        <button data-view="dashboard" data-action="switchDashboardViewMobile" data-arg="dashboard" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_home">🏠 Home</button>
     </div>
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_scanners">SCANNERS</div>
-        <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_scam_scanner">🛡️ Scam Scanner</button>
-        <button onclick="window.openModal('screenshot'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_screenshot">📸 Screenshot Analyzer</button>
+        <button data-view="scanner" data-action="switchScannerUrlMobile" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_scam_scanner">🛡️ Scam Scanner</button>
+        <button data-action="openModalMobile" data-arg="screenshot" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_screenshot">📸 Screenshot Analyzer</button>
     </div>
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_intel">INTELLIGENCE</div>
-        <button data-view="map" onclick="window.switchDashboardView('map'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_india_map">🗺️ India Threat Map</button>
-        <button data-view="intel" onclick="window.switchDashboardView('intel'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_intel_link">🌍 Cyber Intelligence</button>
-        <button data-view="scams" onclick="window.switchDashboardView('scams'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_scam_encyclopedia">📖 Scam Encyclopedia</button>
-        <button data-view="safety" onclick="window.switchDashboardView('safety'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_safety_dashboard">📊 Safety Dashboard</button>
+        <button data-view="map" data-action="switchDashboardViewMobile" data-arg="map" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_india_map">🗺️ India Threat Map</button>
+        <button data-view="intel" data-action="switchDashboardViewMobile" data-arg="intel" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_intel_link">🌍 Cyber Intelligence</button>
+        <button data-view="scams" data-action="switchDashboardViewMobile" data-arg="scams" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_scam_encyclopedia">📖 Scam Encyclopedia</button>
+        <button data-view="safety" data-action="switchDashboardViewMobile" data-arg="safety" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_safety_dashboard">📊 Safety Dashboard</button>
     </div>
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_tools">TOOLS</div>
-        <button data-view="tools" onclick="window.switchDashboardView('tools'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_pwd_checker">🔑 Password Checker</button>
-        <button onclick="window.openModal('whois'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_whois">🌐 WHOIS</button>
-        <button onclick="window.openModal('ip'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_ip_lookup">🌍 IP Lookup</button>
-        <button onclick="window.openModal('dns'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_dns_lookup">🔍 DNS Lookup</button>
-        <button data-view="tools" onclick="window.switchDashboardView('tools'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_qr_gen">▦ CyberPehra Tools</button>
-        <button onclick="window.openModal('quiz'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_quiz">🎮 Cyber Security Quiz</button>
+        <button data-view="tools" data-action="switchDashboardViewMobile" data-arg="tools" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_pwd_checker">🔑 Password Checker</button>
+        <button data-action="openModalMobile" data-arg="whois" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_whois">🌐 WHOIS</button>
+        <button data-action="openModalMobile" data-arg="ip" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_ip_lookup">🌍 IP Lookup</button>
+        <button data-action="openModalMobile" data-arg="dns" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_dns_lookup">🔍 DNS Lookup</button>
+        <button data-view="tools" data-action="switchDashboardViewMobile" data-arg="tools" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_qr_gen">▦ CyberPehra Tools</button>
+        <button data-action="openModalMobile" data-arg="quiz" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_quiz">🎮 Cyber Security Quiz</button>
     </div>
     <div class="space-y-1">
         <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_response">RESPONSE</div>
-        <button data-view="emergency" onclick="window.switchDashboardView('emergency'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-rose-400 font-bold hover:bg-white/5 transition" data-i18n="nav_emergency_ctr">🚨 Emergency Center</button>
-        <button data-view="report" onclick="window.switchDashboardView('report'); window.toggleMobileMenu();" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_report_scam">📢 Report Scam</button>
+        <button data-view="emergency" data-action="switchDashboardViewMobile" data-arg="emergency" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-rose-400 font-bold hover:bg-white/5 transition" data-i18n="nav_emergency_ctr">🚨 Emergency Center</button>
+        <button data-view="report" data-action="switchDashboardViewMobile" data-arg="report" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_report_scam">📢 Report Scam</button>
     </div>
 
     <!-- PWA INSTALL PROMPT MENU ITEM -->
@@ -264,7 +264,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                         <div id="pwaInstallSubtitle" class="text-[10px] text-slate-300 font-medium truncate">Add CyberPehra to home screen</div>
                     </div>
                 </div>
-                <button id="pwaInstallActionBtn" onclick="window.triggerPWAInstall()" class="px-3 py-1.5 rounded-xl bg-[#00FF88] text-black font-extrabold text-xs shadow-[0_0_12px_rgba(0,255,136,0.4)] hover:scale-105 transition cursor-pointer shrink-0">
+                <button id="pwaInstallActionBtn" data-action="triggerPWAInstall" class="px-3 py-1.5 rounded-xl bg-[#00FF88] text-black font-extrabold text-xs shadow-[0_0_12px_rgba(0,255,136,0.4)] hover:scale-105 transition cursor-pointer shrink-0">
                     Install
                 </button>
             </div>
@@ -279,65 +279,65 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
     <aside id="sidebarNav" class="hidden md:flex flex-col w-64 border-r border-white/10 bg-[#050806]/90 p-4 space-y-4 font-medium text-xs flex-shrink-0 sticky top-24 self-start max-h-[calc(100vh-7rem)] overflow-y-auto">
         <div class="space-y-1">
             <div class="px-3 text-[10px] font-sans tracking-widest text-slate-500 uppercase font-bold" data-i18n="nav_cat_main">MAIN</div>
-            <button data-view="dashboard" onclick="window.switchDashboardView('dashboard');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_home">
+            <button data-view="dashboard" data-action="switchDashboardView" data-arg="dashboard" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_home">
                 🏠 Home
             </button>
         </div>
 
         <div class="space-y-1">
             <div class="px-3 text-[10px] font-sans tracking-widest text-slate-500 uppercase font-bold" data-i18n="nav_cat_scanners">SCANNERS</div>
-            <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_scam_scanner">
+            <button data-view="scanner" data-action="switchScannerUrl" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_scam_scanner">
                 🛡️ Scam Scanner
             </button>
-            <button onclick="window.openModal('screenshot');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_screenshot">
+            <button data-action="openModal" data-arg="screenshot" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_screenshot">
                 📸 Screenshot Analyzer
             </button>
         </div>
 
         <div class="space-y-1">
             <div class="px-3 text-[10px] font-sans tracking-widest text-slate-500 uppercase font-bold" data-i18n="nav_cat_intel">INTELLIGENCE</div>
-            <button data-view="map" onclick="window.switchDashboardView('map');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_india_map">
+            <button data-view="map" data-action="switchDashboardView" data-arg="map" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_india_map">
                 🗺️ India Threat Map
             </button>
-            <button data-view="intel" onclick="window.switchDashboardView('intel');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_intel_link">
+            <button data-view="intel" data-action="switchDashboardView" data-arg="intel" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_intel_link">
                 🌍 Cyber Intelligence
             </button>
-            <button data-view="scams" onclick="window.switchDashboardView('scams');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_scam_encyclopedia">
+            <button data-view="scams" data-action="switchDashboardView" data-arg="scams" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_scam_encyclopedia">
                 📖 Scam Encyclopedia
             </button>
-            <button data-view="safety" onclick="window.switchDashboardView('safety');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_safety_dashboard">
+            <button data-view="safety" data-action="switchDashboardView" data-arg="safety" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_safety_dashboard">
                 📊 Safety Dashboard
             </button>
         </div>
 
         <div class="space-y-1">
             <div class="px-3 text-[10px] font-sans tracking-widest text-slate-500 uppercase font-bold" data-i18n="nav_cat_tools">TOOLS</div>
-            <button data-view="tools" onclick="window.switchDashboardView('tools');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_pwd_checker">
+            <button data-view="tools" data-action="switchDashboardView" data-arg="tools" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_pwd_checker">
                 🔑 Password Checker
             </button>
-            <button onclick="window.openModal('whois');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_whois">
+            <button data-action="openModal" data-arg="whois" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_whois">
                 🌐 WHOIS
             </button>
-            <button onclick="window.openModal('ip');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_ip_lookup">
+            <button data-action="openModal" data-arg="ip" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_ip_lookup">
                 🌍 IP Lookup
             </button>
-            <button onclick="window.openModal('dns');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_dns_lookup">
+            <button data-action="openModal" data-arg="dns" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_dns_lookup">
                 🔍 DNS Lookup
             </button>
-            <button data-view="tools" onclick="window.switchDashboardView('tools');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_qr_gen">
+            <button data-view="tools" data-action="switchDashboardView" data-arg="tools" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_qr_gen">
                 ▦ CyberPehra Tools
             </button>
-            <button onclick="window.openModal('quiz');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_quiz">
+            <button data-action="openModal" data-arg="quiz" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_quiz">
                 🎮 Cyber Security Quiz
             </button>
         </div>
 
         <div class="space-y-1">
             <div class="px-3 text-[10px] font-sans tracking-widest text-slate-500 uppercase font-bold" data-i18n="nav_cat_response">RESPONSE</div>
-            <button data-view="emergency" onclick="window.switchDashboardView('emergency');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-rose-400 hover:bg-white/5 font-bold" data-i18n="nav_emergency_ctr">
+            <button data-view="emergency" data-action="switchDashboardView" data-arg="emergency" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-rose-400 hover:bg-white/5 font-bold" data-i18n="nav_emergency_ctr">
                 🚨 Emergency Center
             </button>
-            <button data-view="report" onclick="window.switchDashboardView('report');" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_report_scam">
+            <button data-view="report" data-action="switchDashboardView" data-arg="report" class="sidebar-nav-link w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-left text-slate-400 hover:bg-white/5" data-i18n="nav_report_scam">
                 📢 Report Scam
             </button>
         </div>
@@ -370,10 +370,10 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     </p>
 
                     <div class="flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 sm:gap-4 pt-2 sm:pt-4 w-full sm:w-auto">
-                        <button onclick="window.switchDashboardView('scanner'); window.switchMode('url');" class="w-full xs:w-auto justify-center px-5 sm:px-7 py-3.5 sm:py-4 rounded-2xl font-semibold bg-[#00FF88] text-black shadow-[0_0_30px_rgba(0,255,136,0.3)] hover:bg-[#00FFA3] hover:shadow-[0_0_40px_rgba(0,255,136,0.45)] hover:scale-[1.02] transition text-sm sm:text-base tracking-wide flex items-center gap-2.5">
+                        <button data-action="switchScannerUrl" class="w-full xs:w-auto justify-center px-5 sm:px-7 py-3.5 sm:py-4 rounded-2xl font-semibold bg-[#00FF88] text-black shadow-[0_0_30px_rgba(0,255,136,0.3)] hover:bg-[#00FFA3] hover:shadow-[0_0_40px_rgba(0,255,136,0.45)] hover:scale-[1.02] transition text-sm sm:text-base tracking-wide flex items-center gap-2.5">
                             <span data-i18n="hero_cta_scan">⚡ Scan a Suspicious Link</span>
                         </button>
-                        <button onclick="window.switchDashboardView('tools');" class="w-full xs:w-auto justify-center px-5 sm:px-7 py-3.5 sm:py-4 rounded-2xl font-medium bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition text-sm sm:text-base tracking-wide flex items-center gap-2">
+                        <button data-action="switchDashboardView" data-arg="tools" class="w-full xs:w-auto justify-center px-5 sm:px-7 py-3.5 sm:py-4 rounded-2xl font-medium bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition text-sm sm:text-base tracking-wide flex items-center gap-2">
                             <span data-i18n="hero_cta_tools">Explore Security ↗</span>
                         </button>
                     </div>
@@ -434,22 +434,22 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     </span>
                 </div>
                 <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3">
-                    <button onclick="window.switchDashboardView('scanner'); window.switchMode('url');" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
+                    <button data-action="switchScannerUrl" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
                         <div class="text-2xl sm:text-3xl group-hover:scale-105 transition">🔗</div>
                         <div class="font-bold text-sm sm:text-base text-white group-hover:text-[#00FF88]" data-i18n="card_link_title">Link / URL Scan</div>
                         <p class="text-[11px] sm:text-xs text-slate-400" data-i18n="card_link_desc">Verify suspicious links & domain WHOIS records.</p>
                     </button>
-                    <button onclick="window.switchDashboardView('scanner'); window.switchMode('file');" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
+                    <button data-action="switchScannerFile" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
                         <div class="text-2xl sm:text-3xl group-hover:scale-105 transition">📁</div>
                         <div class="font-bold text-sm sm:text-base text-white group-hover:text-[#00FF88]" data-i18n="card_file_title">File / APK Scan</div>
                         <p class="text-[11px] sm:text-xs text-slate-400" data-i18n="card_file_desc">Local SHA-256 hash lookup against 70+ AV engines.</p>
                     </button>
-                    <button onclick="window.switchDashboardView('scanner'); window.switchMode('chat');" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
+                    <button data-action="switchScannerChat" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
                         <div class="text-2xl sm:text-3xl group-hover:scale-105 transition">💬</div>
                         <div class="font-bold text-sm sm:text-base text-white group-hover:text-[#00FF88]" data-i18n="card_chat_title">Message Analyzer</div>
                         <p class="text-[11px] sm:text-xs text-slate-400" data-i18n="card_chat_desc">Inspect SMS, WhatsApp, and Telegram text for scam flags.</p>
                     </button>
-                    <button onclick="window.switchDashboardView('scanner'); window.switchMode('qr');" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
+                    <button data-action="switchScannerQr" class="glass-card p-4 sm:p-6 rounded-2xl border border-white/10 hover:border-[#00FF88]/40 transition text-left space-y-2 group">
                         <div class="text-2xl sm:text-3xl group-hover:scale-105 transition">▦</div>
                         <div class="font-bold text-sm sm:text-base text-white group-hover:text-[#00FF88]" data-i18n="card_qr_title">QR Code Scanner</div>
                         <div class="text-[11px] sm:text-xs text-slate-400" data-i18n="card_qr_desc">Decode hidden QR payloads & payment traps.</div>
@@ -461,7 +461,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
             <div class="space-y-4 pt-4">
                 <div class="flex items-center justify-between border-b border-white/10 pb-3">
                     <h3 class="text-2xl font-bold text-white tracking-tight" data-i18n="intel_sec_title">Threat Intelligence</h3>
-                    <button onclick="window.refreshCyberIntel()" class="px-3 py-1 rounded-xl text-xs bg-white/5 border border-white/10 hover:bg-white/10 transition font-sans" data-i18n="btn_refresh_intel">↻ Refresh Telemetry</button>
+                    <button data-action="refreshCyberIntel" class="px-3 py-1 rounded-xl text-xs bg-white/5 border border-white/10 hover:bg-white/10 transition font-sans" data-i18n="btn_refresh_intel">↻ Refresh Telemetry</button>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -580,7 +580,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     <a href="tel:1930" class="w-full xs:w-auto text-center justify-center px-6 py-3.5 rounded-2xl font-bold bg-[#FF3B5C] text-white shadow-[0_0_25px_rgba(255,59,92,0.4)] hover:bg-rose-600 transition text-sm font-sans flex items-center gap-2">
                         📞 Call 1930 Now
                     </a>
-                    <button data-view="emergency" onclick="window.switchDashboardView('emergency');" class="w-full xs:w-auto text-center justify-center px-5 py-3.5 rounded-2xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition text-xs font-sans">
+                    <button data-view="emergency" data-action="switchDashboardView" data-arg="emergency" class="w-full xs:w-auto text-center justify-center px-5 py-3.5 rounded-2xl font-bold bg-white/5 border border-white/10 text-white hover:bg-white/10 transition text-xs font-sans">
                         View Playbooks 📖
                     </button>
                 </div>
@@ -979,7 +979,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     <div class="font-bold text-xs text-white truncate w-full">NPCI</div>
                     <div class="text-[10px] text-slate-400 truncate w-full">UPI Dispute</div>
                 </a>
-                <button onclick="window.selectLawCase('money')" class="glass-card p-3.5 sm:p-4 rounded-xl border border-white/10 text-center space-y-1.5 glass-panel-hover group block w-full min-w-0">
+                <button data-action="selectLawCase" data-arg="money" class="glass-card p-3.5 sm:p-4 rounded-xl border border-white/10 text-center space-y-1.5 glass-panel-hover group block w-full min-w-0">
                     <div class="text-2xl group-hover:scale-110 transition">🏛️</div>
                     <div class="font-bold text-xs text-white truncate w-full">Cyber Police</div>
                     <div class="text-[10px] text-slate-400 truncate w-full">FIR Guidance</div>
@@ -1026,7 +1026,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                             <span id="evidenceItemCount" class="text-[10px] text-slate-400 shrink-0">5 Required</span>
                         </div>
                         <ul id="emergencyEvidenceChecklist" class="space-y-2 text-slate-300 break-words"></ul>
-                        <button id="downloadEmergencyPdfBtn" onclick="window.downloadEmergencyActionPDF()" class="w-full py-2.5 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-[11px] hover:bg-emerald-900 transition cursor-pointer">
+                        <button id="downloadEmergencyPdfBtn" data-action="downloadEmergencyActionPDF" class="w-full py-2.5 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-[11px] hover:bg-emerald-900 transition cursor-pointer">
                             Download Action PDF 📄
                         </button>
                     </div>
@@ -1041,7 +1041,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     <h2 class="text-2xl font-bold text-white tracking-wide" data-i18n="safety_title">🛡️ Citizen Safety Dashboard</h2>
                     <p class="text-xs text-slate-400" data-i18n="safety_desc">Apple Health & Microsoft Defender Inspired Digital Hygiene System</p>
                 </div>
-                <button onclick="window.downloadCyberHygienePDFReport()" class="px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-sans text-xs font-bold hover:bg-emerald-500/20 transition" data-i18n="btn_dl_hygiene">
+                <button data-action="downloadCyberHygienePDFReport" class="px-4 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-sans text-xs font-bold hover:bg-emerald-500/20 transition" data-i18n="btn_dl_hygiene">
                     Download Hygiene Report 📄
                 </button>
             </div>
@@ -1083,9 +1083,9 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-bold text-white" data-i18n="safety_checklist_title">Security Action Checklist</h3>
                     <div class="flex gap-2 text-xs font-sans">
-                        <button id="btnFilterAll" onclick="window.filterChecklistCategory('all')" class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40" data-i18n="filter_all">All</button>
-                        <button id="btnFilterIncomplete" onclick="window.filterChecklistCategory('pending')" class="px-3 py-1 rounded-lg bg-white/5 text-slate-400 border border-white/10" data-i18n="filter_pending">Pending</button>
-                        <button id="btnFilterCompleted" onclick="window.filterChecklistCategory('done')" class="px-3 py-1 rounded-lg bg-white/5 text-slate-400 border border-white/10" data-i18n="filter_completed">Completed</button>
+                        <button id="btnFilterAll" data-action="filterChecklistCategory" data-arg="all" class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40" data-i18n="filter_all">All</button>
+                        <button id="btnFilterIncomplete" data-action="filterChecklistCategory" data-arg="pending" class="px-3 py-1 rounded-lg bg-white/5 text-slate-400 border border-white/10" data-i18n="filter_pending">Pending</button>
+                        <button id="btnFilterCompleted" data-action="filterChecklistCategory" data-arg="done" class="px-3 py-1 rounded-lg bg-white/5 text-slate-400 border border-white/10" data-i18n="filter_completed">Completed</button>
                     </div>
                 </div>
 
@@ -1128,7 +1128,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 
                     <div class="flex gap-2 pt-2">
                         <button id="genPwdBtn" class="flex-1 py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs font-sans uppercase tracking-wider" data-i18n="btn_gen_pwd">Generate 16-Char Password ⚡</button>
-                        <button onclick="window.copyPassword()" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-xs font-sans" data-i18n="btn_copy">Copy 📋</button>
+                        <button data-action="copyPassword" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-xs font-sans" data-i18n="btn_copy">Copy 📋</button>
                     </div>
                 </div>
 
@@ -1143,7 +1143,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                     <p class="text-xs text-slate-400" data-i18n="tool_pwned_desc">Checks if a password has appeared in public data breaches using 5-character SHA-1 hash prefixes. Your full password is <strong>NEVER</strong> transmitted.</p>
                     <div class="flex gap-2">
                         <input type="password" id="pwnedPasswordInput" class="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-sm focus:outline-none focus:border-[#00FF88]" placeholder="Enter password to check breach corpus..." data-i18n-placeholder="ph_pwned">
-                        <button onclick="window.runPasswordBreachCheck()" class="px-5 py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider" data-i18n="btn_check_breach">
+                        <button data-action="runPasswordBreachCheck" class="px-5 py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider" data-i18n="btn_check_breach">
                             Check Breach 🔍
                         </button>
                     </div>
@@ -1216,7 +1216,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 
                     <div class="flex gap-2 pt-2">
                         <button id="genQrBtn" class="flex-1 py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs font-sans uppercase tracking-wider" data-i18n="btn_gen_qr">Generate Secure QR ▦</button>
-                        <button onclick="window.copyQRText()" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-xs font-sans" data-i18n="btn_copy_text">Copy Text 📋</button>
+                        <button data-action="copyQRText" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-xs font-sans" data-i18n="btn_copy_text">Copy Text 📋</button>
                     </div>
                 </div>
 
@@ -1273,7 +1273,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 
             <div class="flex flex-col sm:flex-row gap-3">
                 <input type="text" id="scamSearch" oninput="window.filterScams()" class="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-xs focus:outline-none focus:border-[#00FF88]" placeholder="Search scams by keyword (e.g. Digital Arrest, UPI, Telegram)..." data-i18n-placeholder="ph_scam_search">
-                <button id="clearScamSearchBtn" onclick="window.clearScamSearch()" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-xs font-sans" data-i18n="btn_clear">Clear</button>
+                <button id="clearScamSearchBtn" data-action="clearScamSearch" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-xs font-sans" data-i18n="btn_clear">Clear</button>
             </div>
 
             <div id="categoryFilterChips" class="flex flex-wrap gap-2 text-xs font-sans"></div>
@@ -1418,7 +1418,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
         <section id="view-incident-report" class="dashboard-view hidden space-y-6">
             <!-- BACK BUTTON & HEADER BAR -->
             <div class="flex items-center justify-between gap-4 border-b border-white/10 pb-4 flex-wrap">
-                <button onclick="window.switchDashboardView('map');" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2 cursor-pointer shadow-lg">
+                <button data-action="switchDashboardView" data-arg="map" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2 cursor-pointer shadow-lg">
                     <span>← Back to India Threat Map</span>
                 </button>
                 <div class="flex items-center gap-2">
@@ -1489,7 +1489,7 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
     <!-- Top Navigation Header -->
     <header class="sticky top-0 z-50 bg-[#050806]/95 backdrop-blur-md border-b border-white/10 px-4 py-3 flex items-center justify-between shadow-lg">
         <div class="flex items-center gap-3">
-            <button onclick="window.closeScreenshotWorkspace()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer" aria-label="Go back">
+            <button data-action="closeScreenshotWorkspace" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition cursor-pointer" aria-label="Go back">
                 <span>←</span>
                 <span data-i18n="sw_back">Back</span>
             </button>
@@ -1505,18 +1505,18 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 
         <div class="flex items-center gap-2">
             <div class="relative">
-                <button id="workspaceLangToggleBtn" onclick="window.toggleWorkspaceLangMenu()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                <button id="workspaceLangToggleBtn" data-action="toggleWorkspaceLangMenu" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
                     <span id="workspaceCurrentLangLabel">English</span>
                     <span class="text-[10px]">▼</span>
                 </button>
                 <div id="workspaceLangMenu" class="hidden absolute right-0 mt-1 w-32 bg-slate-950 border border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden text-xs">
-                    <button onclick="window.setLanguage('en'); window.toggleWorkspaceLangMenu(true);" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">English</button>
-                    <button onclick="window.setLanguage('hi'); window.toggleWorkspaceLangMenu(true);" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">हिन्दी</button>
-                    <button onclick="window.setLanguage('hinglish'); window.toggleWorkspaceLangMenu(true);" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">Hinglish</button>
+                    <button data-action="setLanguage" data-arg="en" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">English</button>
+                    <button data-action="setLanguage" data-arg="hi" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">हिन्दी</button>
+                    <button data-action="setLanguage" data-arg="hinglish" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">Hinglish</button>
                 </div>
             </div>
 
-            <button onclick="window.closeScreenshotWorkspace()" class="px-3 py-1.5 rounded-xl bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/50 text-rose-300 font-bold text-xs transition cursor-pointer flex items-center gap-1" aria-label="Close analysis">
+            <button data-action="closeScreenshotWorkspace" class="px-3 py-1.5 rounded-xl bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/50 text-rose-300 font-bold text-xs transition cursor-pointer flex items-center gap-1" aria-label="Close analysis">
                 <span>✕</span>
                 <span class="hidden sm:inline" data-i18n="sw_close">Close Analysis</span>
             </button>
@@ -1531,23 +1531,23 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
 
 <!-- FIXED APP-LIKE MOBILE BOTTOM NAVIGATION DOCK (MD:HIDDEN) -->
 <nav id="mobileBottomDock" class="md:hidden fixed bottom-0 inset-x-0 z-50 bg-[#050806]/95 backdrop-blur-2xl border-t border-white/10 grid grid-cols-5 py-1 px-1 shadow-[0_-5px_25px_rgba(0,0,0,0.8)] font-sans pb-[max(0.375rem,env(safe-area-inset-bottom))] max-w-full">
-    <button data-view="dashboard" onclick="window.switchDashboardView('dashboard')" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
+    <button data-view="dashboard" data-action="switchDashboardView" data-arg="dashboard" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
         <span class="text-base sm:text-lg leading-none">🏠</span>
         <span class="text-[10px] font-bold mt-0.5 tracking-tight truncate w-full">Home</span>
     </button>
-    <button data-view="scanner" onclick="window.switchDashboardView('scanner'); window.switchMode('url');" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
+    <button data-view="scanner" data-action="switchScannerUrl" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
         <span class="text-base sm:text-lg leading-none">🛡️</span>
         <span class="text-[10px] font-bold mt-0.5 tracking-tight truncate w-full">Scan</span>
     </button>
-    <button data-view="map" onclick="window.switchDashboardView('map')" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
+    <button data-view="map" data-action="switchDashboardView" data-arg="map" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
         <span class="text-base sm:text-lg leading-none">🗺️</span>
         <span class="text-[10px] font-bold mt-0.5 tracking-tight truncate w-full">Map</span>
     </button>
-    <button data-view="tools" onclick="window.switchDashboardView('tools')" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
+    <button data-view="tools" data-action="switchDashboardView" data-arg="tools" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl text-slate-400 hover:text-emerald-400 transition cursor-pointer text-center w-full min-w-0">
         <span class="text-base sm:text-lg leading-none">🛠️</span>
         <span class="text-[10px] font-bold mt-0.5 tracking-tight truncate w-full">Tools</span>
     </button>
-    <button data-view="emergency" onclick="window.switchDashboardView('emergency')" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl bg-[#FF3B5C]/10 text-rose-400 hover:bg-[#FF3B5C]/20 border border-[#FF3B5C]/30 transition cursor-pointer text-center w-full min-w-0">
+    <button data-view="emergency" data-action="switchDashboardView" data-arg="emergency" class="mobile-dock-item flex flex-col items-center justify-center min-h-[44px] py-1 px-0.5 sm:px-1 rounded-xl bg-[#FF3B5C]/10 text-rose-400 hover:bg-[#FF3B5C]/20 border border-[#FF3B5C]/30 transition cursor-pointer text-center w-full min-w-0">
         <span class="text-base sm:text-lg leading-none">🚨</span>
         <span class="text-[10px] font-extrabold mt-0.5 tracking-tight truncate w-full text-rose-300">1930</span>
     </button>

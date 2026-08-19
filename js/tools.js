@@ -1012,7 +1012,7 @@ export const renderScamEncyclopedia = () => {
         let chipsHtml = '';
         categories.forEach(cat => {
             chipsHtml += `
-                <button onclick="filterScamsCategory('${cat.id}')" data-category="${cat.id}" class="scam-chip text-[11px] font-sans font-bold px-3 py-1.5 rounded-xl border transition flex items-center gap-1.5 ${cat.id === currentActiveCategory ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md scale-105' : 'bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'}">
+                <button data-action="filterScamsCategory" data-arg="${cat.id}" data-category="${cat.id}" class="scam-chip text-[11px] font-sans font-bold px-3 py-1.5 rounded-xl border transition flex items-center gap-1.5 ${cat.id === currentActiveCategory ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md scale-105' : 'bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'}">
                     <span>${cat.icon}</span> <span>${cat.label}</span>
                 </button>
             `;
@@ -1050,7 +1050,7 @@ export const renderScamEncyclopedia = () => {
                 <span class="text-3xl block">🔍</span>
                 <h4 class="text-slate-200 font-bold text-sm">No Matching Scams Found</h4>
                 <p class="text-slate-400 text-xs">Try searching for keywords like "UPI", "OTP", "CBI", "FedEx", "Loan App", or clear category filters.</p>
-                <button onclick="clearScamSearch()" class="px-4 py-2 bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-xs rounded-xl hover:bg-emerald-900 transition">Clear Search & Filters</button>
+                <button data-action="clearScamSearch" class="px-4 py-2 bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-xs rounded-xl hover:bg-emerald-900 transition">Clear Search & Filters</button>
             </div>
         `;
         return;
@@ -1089,7 +1089,7 @@ export const renderScamEncyclopedia = () => {
                         <span class="text-sky-400 font-bold">🛡️ Verified Guide</span>
                     </div>
 
-                    <button onclick="openScamDetails('${scam.id}')" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-400 hover:text-emerald-300 font-sans font-bold text-xs transition flex items-center justify-center gap-2 shadow-md">
+                    <button data-action="openScamDetails" data-arg="${scam.id}" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-400 hover:text-emerald-300 font-sans font-bold text-xs transition flex items-center justify-center gap-2 shadow-md">
                         <span>📖</span> <span>View Incident Guide & How It Works</span>
                     </button>
                 </div>
@@ -1215,7 +1215,7 @@ export const openScamDetails = (key) => {
                         <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-teal-300 font-bold text-xs transition flex items-center gap-1.5">
                             <span>🌐</span> cybercrime.gov.in ↗
                         </a>
-                        <button onclick="executeRelatedScamTool('${scam.related_tool || 'url'}')" class="px-3.5 py-2 rounded-xl bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 text-emerald-300 font-bold text-xs transition flex items-center gap-1.5">
+                        <button data-action="executeRelatedScamTool" data-arg="${scam.related_tool || 'url'}" class="px-3.5 py-2 rounded-xl bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 text-emerald-300 font-bold text-xs transition flex items-center gap-1.5">
                             <span>${scam.related_tool_label || '🔗 Open CyberPehra Scanner'}</span>
                         </button>
                     </div>
@@ -1554,7 +1554,7 @@ export const renderSafetyDashboard = () => {
                 `;
             } else if (item.fix_tool) {
                 fixActionBtn = `
-                    <button onclick="executeFixTool('${item.fix_tool}')" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-emerald-500/40 text-emerald-400 hover:text-emerald-300 font-sans font-bold text-xs transition inline-flex items-center gap-1.5 shadow-sm">
+                    <button data-action="executeFixTool" data-arg="${item.fix_tool}" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-emerald-500/40 text-emerald-400 hover:text-emerald-300 font-sans font-bold text-xs transition inline-flex items-center gap-1.5 shadow-sm">
                         <span>Fix Now</span> <span>⚡</span>
                     </button>
                 `;
@@ -3600,7 +3600,7 @@ const renderScreenshotPreviewWorkspace = (container) => {
             <div class="glass-card p-4 rounded-2xl border border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 font-sans text-xs">
                 <div class="flex items-center gap-2 overflow-x-auto py-1 max-w-full">
                     ${ScreenshotWorkspaceState.files.map((f, idx) => `
-                        <button onclick="window.setActiveScreenshotIndex(${idx})" class="px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 ${idx === ScreenshotWorkspaceState.activeFileIndex ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'}">
+                        <button data-action="setActiveScreenshotIndex" data-arg="${idx}" class="px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center gap-1.5 shrink-0 ${idx === ScreenshotWorkspaceState.activeFileIndex ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'}">
                             <span>📸 #${idx+1}</span>
                             <span class="text-[10px] text-slate-500">${(f.size/1024).toFixed(0)}KB</span>
                         </button>
@@ -3615,8 +3615,8 @@ const renderScreenshotPreviewWorkspace = (container) => {
                 </div>
 
                 <div class="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
-                    <button onclick="window.clearAllScreenshots()" class="px-3 py-2 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40 text-rose-300 font-bold text-xs cursor-pointer transition">${t('sw_btn_clear_all')}</button>
-                    <button onclick="window.startScreenshotInvestigation()" class="px-6 py-2.5 rounded-2xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-black font-bold text-xs uppercase tracking-wider cursor-pointer shadow-lg hover:scale-105 transition flex-1 sm:flex-none text-center">
+                    <button data-action="clearAllScreenshots" class="px-3 py-2 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40 text-rose-300 font-bold text-xs cursor-pointer transition">${t('sw_btn_clear_all')}</button>
+                    <button data-action="startScreenshotInvestigation" class="px-6 py-2.5 rounded-2xl bg-[#00FF88] hover:bg-[#00FF88]/90 text-black font-bold text-xs uppercase tracking-wider cursor-pointer shadow-lg hover:scale-105 transition flex-1 sm:flex-none text-center">
                         ${t('sw_btn_scan')} (${ScreenshotWorkspaceState.files.length})
                     </button>
                 </div>
@@ -3633,10 +3633,10 @@ const renderScreenshotPreviewWorkspace = (container) => {
                         </span>
 
                         <div class="flex items-center gap-1 sm:gap-1.5 flex-wrap">
-                            <button onclick="window.adjustScreenshotZoom(0.2)" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_zoom_in')}</button>
-                            <button onclick="window.adjustScreenshotZoom(-0.2)" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_zoom_out')}</button>
-                            <button onclick="window.rotateScreenshotCanvas()" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_rotate')}</button>
-                            <button onclick="window.resetScreenshotCanvasView()" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_reset')}</button>
+                            <button data-action="adjustScreenshotZoom" data-arg="0.2" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_zoom_in')}</button>
+                            <button data-action="adjustScreenshotZoom" data-arg="-0.2" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_zoom_out')}</button>
+                            <button data-action="rotateScreenshotCanvas" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_rotate')}</button>
+                            <button data-action="resetScreenshotCanvasView" class="px-2 sm:px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-[11px] font-bold">${t('sw_btn_reset')}</button>
                         </div>
                     </div>
 
@@ -3655,13 +3655,13 @@ const renderScreenshotPreviewWorkspace = (container) => {
                         <h4 class="font-bold text-white uppercase text-[11px] tracking-wider">Privacy & Redaction Tools</h4>
                         <p class="text-slate-400 text-[11px]">Toggle Redact Mode to draw black privacy masks over phone numbers, OTPs, or private text before report generation.</p>
 
-                        <button onclick="window.toggleScreenshotRedactMode()" class="w-full py-2 px-3 rounded-xl border font-bold text-xs transition cursor-pointer flex items-center justify-center gap-2 ${ScreenshotWorkspaceState.isRedactMode ? 'bg-amber-500 text-black border-amber-400 font-bold' : 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800'}">
+                        <button data-action="toggleScreenshotRedactMode" class="w-full py-2 px-3 rounded-xl border font-bold text-xs transition cursor-pointer flex items-center justify-center gap-2 ${ScreenshotWorkspaceState.isRedactMode ? 'bg-amber-500 text-black border-amber-400 font-bold' : 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800'}">
                             <span>✏️</span>
                             <span>${ScreenshotWorkspaceState.isRedactMode ? 'Redact Mode ON (Click & Drag)' : 'Enable Redact Mask Mode'}</span>
                         </button>
 
                         ${ScreenshotWorkspaceState.redactions.length > 0 ? `
-                            <button onclick="window.clearScreenshotRedactions()" class="w-full py-1.5 px-3 rounded-xl bg-rose-950/40 border border-rose-800/40 text-rose-300 font-bold text-[11px]">Clear Redaction Masks (${ScreenshotWorkspaceState.redactions.length})</button>
+                            <button data-action="clearScreenshotRedactions" class="w-full py-1.5 px-3 rounded-xl bg-rose-950/40 border border-rose-800/40 text-rose-300 font-bold text-[11px]">Clear Redaction Masks (${ScreenshotWorkspaceState.redactions.length})</button>
                         ` : ''}
                     </div>
 
@@ -3790,7 +3790,7 @@ const renderScreenshotScanHUD = (container) => {
             </div>
 
             <div class="pt-4 border-t border-slate-800">
-                <button onclick="window.cancelScreenshotScan()" class="px-4 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/50 text-rose-300 font-bold text-xs transition cursor-pointer">
+                <button data-action="cancelScreenshotScan" class="px-4 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900/80 border border-rose-800/50 text-rose-300 font-bold text-xs transition cursor-pointer">
                     Cancel Analysis ✕
                 </button>
             </div>
@@ -4257,7 +4257,7 @@ const renderScreenshotReportView = (container) => {
                 </div>
 
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button onclick="window.downloadScreenshotPDFReport()" class="w-full sm:w-auto justify-center px-5 py-2.5 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider hover:bg-[#00FF88]/90 transition cursor-pointer shadow-lg flex items-center gap-2" data-i18n="sw_export_pdf">
+                    <button data-action="downloadScreenshotPDFReport" class="w-full sm:w-auto justify-center px-5 py-2.5 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider hover:bg-[#00FF88]/90 transition cursor-pointer shadow-lg flex items-center gap-2" data-i18n="sw_export_pdf">
                         <span>📄</span>
                         <span>${t('sw_export_pdf')}</span>
                     </button>
@@ -4346,7 +4346,7 @@ const renderScreenshotReportView = (container) => {
             <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-3">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-bold text-white uppercase tracking-wider">4. Extracted OCR Text</span>
-                    <button onclick="window.copyScreenshotReportText()" class="text-[10px] text-emerald-400 font-bold hover:underline">Copy Text 📋</button>
+                    <button data-action="copyScreenshotReportText" class="text-[10px] text-emerald-400 font-bold hover:underline">Copy Text 📋</button>
                 </div>
                 ${res.fileAnalyses.map((fa, idx) => `
                     <div class="space-y-1">
@@ -4543,12 +4543,12 @@ const renderScreenshotReportView = (container) => {
 
             <!-- FOOTER ACTION BAR -->
             <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
-                <button onclick="window.clearAllScreenshots()" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white font-bold text-xs">
+                <button data-action="clearAllScreenshots" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white font-bold text-xs">
                     ← Analyze Another Screenshot
                 </button>
 
                 ${res.allUrls.length > 0 ? `
-                    <button onclick="document.getElementById('urlInput').value='${sanitizeHTML(res.allUrls[0])}'; window.closeScreenshotWorkspace(); window.switchDashboardView('scanner'); window.switchMode('url');" class="px-5 py-2.5 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider font-bold">
+                    <button data-action="launchUrlScannerWithInput" data-arg="${sanitizeHTML(res.allUrls[0])}" class="px-5 py-2.5 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider font-bold">
                         Scan Extracted Link 🔗
                     </button>
                 ` : ''}
@@ -5262,7 +5262,7 @@ export const renderCyberQuiz = (wasReset = false) => {
             <!-- Options Grid -->
             <div class="space-y-2.5">
                 ${q.options.map((opt, idx) => `
-                    <button onclick="window.submitQuizAnswer(${idx})" class="w-full text-left p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-emerald-500/50 hover:bg-slate-900 transition flex items-center justify-between group cursor-pointer">
+                    <button data-action="submitQuizAnswer" data-arg="${idx}" class="w-full text-left p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200 hover:border-emerald-500/50 hover:bg-slate-900 transition flex items-center justify-between group cursor-pointer">
                         <span class="font-medium text-xs leading-relaxed">${sanitizeHTML(opt)}</span>
                         <span class="text-xs text-slate-500 group-hover:text-emerald-400 transition font-bold font-mono">➜</span>
                     </button>
@@ -5301,7 +5301,7 @@ export const submitQuizAnswer = (selectedIndex) => {
                 <p class="text-xs leading-relaxed font-sans text-slate-200">${sanitizeHTML(q.explanation)}</p>
             </div>
 
-            <button onclick="window.nextQuizQuestion()" class="w-full py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs font-sans uppercase tracking-wider hover:bg-emerald-400 transition cursor-pointer">
+            <button data-action="nextQuizQuestion" class="w-full py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs font-sans uppercase tracking-wider hover:bg-emerald-400 transition cursor-pointer">
                 Next Scenario Question ➔
             </button>
         </div>
@@ -5344,10 +5344,10 @@ export const renderQuizScorecard = (container) => {
             </div>
 
             <div class="flex gap-3">
-                <button onclick="window.resetCyberQuiz()" class="flex-1 py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider hover:bg-emerald-400 transition cursor-pointer">
+                <button data-action="resetCyberQuiz" class="flex-1 py-3 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase tracking-wider hover:bg-emerald-400 transition cursor-pointer">
                     ⚡ Play 5 Fresh Unseen Questions
                 </button>
-                <button onclick="window.closeSimpleModal()" class="px-5 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white font-bold text-xs uppercase hover:bg-slate-800 transition cursor-pointer">
+                <button data-action="closeSimpleModal" class="px-5 py-3 rounded-xl bg-slate-900 border border-slate-800 text-white font-bold text-xs uppercase hover:bg-slate-800 transition cursor-pointer">
                     Close
                 </button>
             </div>

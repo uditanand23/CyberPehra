@@ -230,7 +230,7 @@ export const openModal = (type) => {
                     <p class="text-slate-300">Enter a domain name to inspect registration records & creation timestamp:</p>
                     <div class="flex gap-2">
                         <input type="text" id="whoisInput" class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-xs focus:outline-none focus:border-[#00FF88]" placeholder="e.g. google.com">
-                        <button onclick="window.runWhoisLookup()" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Lookup</button>
+                        <button data-action="runWhoisLookup" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Lookup</button>
                     </div>
                     <div id="whoisOutput" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hidden whitespace-pre-wrap"></div>
                 </div>
@@ -243,7 +243,7 @@ export const openModal = (type) => {
                     <p class="text-slate-300">Enter an IP address to query ISP, country, and ASN details:</p>
                     <div class="flex gap-2">
                         <input type="text" id="ipInput" class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-xs focus:outline-none focus:border-[#00FF88]" placeholder="e.g. 8.8.8.8">
-                        <button onclick="window.runIpLookup()" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Inspect IP</button>
+                        <button data-action="runIpLookup" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Inspect IP</button>
                     </div>
                     <div id="ipOutput" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hidden whitespace-pre-wrap"></div>
                 </div>
@@ -256,7 +256,7 @@ export const openModal = (type) => {
                     <p class="text-slate-300">Query DNS A, MX, TXT, and NS records via Google DNS over HTTPS:</p>
                     <div class="flex gap-2">
                         <input type="text" id="dnsInput" class="flex-1 px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white font-sans text-xs focus:outline-none focus:border-[#00FF88]" placeholder="e.g. github.com">
-                        <button onclick="window.runDnsLookup()" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Fetch DNS</button>
+                        <button data-action="runDnsLookup" class="px-4 py-2 rounded-xl bg-[#00FF88] text-black font-bold text-xs uppercase">Fetch DNS</button>
                     </div>
                     <div id="dnsOutput" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 hidden whitespace-pre-wrap"></div>
                 </div>
@@ -295,7 +295,7 @@ export const openModal = (type) => {
                             <li>Unencrypted HTTP protocol or recent WHOIS registration (&lt; 30 days old)</li>
                         </ul>
                     </div>
-                    <button onclick="window.closeSimpleModal(); window.switchDashboardView('scanner'); window.switchMode('url');" class="w-full py-3 rounded-xl bg-[#00FF88] text-black font-bold uppercase tracking-wider">Launch Full URL Scanner ➔</button>
+                    <button data-action="launchUrlScannerWithInput" class="w-full py-3 rounded-xl bg-[#00FF88] text-black font-bold uppercase tracking-wider">Launch Full URL Scanner ➔</button>
                 </div>
             `;
             break;

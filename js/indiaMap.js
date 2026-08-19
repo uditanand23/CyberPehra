@@ -157,12 +157,12 @@ function renderMapInterface(container) {
         
         <!-- BREADCRUMB NAVIGATION -->
         <div class="flex items-center gap-2 text-xs font-bold text-white flex-wrap" id="mapBreadcrumbs">
-          <button onclick="window.resetMapToNationalView()" class="px-2.5 py-1 rounded-lg bg-emerald-950/60 text-emerald-400 border border-emerald-800 hover:bg-emerald-900/80 transition cursor-pointer flex items-center gap-1.5">
+          <button data-action="resetMapToNationalView" class="px-2.5 py-1 rounded-lg bg-emerald-950/60 text-emerald-400 border border-emerald-800 hover:bg-emerald-900/80 transition cursor-pointer flex items-center gap-1.5">
             <span>🇮🇳</span> <span>India National</span>
           </button>
           ${MapState.selectedStateName ? `
             <span class="text-slate-500">/</span>
-            <button onclick="window.selectStateView('${MapState.selectedStateCode}')" class="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 hover:text-white transition cursor-pointer">
+            <button data-action="selectStateView" data-arg="${MapState.selectedStateCode}" class="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 hover:text-white transition cursor-pointer">
               ${sanitizeHTML(MapState.selectedStateName)}
             </button>
           ` : ''}
@@ -178,7 +178,7 @@ function renderMapInterface(container) {
         <div class="flex items-center gap-1.5 overflow-x-auto py-0.5">
           <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider pr-1">Period:</span>
           ${['24H', '3D', '7D', '30D', '90D'].map(period => `
-            <button onclick="window.setMapTimeFilter('${period}')" class="px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer shrink-0 ${MapState.timeFilter === period ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-md' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'}">
+            <button data-action="setMapTimeFilter" data-arg="${period}" class="px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer shrink-0 ${MapState.timeFilter === period ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50 shadow-md' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'}">
               ${period}
             </button>
           `).join('')}
@@ -232,19 +232,19 @@ function renderMapInterface(container) {
               ${MapState.level === 'NATIONAL' ? '🇮🇳 National View (36 Administrative Units)' : (MapState.level === 'STATE' ? `📍 ${MapState.selectedStateName} State View` : `📍 ${MapState.selectedDistrictName} District View`)}
             </span>
             ${MapState.level !== 'NATIONAL' ? `
-              <button onclick="window.resetMapToNationalView()" class="px-3 py-1.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 font-bold text-xs border border-emerald-800 transition cursor-pointer">
+              <button data-action="resetMapToNationalView" class="px-3 py-1.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 font-bold text-xs border border-emerald-800 transition cursor-pointer">
                 ← Back to National Map
               </button>
             ` : ''}
           </div>
 
           <div class="absolute top-4 right-4 z-20 flex items-center gap-1.5">
-            <button onclick="window.toggleMap3DTilt()" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">
+            <button data-action="toggleMap3DTilt" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">
               ${MapState.is3DTilt ? '3D View ON' : '2D Flat View'}
             </button>
-            <button onclick="window.zoomMapCanvas(1.2)" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">+</button>
-            <button onclick="window.zoomMapCanvas(0.8)" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">-</button>
-            <button onclick="window.resetMapCanvasTransform()" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">Reset</button>
+            <button data-action="zoomMapCanvas" data-arg="1.2" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">+</button>
+            <button data-action="zoomMapCanvas" data-arg="0.8" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">-</button>
+            <button data-action="resetMapCanvasTransform" class="px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white text-xs font-bold">Reset</button>
           </div>
 
           <!-- CANVAS ELEMENT & 3D OVERLAYS -->
@@ -367,7 +367,7 @@ function renderDetailPanelContent() {
             <span class="font-bold text-slate-200 block">No verified recent data available in window (${MapState.timeFilter})</span>
             <p class="text-[11px] text-slate-500">No verified threat advisories or reported incidents logged for this administrative area.</p>
           </div>
-          <button onclick="window.selectStateView('${MapState.selectedStateCode}')" class="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white transition">
+          <button data-action="selectStateView" data-arg="${MapState.selectedStateCode}" class="w-full py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white transition">
             ← Return to ${sanitizeHTML(MapState.selectedStateName)} State
           </button>
         </div>
@@ -415,7 +415,7 @@ function renderDetailPanelContent() {
           `).join('') : '<p class="text-slate-500 text-xs">No individual incident write-ups logged for this timeframe.</p>'}
         </div>
 
-        <button onclick="window.selectStateView('${MapState.selectedStateCode}')" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white transition">
+        <button data-action="selectStateView" data-arg="${MapState.selectedStateCode}" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white transition">
           ← Back to ${sanitizeHTML(MapState.selectedStateName)} State Map
         </button>
       </div>
@@ -433,7 +433,7 @@ function renderDetailPanelContent() {
             <span class="px-2 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-700 text-[10px]">⚪ No verified data</span>
           </div>
           <p class="text-slate-400 text-xs">No verified recent cybercrime data available for this State/UT.</p>
-          <button onclick="window.resetMapToNationalView()" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white">
+          <button data-action="resetMapToNationalView" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white">
             ← Return to National Map
           </button>
         </div>
@@ -474,7 +474,7 @@ function renderDetailPanelContent() {
                 const d = st.districts[dKey];
                 const dInc = d.timeStats && d.timeStats[MapState.timeFilter] ? d.timeStats[MapState.timeFilter].incidents : 0;
                 return `
-                  <button onclick="window.selectDistrictView('${dKey}')" class="w-full p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 flex items-center justify-between text-xs transition cursor-pointer">
+                  <button data-action="selectDistrictView" data-arg="${dKey}" class="w-full p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 flex items-center justify-between text-xs transition cursor-pointer">
                     <span class="font-bold text-slate-200">📍 ${sanitizeHTML(d.name)}</span>
                     <span class="text-emerald-400 font-bold text-[11px]">${dInc} reports</span>
                   </button>
@@ -484,7 +484,7 @@ function renderDetailPanelContent() {
           ` : '<p class="text-slate-500 text-xs">No specific district breakdown available for this state.</p>'}
         </div>
 
-        <button onclick="window.resetMapToNationalView()" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white transition">
+        <button data-action="resetMapToNationalView" class="w-full py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 text-xs font-bold hover:text-white transition">
           ← Back to National Map
         </button>
       </div>
@@ -523,7 +523,7 @@ function renderTopStateRankingsHtml() {
     .slice(0, 5);
 
   return sortedStates.map((st, idx) => `
-    <button onclick="window.selectStateView('${st.code}')" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 flex items-center justify-between text-xs transition cursor-pointer">
+    <button data-action="selectStateView" data-arg="${st.code}" class="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 flex items-center justify-between text-xs transition cursor-pointer">
       <div class="flex items-center gap-2">
         <span class="w-5 h-5 rounded-full bg-slate-900 text-slate-400 font-bold text-[10px] flex items-center justify-center border border-slate-800">${idx+1}</span>
         <span class="font-bold text-white">${sanitizeHTML(st.state)}</span>
@@ -561,7 +561,7 @@ function renderRegionalDirectoryGridHtml() {
               if (!st) return '';
               const distCount = Object.keys(st.districts || {}).length;
               return `
-                <button onclick="window.selectStateView('${code}')" class="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 text-left transition cursor-pointer group">
+                <button data-action="selectStateView" data-arg="${code}" class="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 text-left transition cursor-pointer group">
                   <div class="font-bold text-slate-200 group-hover:text-emerald-400 truncate text-[11px]">${sanitizeHTML(st.state)}</div>
                   <div class="text-[9px] text-slate-500 font-mono">${distCount} districts</div>
                 </button>
@@ -581,7 +581,7 @@ function renderRegionalDirectoryGridHtml() {
               if (!st) return '';
               const distCount = Object.keys(st.districts || {}).length;
               return `
-                <button onclick="window.selectStateView('${code}')" class="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-sky-500/50 text-left transition cursor-pointer group">
+                <button data-action="selectStateView" data-arg="${code}" class="p-2 rounded-xl bg-slate-950 border border-slate-800 hover:border-sky-500/50 text-left transition cursor-pointer group">
                   <div class="font-bold text-slate-200 group-hover:text-sky-400 truncate text-[11px]">${sanitizeHTML(st.state)}</div>
                   <div class="text-[9px] text-slate-500 font-mono">${distCount} districts</div>
                 </button>
@@ -605,7 +605,7 @@ function renderRegionalDirectoryGridHtml() {
           <span class="font-bold text-white text-xs">📍 ${sanitizeHTML(currentSt.state)} Districts (${dKeys.length})</span>
           <span class="text-[10px] text-slate-400">Click any district to inspect threat telemetry</span>
         </div>
-        <button onclick="window.resetMapToNationalView()" class="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 hover:text-white border border-slate-800 text-[10px] font-bold">
+        <button data-action="resetMapToNationalView" class="px-2.5 py-1 rounded-lg bg-slate-900 text-slate-300 hover:text-white border border-slate-800 text-[10px] font-bold">
           ← Back to 36 States/UTs
         </button>
       </div>
@@ -616,7 +616,7 @@ function renderRegionalDirectoryGridHtml() {
           const isSel = MapState.selectedDistrictName === dKey;
           const hasVerification = dist.hasData;
           return `
-            <button onclick="window.selectDistrictView('${dKey}')" class="p-2 rounded-xl text-left border transition cursor-pointer ${isSel ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300' : 'bg-slate-950 border-slate-800 hover:border-emerald-500/40 text-slate-200'}">
+            <button data-action="selectDistrictView" data-arg="${dKey}" class="p-2 rounded-xl text-left border transition cursor-pointer ${isSel ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300' : 'bg-slate-950 border-slate-800 hover:border-emerald-500/40 text-slate-200'}">
               <div class="font-bold truncate text-[11px]">${sanitizeHTML(dist.name)}</div>
               <div class="text-[9px] ${hasVerification ? 'text-emerald-400 font-mono' : 'text-slate-500'}">
                 ${hasVerification ? 'Verified Telemetry' : '🔎 Verification Required'}
@@ -722,7 +722,7 @@ function renderVerifiedNewsStreamHtml() {
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-          <button onclick="window.openFullNewsReportPage('${news.id}')" class="w-full py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-950/50">
+          <button data-action="openFullNewsReportPage" data-arg="${news.id}" class="w-full py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-950/50">
             <span>📖 Open Full Detailed Report ➔</span>
           </button>
 
@@ -1509,7 +1509,7 @@ export const openFullNewsReportPage = (newsId) => {
             <span>Open Official Source Website</span>
             <span>🔗</span>
           </a>
-          <button onclick="window.print()" class="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold text-xs border border-slate-700 transition cursor-pointer flex items-center gap-1.5">
+          <button data-action="printPage" class="px-4 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold text-xs border border-slate-700 transition cursor-pointer flex items-center gap-1.5">
             <span>Print Report 🖨️</span>
           </button>
         </div>
