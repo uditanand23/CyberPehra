@@ -3,7 +3,7 @@
  * Handles 24H, 3D, 7D, 30D, and 90D time window filtering and incident metric aggregations.
  */
 
-export const TIMEFRAMES_MS = {
+const TIMEFRAMES_MS = {
   '24H': 24 * 60 * 60 * 1000,
   '3D': 3 * 24 * 60 * 60 * 1000,
   '7D': 7 * 24 * 60 * 60 * 1000,
@@ -18,7 +18,7 @@ export const TIMEFRAMES_MS = {
  * @param {Date|number} relativeToTime 
  * @returns {Array} Filtered incidents
  */
-export function filterIncidentsByTimeframe(incidents = [], timeframe = '30D', relativeToTime = Date.now()) {
+function filterIncidentsByTimeframe(incidents = [], timeframe = '30D', relativeToTime = Date.now()) {
   if (!Array.isArray(incidents)) return [];
 
   const windowMs = TIMEFRAMES_MS[timeframe] || TIMEFRAMES_MS['30D'];
@@ -35,7 +35,7 @@ export function filterIncidentsByTimeframe(incidents = [], timeframe = '30D', re
  * @param {Array} incidents 
  * @returns {Object} State and category aggregations
  */
-export function aggregateIncidentMetrics(incidents = []) {
+function aggregateIncidentMetrics(incidents = []) {
   if (!Array.isArray(incidents)) {
     return { totalIncidents: 0, totalLossCrores: 0, stateCounts: {}, categoryCounts: {} };
   }
@@ -62,3 +62,9 @@ export function aggregateIncidentMetrics(incidents = []) {
     categoryCounts
   };
 }
+
+module.exports = {
+  TIMEFRAMES_MS,
+  filterIncidentsByTimeframe,
+  aggregateIncidentMetrics
+};

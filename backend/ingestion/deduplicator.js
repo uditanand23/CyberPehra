@@ -3,9 +3,9 @@
  * Computes deterministic SHA-256 fingerprints to eliminate duplicate threat reports.
  */
 
-import { createHash } from 'crypto';
+const { createHash } = require('crypto');
 
-export function normalizeCanonicalUrl(urlStr = '') {
+function normalizeCanonicalUrl(urlStr = '') {
   let cleaned = String(urlStr).trim().toLowerCase();
   try {
     const u = new URL(cleaned);
@@ -25,7 +25,7 @@ export function normalizeCanonicalUrl(urlStr = '') {
  * @param {string} sourceKey 
  * @returns {string} 64-character hex SHA-256 hash
  */
-export function generateIncidentFingerprint(canonicalUrl = '', title = '', sourceKey = '') {
+function generateIncidentFingerprint(canonicalUrl = '', title = '', sourceKey = '') {
   const normUrl = normalizeCanonicalUrl(canonicalUrl);
   const normTitle = String(title).trim().toLowerCase().replace(/\s+/g, ' ');
   const normSource = String(sourceKey).trim().toUpperCase();
@@ -39,7 +39,7 @@ export function generateIncidentFingerprint(canonicalUrl = '', title = '', sourc
  * @param {Array} incidents 
  * @returns {Array} Array of deduplicated incidents
  */
-export function deduplicateIncidents(incidents = []) {
+function deduplicateIncidents(incidents = []) {
   if (!Array.isArray(incidents)) return [];
 
   const seenFingerprints = new Set();
@@ -58,3 +58,9 @@ export function deduplicateIncidents(incidents = []) {
 
   return deduplicated;
 }
+
+module.exports = {
+  normalizeCanonicalUrl,
+  generateIncidentFingerprint,
+  deduplicateIncidents
+};

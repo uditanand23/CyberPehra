@@ -4,19 +4,19 @@
  * classifies trust levels, and applies Indian geographic mapping.
  */
 
-import { isSafeUrl } from '../middleware/ssrfGuard.js';
-import { TRUSTED_SOURCES } from './sources.js';
-import { generateIncidentFingerprint, deduplicateIncidents } from './deduplicator.js';
-import { classifyIncidentTrust } from './verifier.js';
-import { mapLocationToState } from './geoMapper.js';
-import { Logger } from '../utils/logger.js';
+const { isSafeUrl } = require('../middleware/ssrfGuard.js');
+const { TRUSTED_SOURCES } = require('./sources.js');
+const { generateIncidentFingerprint, deduplicateIncidents } = require('./deduplicator.js');
+const { classifyIncidentTrust } = require('./verifier.js');
+const { mapLocationToState } = require('./geoMapper.js');
+const { Logger } = require('../utils/logger.js');
 
 /**
  * Ingests public threat incidents from a specified source key.
  * @param {string} sourceKey 
  * @returns {Promise<{ ok: boolean, incidents: Array, isLiveVerified: boolean }>}
  */
-export async function ingestSourceFeed(sourceKey = 'CERT_IN') {
+async function ingestSourceFeed(sourceKey = 'CERT_IN') {
   const sourceObj = TRUSTED_SOURCES[sourceKey] || TRUSTED_SOURCES.CERT_IN;
 
   // SSRF Protection check on feed URL
@@ -107,7 +107,7 @@ function extractItemsFromFeedPayload(payloadStr = '', sourceObj) {
  * Fetches outbound URLs with manual redirect handling and SSRF re-validation on Location headers.
  * Max 3 redirects enforced.
  */
-export async function fetchWithSafeRedirects(initialUrl, fetchOptions = {}, maxRedirects = 3) {
+async function fetchWithSafeRedirects(initialUrl, fetchOptions = {}, maxRedirects = 3) {
   let currentUrl = initialUrl;
   let redirectsFollowed = 0;
 
@@ -148,3 +148,8 @@ export async function fetchWithSafeRedirects(initialUrl, fetchOptions = {}, maxR
 
   return { ok: false, status: 310, error: 'Too many redirects' };
 }
+
+module.exports = {
+  ingestSourceFeed,
+  fetchWithSafeRedirects
+};

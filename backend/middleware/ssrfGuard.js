@@ -60,7 +60,12 @@ function isAlternativeIpFormat(hostname = '') {
  * @param {string} urlString 
  * @returns {{ valid: boolean, error?: string, parsedUrl?: URL }}
  */
-export function isSafeUrl(urlString) {
+/**
+ * Validates whether a target URL is safe to fetch server-side.
+ * @param {string} urlString 
+ * @returns {{ valid: boolean, error?: string, parsedUrl?: URL }}
+ */
+function isSafeUrl(urlString) {
   if (!urlString || typeof urlString !== 'string') {
     return { valid: false, error: 'URL string is required' };
   }
@@ -104,7 +109,7 @@ export function isSafeUrl(urlString) {
  * @param {string} domain 
  * @returns {boolean}
  */
-export function isValidDomainInput(domain) {
+function isValidDomainInput(domain) {
   if (!domain || typeof domain !== 'string') return false;
   const clean = domain.trim().toLowerCase();
   
@@ -118,3 +123,8 @@ export function isValidDomainInput(domain) {
 
   return true;
 }
+
+module.exports = {
+  isSafeUrl,
+  isValidDomainInput
+};

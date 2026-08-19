@@ -4,7 +4,7 @@
  * Enforces Zero User Data Retention (0-Day Retention).
  */
 
-import { Logger } from '../utils/logger.js';
+const { Logger } = require('../utils/logger.js');
 
 // Supabase / Database Environment Variables
 const SUPABASE_URL = process.env.SUPABASE_URL || '';
@@ -14,7 +14,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || '';
  * Generic query wrapper for public dataset endpoints.
  * Returns local fallback dataset if database connection environment variables are unconfigured.
  */
-export async function queryPublicDatabase(tableName, fallbackData = []) {
+async function queryPublicDatabase(tableName, fallbackData = []) {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     Logger.info(`[Database] Supabase credentials unconfigured. Serving verified public fallback for table '${tableName}'.`);
     return { ok: true, source: 'fallback_static', data: fallbackData };
@@ -42,3 +42,7 @@ export async function queryPublicDatabase(tableName, fallbackData = []) {
     return { ok: true, source: 'fallback_static', data: fallbackData };
   }
 }
+
+module.exports = {
+  queryPublicDatabase
+};

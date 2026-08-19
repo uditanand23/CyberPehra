@@ -3,7 +3,7 @@
  * Enforces Zero User Data Retention, CORS Policy, Rate Limits, and Security Headers.
  */
 
-export const SECURITY_CONFIG = {
+const SECURITY_CONFIG = {
   // CORS Configuration
   ALLOWED_ORIGINS: [
     'https://cyberpehra.in',
@@ -38,7 +38,7 @@ export const SECURITY_CONFIG = {
 /**
  * Returns CORS headers for Netlify Functions based on incoming Origin header
  */
-export function getCorsHeaders(requestOrigin) {
+function getCorsHeaders(requestOrigin) {
   const isAllowed = !requestOrigin || SECURITY_CONFIG.ALLOWED_ORIGINS.includes(requestOrigin);
   return {
     ...SECURITY_CONFIG.JSON_HEADERS,
@@ -47,3 +47,8 @@ export function getCorsHeaders(requestOrigin) {
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With'
   };
 }
+
+module.exports = {
+  SECURITY_CONFIG,
+  getCorsHeaders
+};

@@ -27,7 +27,15 @@ function cleanupStaleKeys(now, windowMs) {
  * @param {number} windowMs 
  * @returns {{ limited: boolean, retryAfter: number, remaining: number }}
  */
-export function checkRateLimit(clientIp = 'unknown', endpointName = 'default', maxRequests = 10, windowMs = 60000) {
+/**
+ * Checks if incoming client request exceeds rate limit.
+ * @param {string} clientIp 
+ * @param {string} endpointName 
+ * @param {number} maxRequests 
+ * @param {number} windowMs 
+ * @returns {{ limited: boolean, retryAfter: number, remaining: number }}
+ */
+function checkRateLimit(clientIp = 'unknown', endpointName = 'default', maxRequests = 10, windowMs = 60000) {
   const now = Date.now();
   const key = `${endpointName}:${clientIp}`;
 
@@ -66,7 +74,7 @@ export function checkRateLimit(clientIp = 'unknown', endpointName = 'default', m
  * Distributed Rate Limiter supporting Upstash Redis REST API with zero external dependencies.
  * Automatically falls back to in-memory checkRateLimit when unconfigured or offline.
  */
-export async function checkDistributedRateLimit(clientIp = 'unknown', endpointName = 'default', maxRequests = 10, windowMs = 60000) {
+async function checkDistributedRateLimit(clientIp = 'unknown', endpointName = 'default', maxRequests = 10, windowMs = 60000) {
   const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
   const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
@@ -110,7 +118,7 @@ export async function checkDistributedRateLimit(clientIp = 'unknown', endpointNa
   return { ...fallback, distributed: false };
 }
 
-export function getClientIp(event) {
+function getClientIp(event) {
   if (!event || !event.headers) return '127.0.0.1';
   const headers = event.headers;
 
@@ -135,3 +143,9 @@ export function getClientIp(event) {
 
   return '127.0.0.1';
 }
+
+module.exports = {
+  checkRateLimit,
+  checkDistributedRateLimit,
+  getClientIp
+};

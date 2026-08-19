@@ -4,7 +4,7 @@
  * and administrative districts.
  */
 
-export const INDIA_STATE_MAP = {
+const INDIA_STATE_MAP = {
   'IN-AN': { code: 'IN-AN', name: 'Andaman and Nicobar Islands' },
   'IN-AP': { code: 'IN-AP', name: 'Andhra Pradesh' },
   'IN-AR': { code: 'IN-AR', name: 'Arunachal Pradesh' },
@@ -62,7 +62,7 @@ const KEYWORD_STATE_MAP = [
  * @param {string} text 
  * @returns {{ stateCode: string, stateName: string }}
  */
-export function mapLocationToState(text = '') {
+function mapLocationToState(text = '') {
   if (!text || typeof text !== 'string') {
     return { stateCode: 'IN-DL', stateName: 'Delhi NCR' }; // Default national hub fallback
   }
@@ -80,3 +80,8 @@ export function mapLocationToState(text = '') {
 
   return { stateCode: 'IN-DL', stateName: 'Delhi NCR' };
 }
+
+module.exports = {
+  INDIA_STATE_MAP,
+  mapLocationToState
+};

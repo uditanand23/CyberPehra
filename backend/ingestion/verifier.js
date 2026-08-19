@@ -4,9 +4,9 @@
  * Strictly adheres to Non-Fabrication Principle.
  */
 
-import { getSourceMetadata } from './sources.js';
+const { getSourceMetadata } = require('./sources.js');
 
-export const TRUST_CLASSIFICATIONS = {
+const TRUST_CLASSIFICATIONS = {
   VERIFIED_OFFICIAL: 'VERIFIED_OFFICIAL',       // Official Govt (.gov.in, .nic.in, CERT-In, RBI)
   HIGH_CONFIDENCE_NEWS: 'HIGH_CONFIDENCE_NEWS', // Accredited national press reports
   UNVERIFIED: 'UNVERIFIED'                     // Unverified public community alerts
@@ -18,7 +18,7 @@ export const TRUST_CLASSIFICATIONS = {
  * @param {string} sourceUrl 
  * @returns {{ classification: string, isLiveVerified: boolean, trustScore: number }}
  */
-export function classifyIncidentTrust(sourceKey = '', sourceUrl = '', wasFetchSuccessful = false) {
+function classifyIncidentTrust(sourceKey = '', sourceUrl = '', wasFetchSuccessful = false) {
   const metadata = getSourceMetadata(sourceKey) || getSourceMetadata(sourceUrl);
   
   let domain = '';
@@ -54,3 +54,8 @@ export function classifyIncidentTrust(sourceKey = '', sourceUrl = '', wasFetchSu
     trustScore
   };
 }
+
+module.exports = {
+  TRUST_CLASSIFICATIONS,
+  classifyIncidentTrust
+};

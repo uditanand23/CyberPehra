@@ -4,7 +4,7 @@
  * No user IPs, search terms, or payload data are logged to stdout/files.
  */
 
-export const Logger = {
+const Logger = {
   info: (msg, meta = {}) => {
     const timestamp = new Date().toISOString();
     console.log(`[INFO] [${timestamp}] ${msg}`, Object.keys(meta).length ? JSON.stringify(meta) : '');
@@ -33,4 +33,8 @@ export const Logger = {
     }
     return '0.0.0.0';
   }
+};
+
+module.exports = {
+  Logger
 };

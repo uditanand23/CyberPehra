@@ -4,7 +4,7 @@
  * Enforces strict origin trust levels and provenance URL retention.
  */
 
-export const TRUSTED_SOURCES = {
+const TRUSTED_SOURCES = {
   CERT_IN: {
     sourceKey: 'CERT_IN',
     name: 'CERT-In (Indian Computer Emergency Response Team)',
@@ -55,7 +55,7 @@ export const TRUSTED_SOURCES = {
 /**
  * Returns source metadata by sourceKey or domain lookup.
  */
-export function getSourceMetadata(sourceKeyOrDomain) {
+function getSourceMetadata(sourceKeyOrDomain) {
   if (!sourceKeyOrDomain) return null;
   const key = String(sourceKeyOrDomain).toUpperCase().trim();
   if (TRUSTED_SOURCES[key]) return TRUSTED_SOURCES[key];
@@ -68,3 +68,8 @@ export function getSourceMetadata(sourceKeyOrDomain) {
 
   return null;
 }
+
+module.exports = {
+  TRUSTED_SOURCES,
+  getSourceMetadata
+};
