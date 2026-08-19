@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-cyber-depth {
+    background: radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.04) 0%, rgba(5, 8, 6, 0.98) 75%), #020403;
+  }
+  .glass-panel {
+    background: rgba(5, 8, 6, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  .glass-card {
+    background: rgba(5, 8, 6, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .glass-panel-hover {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .glass-panel-hover:hover {
+    border-color: rgba(0, 255, 136, 0.3);
+    box-shadow: 0 8px 30px rgba(0, 255, 136, 0.12);
+    transform: translateY(-2px);
+  }
+  .card-3d-tilt {
+    transition: transform 0.2s cubic-bezier(0.1, 1, 0.1, 1);
+    transform-style: preserve-3d;
+  }
+}
