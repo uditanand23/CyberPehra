@@ -142,7 +142,7 @@ body {
 .justify-between { justify-content: space-between; }
 .justify-center { justify-content: center; }
 .grid { display: grid; }
-.hidden { display: none !important; }
+.hidden { display: none; }
 .w-full { width: 100%; }
 .h-full { height: 100%; }
 .relative { position: relative; }

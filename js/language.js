@@ -159,6 +159,13 @@ export const Translations = {
         safety_pending_lbl: "Pending Actions",
         safety_next_lbl: "Recommended Next Step:",
 
+        // Scam Encyclopedia & Intel
+        enc_title: "📖 National Cyber Scam Encyclopedia",
+        enc_desc: "Verified Repository of Cyber Scams, Modus Operandi, and Prevention Tactics in India",
+        enc_showing_all: "Showing All Scams",
+        intel_title: "🌍 Live Threat Intelligence Center",
+        intel_sub: "Aggregated Advisories from CERT-In, CISA, and Public Security Bulletins",
+
         // Map Section
         map_title: "🇮🇳 Live Cyber Threat Map – India",
         map_desc: "Real-time cyber attacks across India • Click any state to view telemetry report",
@@ -474,6 +481,13 @@ export const Translations = {
         safety_completed_lbl: "पूर्ण जांच",
         safety_pending_lbl: "लंबित कदम",
         safety_next_lbl: "अनुशंसित अगला कदम:",
+
+        // Scam Encyclopedia & Intel
+        enc_title: "📖 राष्ट्रीय साइबर स्कैम ज्ञानकोश",
+        enc_desc: "भारत में साइबर स्कैम, कार्यप्रणाली और रोकथाम के तरीकों का सत्यापित रिपोजिटरी",
+        enc_showing_all: "सभी स्कैम दिखाए जा रहे हैं",
+        intel_title: "🌍 लाइव थ्रेट इंटेलिजेंस सेंटर",
+        intel_sub: "CERT-In, CISA और सार्वजनिक सुरक्षा बुलेटिन से एकत्रित सलाह",
 
         // Map Section
         map_title: "🇮🇳 लाइव साइबर थ्रेट मैप – भारत",

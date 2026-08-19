@@ -1,0 +1,17 @@
+{
+  "name": "cyber-pehra",
+  "version": "5.0.0",
+  "description": "CYBERPEHRA Digital Safety Intelligence Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "cybersecurity",
+    "threat-intelligence",
+    "india"
+  ],
+  "author": "",
+  "license": "ISC"
+}
