@@ -202,15 +202,11 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
             <span class="sm:hidden font-bold">🚨 1930</span>
         </button>
 
-        <div class="relative shrink-0">
-            <button id="langMenuToggle" class="px-2 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-white/5 border border-white/10 font-sans text-xs font-semibold flex items-center gap-1 hover:bg-white/10 transition" aria-label="Change Language">
-                <span id="currentLangLabel">EN</span>
-                <span class="text-[10px] text-slate-400">▼</span>
-            </button>
-            <div id="langMenu" class="hidden absolute right-0 mt-2 w-36 py-1.5 glass-card rounded-xl border border-white/10 shadow-2xl z-50 font-sans text-xs space-y-0.5">
-                <button class="lang-btn w-full text-left px-3 py-1.5 hover:bg-white/10 transition" data-lang="en" data-action="setLanguageDesktop" data-arg="en">🇬🇧 English</button>
-                <button class="lang-btn w-full text-left px-3 py-1.5 hover:bg-white/10 transition" data-lang="hi" data-action="setLanguageDesktop" data-arg="hi">🇮🇳 हिन्दी</button>
-            </div>
+        <!-- DIRECT VISIBLE LANGUAGE SWITCHER PILLS (EN / HI) -->
+        <div class="flex items-center gap-1 bg-slate-950/90 p-1 rounded-xl border border-white/10 shrink-0 font-sans text-xs shadow-md">
+            <button class="lang-btn px-3 py-1 rounded-lg transition font-bold cursor-pointer text-slate-300 hover:text-white" data-lang="en" data-action="setLanguage" data-arg="en" onclick="if(typeof window.applyLanguage==='function') window.applyLanguage('en')">EN</button>
+            <span class="text-slate-700 font-normal">|</span>
+            <button class="lang-btn px-3 py-1 rounded-lg transition font-bold cursor-pointer text-slate-300 hover:text-white" data-lang="hi" data-action="setLanguage" data-arg="hi" onclick="if(typeof window.applyLanguage==='function') window.applyLanguage('hi')">हिन्दी</button>
         </div>
 
         <button id="mobileMenuBtn" class="md:hidden p-2 sm:p-2.5 rounded-xl bg-white/5 border border-white/10 text-white shrink-0" aria-label="Toggle Mobile Menu">
@@ -247,10 +243,14 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
         <button data-view="tools" data-action="switchDashboardViewMobile" data-arg="tools" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_qr_gen">▦ CyberPehra Tools</button>
         <button data-action="openModalMobile" data-arg="quiz" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_quiz">🎮 Cyber Security Quiz</button>
     </div>
-    <div class="space-y-1">
-        <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1" data-i18n="nav_cat_response">RESPONSE</div>
-        <button data-view="emergency" data-action="switchDashboardViewMobile" data-arg="emergency" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-rose-400 font-bold hover:bg-white/5 transition" data-i18n="nav_emergency_ctr">🚨 Emergency Center</button>
-        <button data-view="report" data-action="switchDashboardViewMobile" data-arg="report" class="mobile-nav-link w-full text-left py-2.5 px-3.5 rounded-xl text-slate-300 hover:bg-white/5 transition" data-i18n="nav_report_scam">📢 Report Scam</button>
+
+    <!-- MOBILE LANGUAGE SELECTOR -->
+    <div class="space-y-1 pt-2 border-t border-white/10">
+        <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest px-2 pb-1">LANGUAGE / भाषा</div>
+        <div class="flex items-center gap-2 px-2">
+            <button class="lang-btn flex-1 py-2 px-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-bold text-xs text-center cursor-pointer hover:border-emerald-500/50 transition" data-lang="en" data-action="switchLanguageMobile" data-arg="en">🇬🇧 English</button>
+            <button class="lang-btn flex-1 py-2 px-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-bold text-xs text-center cursor-pointer hover:border-emerald-500/50 transition" data-lang="hi" data-action="switchLanguageMobile" data-arg="hi">🇮🇳 हिन्दी</button>
+        </div>
     </div>
 
     <!-- PWA INSTALL PROMPT MENU ITEM -->
@@ -1280,19 +1280,115 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
             <div id="scamListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </section>
 
-        <!-- VIEW 9: 🌍 THREAT INTELLIGENCE CENTER -->
-        <section id="view-intel" class="dashboard-view hidden space-y-6">
-            <div class="flex items-center justify-between border-b border-white/10 pb-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-white tracking-wide" data-i18n="intel_title">🌍 Live Threat Intelligence Center</h2>
-                    <p class="text-xs text-slate-400" data-i18n="intel_sub">Aggregated Advisories from CERT-In, CISA, and Public Security Bulletins</p>
+        <!-- VIEW 8.5: 📖 FULL NATIONAL CYBER SCAM RESEARCH PAPER VIEW -->
+        <section id="view-scam-detail" class="dashboard-view hidden space-y-6">
+            <!-- BACK BUTTON & HEADER BAR -->
+            <div class="flex items-center justify-between gap-4 border-b border-white/10 pb-4 flex-wrap">
+                <button data-action="switchDashboardView" data-arg="scams" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2 cursor-pointer shadow-lg">
+                    <span>← Back to Scam Encyclopedia</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-xs flex items-center gap-1.5 shadow-md">
+                        🏛️ National Cybercrime Research Paper
+                    </span>
                 </div>
-                <span id="intelLastUpdated" class="text-xs font-sans text-slate-400" data-i18n="intel_updated">Updated Just Now</span>
             </div>
 
+            <!-- CONTAINER FOR POPULATED FULL SCAM RESEARCH REPORT -->
+            <div id="scamDetailContainer" class="space-y-6"></div>
+        </section>
+
+        <!-- VIEW 9: 🌍 LIVE THREAT INTELLIGENCE CENTER -->
+        <section id="view-intel" class="dashboard-view hidden space-y-6">
+            <!-- CTI TOP HEADER BAR -->
+            <div class="glass-card p-6 sm:p-8 rounded-3xl border border-emerald-500/30 space-y-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                    <div>
+                        <div class="flex items-center gap-2.5 flex-wrap pb-1">
+                            <span id="intelStatusBadge" class="px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                                🟡 PREVIOUSLY VERIFIED — CACHED
+                            </span>
+                            <span id="intelFreshnessLabel" class="text-xs text-slate-400 font-mono">Verified Local Store</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" data-i18n="intel_title">🌐 Live Threat Intelligence Center</h2>
+                        <p class="text-xs sm:text-sm text-slate-300 pt-1" data-i18n="intel_sub">Evidence-First CTI Stream • Authoritative Bulletins from CERT-In, I4C (MHA), RBI, NPCI, & CISA</p>
+                    </div>
+
+                    <button data-action="refreshIntelFeed" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-400 font-bold text-xs border border-slate-700 transition flex items-center gap-2 cursor-pointer shrink-0 shadow-lg">
+                        <span>↻ Refresh Feed</span>
+                    </button>
+                </div>
+
+                <!-- CTI SUMMARY STATS -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs pt-1">
+                    <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+                        <span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Total Bulletins</span>
+                        <div id="ctiTotalCount" class="text-xl font-bold text-white font-mono">0</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+                        <span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Tier 1 Govt Bulletins</span>
+                        <div id="ctiTier1Count" class="text-xl font-bold text-emerald-400 font-mono">0</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+                        <span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">India Specific / Relevant</span>
+                        <div id="ctiIndiaCount" class="text-xl font-bold text-sky-400 font-mono">0</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+                        <span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Verification Protocol</span>
+                        <div class="text-xs font-bold text-amber-400 pt-1">HTTPS Provenance</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEARCH & FILTER BAR -->
+            <div class="glass-card p-4 rounded-2xl border border-white/10 space-y-3">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                    <!-- SEARCH INPUT -->
+                    <div class="relative flex-1 min-w-0">
+                        <input type="text" id="ctiSearchInput" placeholder="Search advisories, IoCs, threat types, or agencies..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 placeholder-slate-500 text-xs focus:outline-none focus:border-emerald-500 transition">
+                        <span class="absolute left-3 top-2.5 text-slate-500 text-xs">🔍</span>
+                    </div>
+                </div>
+
+                <!-- CATEGORY PILLS -->
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar" id="ctiFilterPills">
+                    <button data-action="filterIntelByTag" data-arg="ALL" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-emerald-500/20 text-[#00FF88] border border-emerald-500/40 font-bold shrink-0 cursor-pointer">All Advisories</button>
+                    <button data-action="filterIntelByTag" data-arg="INDIA" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">🇮🇳 India Relevant</button>
+                    <button data-action="filterIntelByTag" data-arg="HIGH_SEVERITY" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">⚠️ High / Critical</button>
+                    <button data-action="filterIntelByTag" data-arg="GOVERNMENT" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">🏛️ Tier 1 Govt</button>
+                    <button data-action="filterIntelByTag" data-arg="Digital Arrest" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">Digital Arrest</button>
+                    <button data-action="filterIntelByTag" data-arg="APK / Mobile Malware" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">APK Malware</button>
+                    <button data-action="filterIntelByTag" data-arg="UPI Fraud" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">UPI Fraud</button>
+                    <button data-action="filterIntelByTag" data-arg="Phishing" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">Phishing</button>
+                    <button data-action="filterIntelByTag" data-arg="Vulnerability" class="cti-pill-btn px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 font-bold shrink-0 cursor-pointer">Vulnerabilities</button>
+                </div>
+            </div>
+
+            <!-- CONTAINER FOR ADVISORY CARDS -->
             <div id="cyberIntelContainer" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="intelAlertsList"></div>
             </div>
+        </section>
+
+        <!-- VIEW 9.5: 🔬 DETAILED THREAT INTELLIGENCE RESEARCH DRAWER VIEW -->
+        <section id="view-intel-detail" class="dashboard-view hidden space-y-6">
+            <!-- BACK BUTTON & HEADER BAR -->
+            <div class="flex items-center justify-between gap-4 border-b border-white/10 pb-4 flex-wrap">
+                <button data-action="switchDashboardView" data-arg="intel" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2 cursor-pointer shadow-lg">
+                    <span>← Back to Threat Intelligence Center</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-xs flex items-center gap-1.5 shadow-md">
+                        🏛️ Official CTI Research Report
+                    </span>
+                    <button data-action="printPage" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold text-xs border border-slate-700 transition flex items-center gap-1.5 cursor-pointer">
+                        <span>Print Advisory 🖨️</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTAINER FOR POPULATED DETAIL RESEARCH VIEW -->
+            <div id="intelDetailContainer" class="space-y-6"></div>
         </section>
 
         <!-- VIEW 10: ⚖️ CYBER LAW HUB -->
@@ -1433,6 +1529,26 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                 <!-- Dynamically populated by window.openFullNewsReportPage(newsId) -->
             </div>
         </section>
+
+        <!-- VIEW 15: 🔬 FULL STATE CYBER THREAT RESEARCH PAPER VIEW -->
+        <section id="view-research-paper" class="dashboard-view hidden space-y-6">
+            <!-- BACK BUTTON & HEADER BAR -->
+            <div class="flex items-center justify-between gap-4 border-b border-white/10 pb-4 flex-wrap">
+                <button data-action="switchDashboardView" data-arg="map" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-xs border border-slate-700 transition flex items-center gap-2 cursor-pointer shadow-lg">
+                    <span>← Back to India Threat Map</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <span class="px-3 py-1.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-xs flex items-center gap-1.5 shadow-md">
+                        🏛️ Official State Cyber Crime Threat Research Paper (CERT-In / I4C / MHA)
+                    </span>
+                </div>
+            </div>
+
+            <!-- CONTAINER FOR POPULATED FULL SCREEN RESEARCH PAPER -->
+            <div id="fullResearchPaperContainer" class="space-y-6">
+                <!-- Dynamically populated by window.openFullStateResearchModal(code) -->
+            </div>
+        </section>
     </main>
 </div>
 
@@ -1512,7 +1628,6 @@ h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-
                 <div id="workspaceLangMenu" class="hidden absolute right-0 mt-1 w-32 bg-slate-950 border border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden text-xs">
                     <button data-action="setLanguage" data-arg="en" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">English</button>
                     <button data-action="setLanguage" data-arg="hi" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">हिन्दी</button>
-                    <button data-action="setLanguage" data-arg="hinglish" class="w-full text-left px-3 py-2 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400 font-medium">Hinglish</button>
                 </div>
             </div>
 

@@ -1,0 +1,789 @@
+{
+  "meta": {
+    "version": "5.0",
+    "datasetName": "CyberPehra National Cyber Scam Encyclopedia",
+    "description": "Evidence-first canonical cybercrime knowledge base backed by Tier 1 Indian Government Authorities and official security advisories.",
+    "lastVerifiedAt": "2026-08-20T12:00:00.000Z",
+    "totalCanonicalRecords": 14,
+    "totalOriginalPatternsPreserved": 18
+  },
+  "records": [
+    {
+      "id": "digital-arrest",
+      "canonicalName": "Digital Arrest & Fake Law Enforcement Video Call Extortion",
+      "aliases": ["digital arrest fraud", "fake cbi video call", "fake ed call", "courier parcel extortion", "customs drug seizure scam"],
+      "category": "IDENTITY / IMPERSONATION",
+      "riskLevel": "CRITICAL",
+      "indiaRelevance": "india_specific",
+      "summary": "Organized cybercrime syndicates place IVR calls and WhatsApp/Skype video calls while impersonating CBI, Narcotics Control Bureau (NCB), ED, or Police, alleging illegal parcels or money laundering to force victims into continuous 'Digital Arrest' and extort funds.",
+      "executiveSummary": "Cybercriminals set up artificial police studio backdrops and dress in official uniforms to conduct mock video interrogations. Victims are issued forged Supreme Court directives or arrest warrants and threatened with immediate imprisonment unless they transfer funds to 'Government Verification Accounts'.",
+      "howItWorks": [
+        "Victim receives an automated IVR call claiming an international courier parcel containing illegal narcotics or passports in their name was seized.",
+        "Call is transferred to a fake police officer on WhatsApp/Skype video wearing official uniforms in a police station backdrop.",
+        "Scammer issues forged legal warrants and orders victim to remain on continuous camera presence ('Digital Arrest').",
+        "Victim is coerced into liquidating bank deposits into scammer-controlled 'RBI Escrow Verification Accounts'."
+      ],
+      "attackFlow": [
+        "IVR / Phone Call Notification",
+        "WhatsApp / Skype Video Call Interrogation",
+        "Forged Warrant & Digital Arrest Order",
+        "Coerced Fund Transfer to Mule Accounts"
+      ],
+      "communicationChannels": ["VoIP Calls", "WhatsApp Video", "Skype", "SMS"],
+      "warningSigns": [
+        "Demands to stay on continuous video call under 'Digital Arrest'",
+        "Calls originating from WhatsApp or Skype posing as law enforcement",
+        "Threats of immediate arrest unless funds are transferred for verification",
+        "Fake Supreme Court or CBI notices sent via messaging apps"
+      ],
+      "requestedInformation": ["Aadhaar Details", "Bank Account Numbers", "Fixed Deposit Liquidation", "Live Video Presence"],
+      "technicalIndicators": {
+        "callFormats": ["+91-140-xxxx", "+44-xxxx", "WhatsApp Video Accounts with Police Logos"],
+        "noticeSeals": ["Forged Supreme Court Directives", "Fake NCB Arrest Notices"]
+      },
+      "victimImpact": "Severe psychological distress, isolation, and extortion of life savings.",
+      "immediateActions": [
+        "Disconnect the video call immediately; do NOT panic",
+        "Do NOT transfer any money for court or police verification",
+        "Report the incident immediately to 1930 Cyber Crime Helpline",
+        "Lodge a complaint on cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Remember: THERE IS NO LEGAL CONCEPT OF 'DIGITAL ARREST' IN INDIAN LAW",
+        "Police, CBI, ED, and Customs NEVER conduct interrogations or arrests over video calls",
+        "Official police notices under Section 41A CrPC are issued physically, never via WhatsApp"
+      ],
+      "reportingGuidance": "File a report under 'Report Cyber Crime' on cybercrime.gov.in and inform local police station.",
+      "officialGuidance": "I4C (MHA) National Advisory: Disconnect suspicious video calls immediately and report on 1930 Helpline.",
+      "sources": [
+        {
+          "publisher": "I4C (MHA)",
+          "title": "National Advisory on Digital Arrest Extortion",
+          "publishedAt": "2026-08-10T14:15:00.000Z",
+          "sourceUrl": "https://cybercrime.gov.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "fake-police-bail-scam",
+      "canonicalName": "Fake Police Accusation & Emergency Family Bail Money Scam",
+      "aliases": ["fake police call", "son arrested scam", "accident emergency bail", "thana call fraud"],
+      "category": "IDENTITY / IMPERSONATION",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers call parents claiming their child or family member has been detained by police in a serious accident or crime, demanding instant cash or UPI transfer for emergency bail.",
+      "executiveSummary": "Fraudsters exploit parental anxiety by placing unexpected phone calls claiming a relative is in police custody. Background audio of crying is often played while demanding instant funds before an FIR is lodged.",
+      "howItWorks": [
+        "Parent receives an urgent call claiming their son/daughter was caught in a road accident or crime.",
+        "Scammer plays fake background crying audio pretending to be the victim.",
+        "Scammer demands ₹25,000 to ₹1,00,000 via UPI to prevent formal arrest."
+      ],
+      "attackFlow": [
+        "High-Panic Phone Call",
+        "Simulated Crying Background Audio",
+        "Demand for Instant UPI Bail Transfer",
+        "Threat of Immediate FIR"
+      ],
+      "communicationChannels": ["Phone Calls", "SMS"],
+      "warningSigns": [
+        "High-pressure calls causing immediate panic about family safety",
+        "Demand for instant UPI transfer to drop charges",
+        "Caller refusing to let victim speak directly on phone"
+      ],
+      "requestedInformation": ["UPI Money Transfer", "Family Member Location Details"],
+      "technicalIndicators": {
+        "callTypes": ["Direct Phone Call", "Spoofed Mobile Numbers"]
+      },
+      "victimImpact": "Instant loss of funds driven by emotional manipulation.",
+      "immediateActions": [
+        "Call your child/relative directly on their personal phone number to confirm safety",
+        "Ask the caller for their police station name and verify with local police",
+        "Report caller number to 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Police NEVER accept bail money via UPI or personal money transfer",
+        "Always verify family safety independently before reacting to urgent calls"
+      ],
+      "reportingGuidance": "Report caller number to 1930 Helpline and local police station.",
+      "officialGuidance": "I4C (MHA) Public Advisory: Verify caller identity independently and report emergency impersonation fraud on 1930.",
+      "sources": [
+        {
+          "publisher": "I4C (MHA)",
+          "title": "Advisory on Police Impersonation Extortion",
+          "publishedAt": "2026-07-20T10:00:00.000Z",
+          "sourceUrl": "https://cybercrime.gov.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "upi-qr-payment-fraud",
+      "canonicalName": "UPI Collect Request & Malicious QR Code Payment Fraud",
+      "aliases": ["upi collect fraud", "qr code scam", "gpay refund scam", "olx buyer qr fraud", "vpa collect request"],
+      "category": "UPI",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers send UPI Collect Requests or QR codes disguised as refunds or advance buyer payments, tricking victims into entering their UPI PIN under the false belief that PIN is needed to receive money.",
+      "executiveSummary": "Cybercriminals abuse the 'Collect VPA' function of UPI apps or send phishing QR images. They exploit common confusion regarding payment direction to debit funds instantly when victims enter their 4/6-digit PIN.",
+      "howItWorks": [
+        "Scammer contacts seller on marketplace (OLX/Quikr) agreeing to buy an item instantly.",
+        "Scammer sends a QR code or UPI Collect Request over WhatsApp claiming 'Scan/Approve to receive payment'.",
+        "Victim enters UPI PIN believing funds will be credited.",
+        "Account is debited immediately."
+      ],
+      "attackFlow": [
+        "Marketplace / WhatsApp Negotiation",
+        "Fake Advance Payment Offer",
+        "UPI Collect Request / QR Code Sent",
+        "UPI PIN Entry -> Account Debit"
+      ],
+      "communicationChannels": ["WhatsApp", "UPI Apps (GPay, PhonePe, Paytm)", "Marketplace Apps"],
+      "warningSigns": [
+        "Insistence that entering UPI PIN is required to RECEIVE money",
+        "UPI app notification stating 'Pay ₹X' instead of 'Received ₹X'",
+        "Unsolicited QR codes sent for rewards or cashback"
+      ],
+      "requestedInformation": ["UPI PIN", "UPI VPA Approval"],
+      "technicalIndicators": {
+        "tactic": "UPI VPA Collect Request Exploitation",
+        "qrType": "Embedded UPI Payment Intent Link"
+      },
+      "victimImpact": "Instant unauthorized bank account debits.",
+      "immediateActions": [
+        "Block the scammer's UPI VPA in your payment app",
+        "Report fraudulent transaction to bank support and 1930 Helpline",
+        "File complaint on cybercrime.gov.in"
+      ],
+      "prevention": [
+        "GOLDEN RULE: UPI PIN is ONLY required for SENDING money, NEVER for receiving money",
+        "Receiving money requires ZERO action on your part; it credits automatically",
+        "Never scan QR codes to receive money"
+      ],
+      "reportingGuidance": "Report fraud VPA to bank app and 1930 National Cyber Helpline.",
+      "officialGuidance": "NPCI Operational Safety Directive: Entering UPI PIN is strictly required only to send money.",
+      "sources": [
+        {
+          "publisher": "NPCI",
+          "title": "UPI Customer Safety Advisory",
+          "publishedAt": "2026-07-15T16:00:00.000Z",
+          "sourceUrl": "https://www.npci.org.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "fake-bank-netbanking-phishing",
+      "canonicalName": "Fake Bank Account Freeze & KYC Phishing Scam",
+      "aliases": ["banking fraud", "kyc update scam", "aadhaar sim kyc fraud", "netbanking phishing", "bank SMS link scam"],
+      "category": "PHISHING",
+      "riskLevel": "CRITICAL",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers impersonate bank officials or telecom providers via SMS and calls, claiming account or SIM block due to expired KYC, directing victims to phishing portals to capture NetBanking credentials.",
+      "executiveSummary": "Cybercriminals send bulk SMS with spoofed headers threatening account suspension within hours. Links lead to cloned bank NetBanking sites that harvest Customer IDs, passwords, and OTPs in real-time.",
+      "howItWorks": [
+        "Victim receives SMS: 'Your bank account will be blocked today due to pending KYC. Update at link'.",
+        "Phishing link opens a fake bank login interface.",
+        "Victim enters NetBanking User ID, password, and incoming OTP.",
+        "Scammers execute real-time IMPS/NEFT transfers draining account."
+      ],
+      "attackFlow": [
+        "Urgent Account Suspension SMS",
+        "Fake NetBanking Phishing Link",
+        "Credential & OTP Entry",
+        "Real-Time Funds Exfiltration"
+      ],
+      "communicationChannels": ["SMS", "Phone Calls", "Phishing Portals"],
+      "warningSigns": [
+        "SMS sent from 10-digit personal numbers instead of official bank headers",
+        "Urgent threats of account block within 2-24 hours",
+        "Websites asking for NetBanking password or CVV"
+      ],
+      "requestedInformation": ["NetBanking ID", "Password", "Card CVV", "OTP"],
+      "technicalIndicators": {
+        "phishingDomains": ["sbi-kyc-verify-portal.in", "hdfc-netbank-update.com"]
+      },
+      "victimImpact": "Total account compromise and unauthorized wire transfers.",
+      "immediateActions": [
+        "Call bank helpline immediately to freeze NetBanking and debit cards",
+        "Call 1930 Helpline within the 2-hour Golden Window",
+        "Report phishing URL on cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Banks NEVER ask for passwords, PINs, or OTPs over phone or SMS",
+        "Log in to NetBanking ONLY by typing the official bank URL directly into browser",
+        "Check official SMS sender headers (e.g. AD-SBIINB)"
+      ],
+      "reportingGuidance": "Report compromised accounts to 1930 and bank cyber incident team.",
+      "officialGuidance": "RBI Public Protection Advisory: Never click SMS links regarding bank account block.",
+      "sources": [
+        {
+          "publisher": "Reserve Bank of India (RBI)",
+          "title": "Customer Protection Advisory PR 58912",
+          "publishedAt": "2026-07-28T11:00:00.000Z",
+          "sourceUrl": "https://www.rbi.org.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "otp-interception-fraud",
+      "canonicalName": "OTP Interception & Social Engineering Scam",
+      "aliases": ["otp fraud", "delivery otp scam", "verification code theft", "wrong number otp"],
+      "category": "SOCIAL ENGINEERING",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers initiate unauthorized financial transactions or account resets and trick victims into revealing the incoming OTP under pretexts of delivery confirmation or accidental SMS transfers.",
+      "executiveSummary": "Fraudsters manipulate victims into sharing One-Time Passwords by posing as delivery agents or customer care representatives. Once obtained, the OTP authorizes unauthorized debits or account takeovers.",
+      "howItWorks": [
+        "Scammer initiates an online card transaction or app login using victim's phone number.",
+        "Scammer calls victim claiming to be a delivery executive needing OTP for package drop.",
+        "Victim reads OTP out loud; scammer completes transaction."
+      ],
+      "attackFlow": [
+        "Unauthorized Transaction Trigger",
+        "Social Engineering Call",
+        "Victim Reveals OTP",
+        "Transaction Authorized"
+      ],
+      "communicationChannels": ["Phone Calls", "SMS"],
+      "warningSigns": [
+        "Unsolicited calls asking for 6-digit SMS verification codes",
+        "OTP SMS explicitly warning 'Do NOT share this code'",
+        "Receiving OTPs when you did not initiate any action"
+      ],
+      "requestedInformation": ["SMS OTP", "Transaction Verification Code"],
+      "technicalIndicators": {
+        "tactic": "Real-Time OTP Relay Interception"
+      },
+      "victimImpact": "Unauthorized account debits.",
+      "immediateActions": [
+        "Call bank helpline immediately to block card/account",
+        "Report incident to 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "NEVER share OTPs with anyone—including bank staff or delivery agents",
+        "Always read the exact text inside OTP SMS specifying amount and merchant"
+      ],
+      "reportingGuidance": "Report fraud to 1930 Helpline and bank customer care.",
+      "officialGuidance": "CERT-In Security Advisory: Keep OTPs strictly confidential.",
+      "sources": [
+        {
+          "publisher": "CERT-In",
+          "title": "Advisory on OTP Security",
+          "publishedAt": "2026-06-10T09:00:00.000Z",
+          "sourceUrl": "https://www.cert-in.org.in/s-advisories.jsp",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "fake-job-prepaid-task-scam",
+      "canonicalName": "Work From Home & Telegram Prepaid Task Recruitment Scam",
+      "aliases": ["job scam", "telegram task scam", "youtube like scam", "work from home fraud", "part time rating scam"],
+      "category": "JOB FRAUD",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers send unsolicited job offers promising high daily earnings for liking YouTube videos or writing reviews, luring victims into Telegram groups that demand tiered prepaid deposits for VIP tasks.",
+      "executiveSummary": "Fraudsters recruit victims via WhatsApp/SMS for simple online tasks. Small initial payouts are made to build trust, after which victims are pressured into depositing large sums for 'VIP Investment Tasks' that block withdrawals.",
+      "howItWorks": [
+        "SMS/WhatsApp received offering ₹3,000/day for online rating tasks.",
+        "Victim completes initial tasks and receives ₹150-₹300 trust payout.",
+        "Victim added to Telegram VIP channel requiring ₹5,000 to ₹2,00,000 prepaid deposits.",
+        "Withdrawal is blocked; admins demand additional 'taxes'."
+      ],
+      "attackFlow": [
+        "Unsolicited Job Offer Message",
+        "Small Initial Trust Payout",
+        "Telegram VIP Channel Onboarding",
+        "Tiered Prepaid Deposits & Withdrawal Block"
+      ],
+      "communicationChannels": ["Telegram", "WhatsApp", "SMS"],
+      "warningSigns": [
+        "Job offers promising high income for trivial video-liking tasks",
+        "Requirement to deposit money before withdrawing earned wages",
+        "Recruitment conducted entirely via anonymous Telegram groups"
+      ],
+      "requestedInformation": ["Prepaid Deposit Money", "Bank Details", "Aadhaar Card"],
+      "technicalIndicators": {
+        "groupAdmins": ["Hidden foreign admin numbers (+62, +84)"],
+        "tactic": "Ponzi Task Investment Scheme"
+      },
+      "victimImpact": "Substantial financial loss across multiple deposit tiers.",
+      "immediateActions": [
+        "Stop making further prepaid task deposits immediately",
+        "Preserve chat exports and UPI transaction UTR numbers",
+        "File complaint at 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Legitimate companies NEVER charge job seekers fees or demand prepaid task deposits",
+        "Verify corporate job offers on official company career portals"
+      ],
+      "reportingGuidance": "Lodge report on cybercrime.gov.in under Online Financial Fraud.",
+      "officialGuidance": "I4C (MHA) Advisory: Beware of part-time task scams operating on messaging apps.",
+      "sources": [
+        {
+          "publisher": "I4C (MHA)",
+          "title": "Advisory on Part-Time Task Job Fraud",
+          "publishedAt": "2026-05-18T12:00:00.000Z",
+          "sourceUrl": "https://cybercrime.gov.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "illegal-loan-app-extortion",
+      "canonicalName": "Illegal Instant Loan App Extortion & Photo Morphing Racket",
+      "aliases": ["loan app scam", "instant loan blackmail", "apk loan fraud", "contact list morphing"],
+      "category": "MALWARE",
+      "riskLevel": "CRITICAL",
+      "indiaRelevance": "india_specific",
+      "summary": "Unauthorized instant loan APK apps trap borrowers with easy micro-loans, secretly exfiltrate phone contact lists and gallery photos, and resort to photo morphing blackmail and contact harassment.",
+      "executiveSummary": "Unapproved loan apps offer quick funds without documentation. Upon installation, the APK exfiltrates contacts and media. Recovery agents demand 300% interest within 7 days, threatening to broadcast morphed offensive images to all contacts.",
+      "howItWorks": [
+        "Victim installs an unverified loan APK from web ad promising instant loan.",
+        "App exfiltrates full phone Contacts and Photo Gallery during setup.",
+        "App disburses partial loan amount and demands exorbitant repayment in 7 days.",
+        "If unpaid, recovery agents send morphed offensive photos to victim's contacts."
+      ],
+      "attackFlow": [
+        "Ad Click & APK Download",
+        "Contact & Media Exfiltration",
+        "Predatory Short-Term Disbursal",
+        "Photo Morphing & Contact Harassment"
+      ],
+      "communicationChannels": ["APK Files", "WhatsApp", "SMS", "Phone Calls"],
+      "warningSigns": [
+        "App not listed on Google Play Store or Apple App Store",
+        "Requests broad permissions to Contacts, Camera, and Storage",
+        "Repayment tenure under 60 days (violates RBI guidelines)"
+      ],
+      "requestedInformation": ["Contacts Access", "Gallery Access", "Aadhaar / PAN"],
+      "technicalIndicators": {
+        "appPermissions": ["READ_CONTACTS", "READ_EXTERNAL_STORAGE", "CAMERA"],
+        "distribution": ["Web Sideloading Links"]
+      },
+      "victimImpact": "Severe social humiliation and continuous extortion.",
+      "immediateActions": [
+        "Revoke app permissions and uninstall loan APK file immediately",
+        "Inform contacts about the data breach / harassment",
+        "File complaint at 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Borrow ONLY from RBI-registered banks and NBFCs listed on RBI website",
+        "Never sideload APK files from web ads or unknown links"
+      ],
+      "reportingGuidance": "Report illegal loan app to RBI Sachet portal and 1930 Helpline.",
+      "officialGuidance": "RBI Public Notice: Do not download illegal loan apps offering unauthorized credit.",
+      "sources": [
+        {
+          "publisher": "Reserve Bank of India (RBI)",
+          "title": "Advisory on Illegal Digital Lending Apps",
+          "publishedAt": "2026-04-12T10:00:00.000Z",
+          "sourceUrl": "https://www.rbi.org.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "investment-stock-ponzi-scheme",
+      "canonicalName": "Fake Stock Trading & SEBI Broker Impersonation Ponzi Scheme",
+      "aliases": ["investment scam", "stock market fraud", "sebi broker scam", "fake trading app", "vip stock group"],
+      "category": "INVESTMENT",
+      "riskLevel": "CRITICAL",
+      "indiaRelevance": "india_specific",
+      "summary": "Fraudulent stock trading platforms impersonate reputed SEBI brokers, offering guaranteed high returns on equities or IPO allotments, luring victims into transferring money into private accounts.",
+      "executiveSummary": "Scammers advertise stock trading courses on social media leading to VIP WhatsApp groups. Fake trading apps display artificial portfolio profits, but withdrawals are permanently blocked when victims attempt to Cash Out.",
+      "howItWorks": [
+        "Victim joins 'Institutional Trading' WhatsApp group via web ads.",
+        "Fake stock tips and fabricated profit screenshots are posted by bots.",
+        "Victim deposits money into private accounts via custom trading app.",
+        "App shows fake profits; withdrawal requests demand additional 'tax fees'."
+      ],
+      "attackFlow": [
+        "Social Media Ad Onboarding",
+        "VIP Trading WhatsApp Group",
+        "Deposit to Mule Bank Accounts",
+        "App Balance Manipulation & Withdrawal Block"
+      ],
+      "communicationChannels": ["WhatsApp Groups", "Custom Trading Apps", "Social Media Ads"],
+      "warningSigns": [
+        "Guarantees of fixed high stock profits with zero risk",
+        "Investment money requested in individual personal bank accounts",
+        "Trading conducted on unverified custom apps not listed on SEBI/NSE"
+      ],
+      "requestedInformation": ["Bank Account Transfer", "PAN Card", "Demats Credentials"],
+      "technicalIndicators": {
+        "tradingApps": ["Unverified APK / Web Trading Portals"],
+        "tactic": "Ponzi Investment Account Fraud"
+      },
+      "victimImpact": "Total loss of investment capital.",
+      "immediateActions": [
+        "Stop depositing funds into trading portal immediately",
+        "Lodge complaint on SEBI SCORES portal, 1930 Helpline and cybercrime.gov.in",
+        "Report mule bank details to cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Trade ONLY through SEBI-registered brokers verified on sebi.gov.in",
+        "Never deposit trading money into personal bank accounts"
+      ],
+      "reportingGuidance": "File complaint on SEBI SCORES portal (scores.gov.in) and 1930 Helpline.",
+      "officialGuidance": "SEBI Advisory: Beware of unregistered entities offering guaranteed stock returns.",
+      "sources": [
+        {
+          "publisher": "PIB",
+          "title": "SEBI Warning Against Unauthorized Trading Schemes",
+          "publishedAt": "2026-03-22T11:00:00.000Z",
+          "sourceUrl": "https://pib.gov.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "sim-swap-identity-hijack",
+      "canonicalName": "SIM Swap & Telecom Identity Hijacking Fraud",
+      "aliases": ["sim swap", "5g upgrade scam", "esim fraud", "mobile signal loss scam"],
+      "category": "IDENTITY / IMPERSONATION",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers trick telecom operators into issuing a duplicate SIM card for your phone number, cutting off your network connection and capturing all incoming banking OTPs.",
+      "executiveSummary": "Fraudsters pose as telecom customer care offering 5G upgrades to trick victims into forwarding SIM card numbers or eSIM QR codes. Once activated, the scammer's SIM receives all banking SMS OTPs.",
+      "howItWorks": [
+        "Scammer calls victim offering 'Free 5G SIM Upgrade'.",
+        "Tricks victim into sending 20-digit SIM number via SMS to operator.",
+        "Operator issues new SIM to scammer; victim's phone loses signal.",
+        "Scammer logs into victim's NetBanking using intercepted OTPs."
+      ],
+      "attackFlow": [
+        "Telecom Upgrade Offer Call",
+        "SIM Number SMS Forwarding",
+        "Victim Mobile Signal Loss",
+        "Interception of Banking OTPs"
+      ],
+      "communicationChannels": ["Phone Calls", "SMS"],
+      "warningSigns": [
+        "Sudden total loss of phone network signal in coverage area",
+        "Requests to SMS 20-digit SIM number or scan eSIM QR codes",
+        "Confirmation SMS from telecom operator regarding SIM swap"
+      ],
+      "requestedInformation": ["20-Digit SIM Number", "eSIM Activation Code", "Aadhaar"],
+      "technicalIndicators": {
+        "vector": "Unauthorized SIM Replacement Request"
+      },
+      "victimImpact": "Complete interception of multi-factor authentication codes.",
+      "immediateActions": [
+        "If signal disappears suddenly, contact mobile operator immediately from another phone",
+        "Block bank NetBanking & cards via bank helpline",
+        "Report to 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Operators NEVER ask customers to SMS SIM numbers for 5G upgrades",
+        "Never share eSIM activation QR codes"
+      ],
+      "reportingGuidance": "Report unauthorized SIM swap to telecom operator and 1930 Helpline.",
+      "officialGuidance": "DoT Advisory: Guard SIM card details and report sudden network loss on 1930.",
+      "sources": [
+        {
+          "publisher": "PIB",
+          "title": "DoT Advisory on SIM Swap Frauds",
+          "publishedAt": "2026-02-14T15:00:00.000Z",
+          "sourceUrl": "https://pib.gov.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "whatsapp-family-impersonation",
+      "canonicalName": "WhatsApp Account Takeover & Family Emergency Scam",
+      "aliases": ["whatsapp scam", "family emergency scam", "friend money request", "whatsapp hijacked"],
+      "category": "SOCIAL ENGINEERING",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers hijack a friend or relative's WhatsApp account and send urgent messages requesting emergency money transfers or trick victims into sharing verification PINs.",
+      "executiveSummary": "By taking over a known contact's account, scammers exploit existing social trust. They send urgent distress messages requesting money transfers via UPI for medical or legal emergencies.",
+      "howItWorks": [
+        "Scammer hijacks contact's WhatsApp account via verification code trick.",
+        "Messages victim: 'Emergency! Hospitalized, please send ₹20,000 via UPI'.",
+        "Victim transfers money believing it is their real friend."
+      ],
+      "attackFlow": [
+        "WhatsApp Account Hijack",
+        "Distress Message to Contacts",
+        "Urgent UPI Payment Request",
+        "Money Transferred to Fraudster VPA"
+      ],
+      "communicationChannels": ["WhatsApp Messages"],
+      "warningSigns": [
+        "Unexpected message from a contact asking for urgent money",
+        "Sender refusing to take a voice call claiming emergency",
+        "Requests asking you to forward 6-digit WhatsApp SMS codes"
+      ],
+      "requestedInformation": ["UPI Money Transfer", "WhatsApp Verification Code"],
+      "technicalIndicators": {
+        "tactic": "Account Session Takeover"
+      },
+      "victimImpact": "Financial loss driven by social trust exploitation.",
+      "immediateActions": [
+        "Call contact on regular voice call to verify emergency independently",
+        "Report hijacked account in WhatsApp app settings",
+        "Call 1930 Helpline and report on cybercrime.gov.in if funds were sent"
+      ],
+      "prevention": [
+        "ALWAYS call contact on phone to verify before sending emergency money",
+        "Enable Two-Step Verification (6-digit PIN) in WhatsApp Settings"
+      ],
+      "reportingGuidance": "Report account hijacking to WhatsApp support and 1930 Helpline.",
+      "officialGuidance": "CERT-In Security Note: Enable 2FA on instant messaging apps.",
+      "sources": [
+        {
+          "publisher": "CERT-In",
+          "title": "Guidance on WhatsApp Account Security",
+          "publishedAt": "2026-01-20T09:30:00.000Z",
+          "sourceUrl": "https://www.cert-in.org.in/s-advisories.jsp",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "remote-access-screen-share",
+      "canonicalName": "Screen Mirroring & Remote Access Software Fraud",
+      "aliases": ["screen sharing scam", "anydesk fraud", "teamviewer scam", "rustdesk remote fraud"],
+      "category": "MALWARE",
+      "riskLevel": "CRITICAL",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers guide victims to install remote screen-sharing apps (AnyDesk, RustDesk, TeamViewer), allowing them to view phone screens live and capture banking PINs during transactions.",
+      "executiveSummary": "Fraudsters posing as customer care trick victims into downloading remote access software. By viewing the phone screen live, scammers capture NetBanking passwords and UPI PINs as victims type them.",
+      "howItWorks": [
+        "Victim calls fake customer care number found online for refund help.",
+        "Scammer instructs victim to install AnyDesk app from Play Store.",
+        "Scammer obtains 9-digit session code and views victim's screen live.",
+        "Scammer watches victim enter banking PIN and steals funds."
+      ],
+      "attackFlow": [
+        "Fake Helpline Call",
+        "Remote Access App Download",
+        "Session Code Sharing",
+        "Live Screen Observation & Credentials Theft"
+      ],
+      "communicationChannels": ["Phone Calls", "Remote Control Apps (AnyDesk, RustDesk)"],
+      "warningSigns": [
+        "Customer support agent demanding installation of AnyDesk or RustDesk",
+        "Request to share a 9-digit app session code",
+        "Screen notice displaying 'Someone can see your screen'"
+      ],
+      "requestedInformation": ["9-Digit AnyDesk Code", "Live Screen Access"],
+      "technicalIndicators": {
+        "remoteApps": ["AnyDesk", "RustDesk", "TeamViewer QuickSupport"]
+      },
+      "victimImpact": "Complete live device screen exposure and banking compromise.",
+      "immediateActions": [
+        "Turn off Wi-Fi/Mobile Data immediately or switch to Airplane Mode",
+        "Uninstall remote access software",
+        "Call bank helpline and 1930 Helpline to block accounts, report on cybercrime.gov.in"
+      ],
+      "prevention": [
+        "NEVER install remote control software on advice of phone callers",
+        "Banks and support teams NEVER require remote screen control"
+      ],
+      "reportingGuidance": "Report incident to 1930 Helpline and bank cyber fraud cell.",
+      "officialGuidance": "RBI Warning: Do not grant remote access screen permissions to strangers.",
+      "sources": [
+        {
+          "publisher": "Reserve Bank of India (RBI)",
+          "title": "Advisory on Remote Access Application Risks",
+          "publishedAt": "2026-07-28T11:00:00.000Z",
+          "sourceUrl": "https://www.rbi.org.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "sextortion-video-blackmail",
+      "canonicalName": "Video Call Blackmail & Online Sextortion Racket",
+      "aliases": ["sextortion", "video call blackmail", "whatsapp nude call", "morphing extortion"],
+      "category": "ROMANCE / SEXTORTION",
+      "riskLevel": "CRITICAL",
+      "indiaRelevance": "india_specific",
+      "summary": "Victims receive unsolicited video calls from unknown profiles. Once accepted, scammers record screen footage with explicit clips and demand extortion money under threat of social media leaks.",
+      "executiveSummary": "Cyber blackmailers initiate video calls showing pre-recorded explicit video while recording victim reactions. Edited clips are used to demand extortion money, often followed by fake police calls threatening arrest.",
+      "howItWorks": [
+        "Unknown profile initiates video call on WhatsApp/Instagram.",
+        "Victim answers; screen displays explicit footage while recording victim's face.",
+        "Scammer threatens to send edited video to victim's Facebook contacts unless money is paid.",
+        "Fake 'Cyber Police Officer' calls demanding deletion fees."
+      ],
+      "attackFlow": [
+        "Unsolicited Video Call",
+        "Screen Recording Capture",
+        "Blackmail Threat Message",
+        "Extortion Demands & Fake Police Pressure"
+      ],
+      "communicationChannels": ["WhatsApp Video", "Instagram", "Facebook Messenger"],
+      "warningSigns": [
+        "Video calls from unknown female profiles on social media",
+        "Demands for money to prevent uploading video clips",
+        "Follow-up calls from fake police threatening arrest for porn charges"
+      ],
+      "requestedInformation": ["Extortion Payment", "Personal Contact Details"],
+      "technicalIndicators": {
+        "tactic": "Pre-Recorded Screen Capture Blackmail"
+      },
+      "victimImpact": "Severe psychological distress, fear, and financial extortion.",
+      "immediateActions": [
+        "Do NOT pay money to blackmailers (paying leads to higher demands)",
+        "Block the blackmailer's number immediately",
+        "Report to 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "NEVER answer video calls from unknown contacts on social media",
+        "Cover front camera when taking calls from unknown numbers",
+        "Set social media profiles to Private"
+      ],
+      "reportingGuidance": "Report under 'Report Cyber Crime' on cybercrime.gov.in and dial 1930.",
+      "officialGuidance": "I4C (MHA) Advisory: Do not pay blackmailers; report sextortion to 1930.",
+      "sources": [
+        {
+          "publisher": "I4C (MHA)",
+          "title": "Advisory on Sextortion Extortion Networks",
+          "publishedAt": "2026-03-10T14:00:00.000Z",
+          "sourceUrl": "https://cybercrime.gov.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "crypto-dapp-exchange-fraud",
+      "canonicalName": "Fake Cryptocurrency Exchange & Web3 DApp Mining Fraud",
+      "aliases": ["crypto scam", "fake exchange", "usdt mining scam", "dapp liquidity fraud"],
+      "category": "INVESTMENT",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "global_context",
+      "summary": "Scammers build fake crypto trading platforms or liquidity mining Web3 dApps promising 10% daily USDT returns, obtaining unlimited token approvals to drain connected crypto wallets.",
+      "executiveSummary": "Fraudsters target victims on social apps, guiding them to connect crypto wallets to malicious dApps. Phishing smart contracts request unlimited allowance approvals, allowing scammers to siphon all wallet tokens.",
+      "howItWorks": [
+        "Victim lured via dating apps or social media into 'Liquidity Mining'.",
+        "Directed to connect Web3 wallet (MetaMask/Trust Wallet) to phishing dApp link.",
+        "Phishing smart contract grants scammer unlimited token approval.",
+        "All USDT/Crypto in wallet is drained automatically."
+      ],
+      "attackFlow": [
+        "Social Media / Dating App Onboarding",
+        "Phishing DApp Connection",
+        "Unlimited Smart Contract Token Approval",
+        "Automated Wallet Drain"
+      ],
+      "communicationChannels": ["Web3 DApps", "Telegram", "Instagram"],
+      "warningSigns": [
+        "Promises of guaranteed daily percentage returns in cryptocurrency",
+        "Trading on unverified web exchanges instead of FIU-registered exchanges",
+        "Smart contract prompts requesting 'Unlimited Allowance Approval'"
+      ],
+      "requestedInformation": ["Web3 Wallet Connection", "Token Allowance Approval"],
+      "technicalIndicators": {
+        "contractMethod": "approve(address spender, uint256 value)"
+      },
+      "victimImpact": "Total drain of Web3 crypto wallet balances.",
+      "immediateActions": [
+        "Disconnect Web3 wallet from dApp immediately",
+        "Revoke token approvals using Etherscan/BscScan token approval tools",
+        "Report TxHashes on 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "Trade ONLY on FIU-registered cryptocurrency exchanges in India",
+        "Never connect Web3 wallets to unverified web links",
+        "Regularly audit token approvals"
+      ],
+      "reportingGuidance": "Report crypto fraud details to 1930 Helpline and cybercrime.gov.in.",
+      "officialGuidance": "CERT-In Security Bulletin: Guard Web3 wallet approvals and avoid unverified exchanges.",
+      "sources": [
+        {
+          "publisher": "CERT-In",
+          "title": "Advisory on Web3 Crypto Wallet Security",
+          "publishedAt": "2026-02-28T10:00:00.000Z",
+          "sourceUrl": "https://www.cert-in.org.in/s-advisories.jsp",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    },
+    {
+      "id": "fake-customer-care-helpline-scam",
+      "canonicalName": "Google Search & Maps Fake Customer Care Helpline Fraud",
+      "aliases": ["fake customer care", "google search helpline scam", "fake toll free number", "bank support scam"],
+      "category": "PHISHING",
+      "riskLevel": "HIGH",
+      "indiaRelevance": "india_specific",
+      "summary": "Scammers edit public Google Maps listings and publish SEO-optimized fake posts containing mobile numbers listed as 24x7 customer support for banks, airlines, or e-commerce, looting callers seeking refunds.",
+      "executiveSummary": "Cybercriminals publish fake helpline numbers for popular brands online. When victims call for refund help, scammers guide them to scan QR codes or install remote access software to steal banking credentials.",
+      "howItWorks": [
+        "Victim searches Google for bank or courier customer helpline number.",
+        "Finds a sponsored ad or edited map listing displaying scammer's 10-digit number.",
+        "Victim calls number; scammer claims 'To process refund, scan QR or download AnyDesk'.",
+        "Scammer steals funds."
+      ],
+      "attackFlow": [
+        "Google Search for Support Number",
+        "Call to Fake 10-Digit Mobile Number",
+        "QR Scan / Remote App Guide",
+        "Banking Credentials Compromise"
+      ],
+      "communicationChannels": ["Phone Calls", "Web Search Results", "Map Business Listings"],
+      "warningSigns": [
+        "Customer support number starting with regular mobile digits (+91 9XXXX) instead of 1800 toll-free",
+        "Helpline agent asking to install remote control software",
+        "Asking for UPI PIN to process a refund"
+      ],
+      "requestedInformation": ["UPI PIN", "Remote Control Access", "Card Details"],
+      "technicalIndicators": {
+        "vector": "SEO Search Engine Poisoning & Edited Maps Profile"
+      },
+      "victimImpact": "Loss of bank funds during refund seeking.",
+      "immediateActions": [
+        "Call actual bank helpline (from back of debit card) to block cards",
+        "Report fake helpline number to 1930 Helpline and cybercrime.gov.in"
+      ],
+      "prevention": [
+        "NEVER trust customer care numbers found on Google Search or Maps",
+        "ALWAYS obtain support numbers ONLY from inside official mobile apps or official websites"
+      ],
+      "reportingGuidance": "Report fake listing to 1930 Helpline and search engine feedback.",
+      "officialGuidance": "RBI Public Advisory: Do not call unverified customer care numbers found on search engines.",
+      "sources": [
+        {
+          "publisher": "Reserve Bank of India (RBI)",
+          "title": "Advisory on Fake Helpline Number Scams",
+          "publishedAt": "2026-07-28T11:00:00.000Z",
+          "sourceUrl": "https://www.rbi.org.in",
+          "sourceTier": 1,
+          "verificationStatus": "verified"
+        }
+      ],
+      "lastVerified": "2026-08-20T12:00:00.000Z"
+    }
+  ]
+}

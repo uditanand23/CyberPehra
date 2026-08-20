@@ -1,61 +1,40 @@
 /**
- * CYBERPEHRA TRUST & VERIFICATION CLASSIFIER
+ * CYBERPEHRA TRUST & VERIFICATION ENGINE
  * Evaluates origin signatures, government domain credentials, and live status.
- * Strictly adheres to Non-Fabrication Principle.
+ * Enforces explicit verification statuses: 'verified', 'cached', 'unverified', 'rejected'.
  */
 
-const { getSourceMetadata } = require('./sources.js');
+const { getSourceMetadata, isTrustedSourceUrl } = require('./sources.js');
+const { validateCtiRecord } = require('../schema/intelSchema.js');
 
-const TRUST_CLASSIFICATIONS = {
-  VERIFIED_OFFICIAL: 'VERIFIED_OFFICIAL',       // Official Govt (.gov.in, .nic.in, CERT-In, RBI)
-  HIGH_CONFIDENCE_NEWS: 'HIGH_CONFIDENCE_NEWS', // Accredited national press reports
-  UNVERIFIED: 'UNVERIFIED'                     // Unverified public community alerts
-};
+function evaluateRecordVerificationStatus(record, isLiveFetch = false) {
+  if (!record) return { status: 'rejected', reason: 'Record is null or undefined' };
 
-/**
- * Classifies an incident trust level based on source metadata and canonical URL domain.
- * @param {string} sourceKey 
- * @param {string} sourceUrl 
- * @returns {{ classification: string, isLiveVerified: boolean, trustScore: number }}
- */
-function classifyIncidentTrust(sourceKey = '', sourceUrl = '', wasFetchSuccessful = false) {
-  const metadata = getSourceMetadata(sourceKey) || getSourceMetadata(sourceUrl);
-  
-  let domain = '';
-  try {
-    if (sourceUrl) domain = new URL(sourceUrl).hostname.toLowerCase();
-  } catch (err) {
-    domain = '';
+  // 1. Schema Validation
+  const schemaCheck = validateCtiRecord(record);
+  if (!schemaCheck.valid) {
+    return { status: 'rejected', reason: `Schema validation failed: ${schemaCheck.errors.join('; ')}` };
   }
 
-  // Check official government TLDs
-  const isGovDomain = domain.endsWith('.gov.in') || domain.endsWith('.nic.in') || domain.endsWith('cert-in.org.in') || domain.endsWith('rbi.org.in');
-
-  let classification = TRUST_CLASSIFICATIONS.UNVERIFIED;
-  let trustScore = 40;
-
-  if (metadata && metadata.trustClassification === TRUST_CLASSIFICATIONS.VERIFIED_OFFICIAL) {
-    classification = TRUST_CLASSIFICATIONS.VERIFIED_OFFICIAL;
-    trustScore = metadata.trustScore || 100;
-  } else if (isGovDomain) {
-    classification = TRUST_CLASSIFICATIONS.VERIFIED_OFFICIAL;
-    trustScore = 100;
-  } else if (metadata && metadata.trustClassification === TRUST_CLASSIFICATIONS.HIGH_CONFIDENCE_NEWS) {
-    classification = TRUST_CLASSIFICATIONS.HIGH_CONFIDENCE_NEWS;
-    trustScore = metadata.trustScore || 80;
+  // 2. HTTPS URL & Trusted Domain Check
+  const urlCheck = isTrustedSourceUrl(record.sourceUrl);
+  if (!urlCheck.trusted) {
+    return { status: 'unverified', reason: urlCheck.reason };
   }
 
-  // LIVE Safeguard: Data is ONLY marked live-verified if the fetch succeeded
-  const isLiveVerified = Boolean(wasFetchSuccessful);
+  // 3. Provenance Check
+  if (!record.provenance || !record.provenance.who || !record.provenance.where) {
+    return { status: 'unverified', reason: 'Incomplete provenance data' };
+  }
 
-  return {
-    classification,
-    isLiveVerified,
-    trustScore
-  };
+  // 4. Live vs Cached Status
+  if (isLiveFetch) {
+    return { status: 'verified', reason: 'Live HTTPS fetch verified against Controlled Source Registry' };
+  }
+
+  return { status: 'cached', reason: 'Previously verified record loaded from secure local store' };
 }
 
 module.exports = {
-  TRUST_CLASSIFICATIONS,
-  classifyIncidentTrust
+  evaluateRecordVerificationStatus
 };

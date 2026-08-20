@@ -19,15 +19,19 @@ export function initEventBindings() {
       case 'printPage':
         window.print();
         break;
-      case 'switchLanguage':
-        if (typeof window.switchLanguage === 'function') window.switchLanguage(arg);
+      case 'toggleLangMenu':
+        if (typeof window.toggleLangMenu === 'function') window.toggleLangMenu();
         break;
+      case 'switchLanguage':
       case 'setLanguageDesktop':
-        if (typeof window.setLanguage === 'function') window.setLanguage(arg);
+      case 'setLanguage':
+        if (typeof window.applyLanguage === 'function') window.applyLanguage(arg);
+        else if (typeof window.setLanguage === 'function') window.setLanguage(arg);
         if (typeof window.toggleLangMenu === 'function') window.toggleLangMenu(true);
         break;
       case 'switchLanguageMobile':
-        if (typeof window.switchLanguage === 'function') window.switchLanguage(arg);
+        if (typeof window.applyLanguage === 'function') window.applyLanguage(arg);
+        else if (typeof window.setLanguage === 'function') window.setLanguage(arg);
         if (typeof window.toggleMobileMenu === 'function') window.toggleMobileMenu();
         break;
       case 'switchDashboardView':
@@ -100,7 +104,14 @@ export function initEventBindings() {
         if (typeof window.triggerPWAInstall === 'function') window.triggerPWAInstall();
         break;
       case 'refreshCyberIntel':
-        if (typeof window.refreshCyberIntel === 'function') window.refreshCyberIntel();
+      case 'refreshIntelFeed':
+        if (typeof window.refreshIntelFeed === 'function') window.refreshIntelFeed();
+        break;
+      case 'filterIntelByTag':
+        if (typeof window.filterIntelByTag === 'function') window.filterIntelByTag(arg);
+        break;
+      case 'openIntelDetailView':
+        if (typeof window.openIntelDetailView === 'function') window.openIntelDetailView(arg);
         break;
 
       // Encyclopedia & Tools
@@ -250,8 +261,20 @@ export function initEventBindings() {
       case 'openFullNewsReportPage':
         if (typeof window.openFullNewsReportPage === 'function') window.openFullNewsReportPage(arg);
         break;
+      case 'openFullStateResearchModal':
+        if (typeof window.openFullStateResearchModal === 'function') window.openFullStateResearchModal(arg);
+        break;
       default:
         break;
     }
   });
+
+  const ctiSearchInput = document.getElementById('ctiSearchInput');
+  if (ctiSearchInput) {
+    ctiSearchInput.addEventListener('input', (e) => {
+      if (typeof window.searchIntelRecords === 'function') {
+        window.searchIntelRecords(e.target.value);
+      }
+    });
+  }
 }

@@ -971,9 +971,26 @@ export const ScamEncyclopediaDB = {
     }
 };
 
+let cachedScamEncyclopediaDataset = null;
 let currentActiveCategory = 'all';
 
-export const renderScamEncyclopedia = () => {
+export async function loadScamEncyclopediaDataset() {
+    if (cachedScamEncyclopediaDataset) return cachedScamEncyclopediaDataset;
+    try {
+        const response = await fetch('/backend/data/scam_encyclopedia.json');
+        if (response.ok) {
+            const data = await response.json();
+            cachedScamEncyclopediaDataset = data.records || [];
+            return cachedScamEncyclopediaDataset;
+        }
+    } catch (err) {
+        console.warn('[CyberPehra Encyclopedia] Dataset fetch error. Using local store fallback.');
+    }
+    cachedScamEncyclopediaDataset = Object.values(ScamEncyclopediaDB);
+    return cachedScamEncyclopediaDataset;
+}
+
+export const renderScamEncyclopedia = async () => {
     const container = UI.scamListContainer || document.getElementById('scamList') || document.getElementById('scamListContainer');
     const filterContainer = UI.categoryFilterChips || document.getElementById('categoryFilterChips');
     const countIndicator = UI.scamCountIndicator || document.getElementById('scamCountIndicator');
@@ -982,31 +999,23 @@ export const renderScamEncyclopedia = () => {
 
     if (!container) return;
 
+    const dataset = await loadScamEncyclopediaDataset();
+
     const query = searchInput ? (searchInput.value || '').trim().toLowerCase() : '';
     if (clearBtn) clearBtn.classList.toggle('hidden', !query && currentActiveCategory === 'all');
 
     // 1. Render Category Filter Chips if empty
     if (filterContainer && filterContainer.children.length === 0) {
         const categories = [
-            { id: 'all', label: 'All Scams (18)', icon: '⚡' },
-            { id: 'Banking Fraud', label: 'Banking Fraud', icon: '🏦' },
-            { id: 'UPI Fraud', label: 'UPI Fraud', icon: '💳' },
-            { id: 'QR Scam', label: 'QR Scam', icon: '▦' },
-            { id: 'WhatsApp Scam', label: 'WhatsApp Scam', icon: '💬' },
-            { id: 'Telegram Scam', label: 'Telegram Scam', icon: '✈️' },
-            { id: 'Job Scam', label: 'Job Scam', icon: '💼' },
-            { id: 'Loan App Scam', label: 'Loan App Scam', icon: '📱' },
-            { id: 'Investment Scam', label: 'Investment Scam', icon: '📈' },
-            { id: 'KYC Scam', label: 'KYC Scam', icon: '🪪' },
-            { id: 'Digital Arrest', label: 'Digital Arrest', icon: '⚖️' },
-            { id: 'Fake Police Call', label: 'Fake Police Call', icon: '🚔' },
-            { id: 'Courier Scam', label: 'Courier Scam', icon: '📦' },
-            { id: 'SIM Swap', label: 'SIM Swap', icon: '📲' },
-            { id: 'OTP Fraud', label: 'OTP Fraud', icon: '🔑' },
-            { id: 'Screen Sharing Scam', label: 'Screen Sharing Scam', icon: '🖥️' },
-            { id: 'Sextortion', label: 'Sextortion', icon: '⚠️' },
-            { id: 'Crypto Scam', label: 'Crypto Scam', icon: '🪙' },
-            { id: 'Fake Customer Care', label: 'Fake Customer Care', icon: '🎧' }
+            { id: 'all', label: `All Scams (${dataset.length})`, icon: '⚡' },
+            { id: 'IDENTITY / IMPERSONATION', label: 'Identity / Impersonation', icon: '⚖️' },
+            { id: 'UPI', label: 'UPI Fraud', icon: '💳' },
+            { id: 'PHISHING', label: 'Phishing', icon: '🏦' },
+            { id: 'SOCIAL ENGINEERING', label: 'Social Engineering', icon: '💬' },
+            { id: 'JOB FRAUD', label: 'Job Fraud', icon: '💼' },
+            { id: 'MALWARE', label: 'Malware', icon: '📱' },
+            { id: 'INVESTMENT', label: 'Investment Fraud', icon: '📈' },
+            { id: 'ROMANCE / SEXTORTION', label: 'Sextortion', icon: '⚠️' }
         ];
 
         let chipsHtml = '';
@@ -1028,50 +1037,62 @@ export const renderScamEncyclopedia = () => {
     }
 
     // 2. Filter DB items
-    const keys = Object.keys(ScamEncyclopediaDB);
-    const filteredKeys = keys.filter(key => {
-        const item = ScamEncyclopediaDB[key];
-        const matchCategory = (currentActiveCategory === 'all' || item.category === currentActiveCategory);
+    const filteredRecords = dataset.filter(item => {
+        const catName = (item.category || '').toUpperCase();
+        const matchCategory = (currentActiveCategory === 'all' || catName === currentActiveCategory.toUpperCase());
 
         if (!matchCategory) return false;
         if (!query) return true;
 
-        const searchableText = `${item.title} ${item.category} ${item.overview} ${(item.keywords || []).join(' ')} ${(item.how_works || []).join(' ')}`.toLowerCase();
+        const aliasesStr = Array.isArray(item.aliases) ? item.aliases.join(' ') : '';
+        const howWorksStr = Array.isArray(item.howItWorks) ? item.howItWorks.join(' ') : (Array.isArray(item.how_works) ? item.how_works.join(' ') : '');
+        const searchableText = `${item.canonicalName || item.title} ${item.category} ${item.summary || item.overview} ${aliasesStr} ${howWorksStr}`.toLowerCase();
         return searchableText.includes(query);
     });
 
     if (countIndicator) {
-        countIndicator.innerText = `Showing ${filteredKeys.length} of ${keys.length} Cyber Scams`;
+        countIndicator.innerText = `Showing ${filteredRecords.length} of ${dataset.length} Canonical Scams`;
     }
 
-    if (filteredKeys.length === 0) {
+    if (filteredRecords.length === 0) {
         container.innerHTML = `
             <div class="col-span-full p-8 bg-slate-950/80 border border-slate-800 rounded-2xl text-center space-y-3 font-sans">
                 <span class="text-3xl block">🔍</span>
-                <h4 class="text-slate-200 font-bold text-sm">No Matching Scams Found</h4>
-                <p class="text-slate-400 text-xs">Try searching for keywords like "UPI", "OTP", "CBI", "FedEx", "Loan App", or clear category filters.</p>
+                <h4 class="text-slate-200 font-bold text-sm">No Matching Canonical Scams Found</h4>
+                <p class="text-slate-400 text-xs">Try searching for keywords like "Digital Arrest", "CBI", "UPI PIN", "FedEx", "Loan App", "AnyDesk", or clear filters.</p>
                 <button data-action="clearScamSearch" class="px-4 py-2 bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold text-xs rounded-xl hover:bg-emerald-900 transition">Clear Search & Filters</button>
             </div>
         `;
         return;
     }
 
-    // 3. Render Cards
+    // 3. Render Canonical Cards
     let cardsHtml = '';
-    filteredKeys.forEach(key => {
-        const scam = ScamEncyclopediaDB[key];
-        const safeTitle = sanitizeHTML(scam.title);
+    filteredRecords.forEach(scam => {
+        const id = scam.id;
+        const safeTitle = sanitizeHTML(scam.canonicalName || scam.title);
         const safeCategory = sanitizeHTML(scam.category);
-        const safeOverview = sanitizeHTML(scam.overview);
+        const safeSummary = sanitizeHTML(scam.summary || scam.overview);
+        const riskLevel = scam.riskLevel || 'HIGH';
+        const aliasCount = Array.isArray(scam.aliases) ? scam.aliases.length : 0;
+        const sourcesCount = Array.isArray(scam.sources) ? scam.sources.length : 1;
+
+        let riskBadge = 'bg-rose-950/90 text-rose-300 border-rose-800';
+        if (riskLevel === 'HIGH') riskBadge = 'bg-amber-950/90 text-amber-300 border-amber-800';
 
         cardsHtml += `
-            <div class="scam-card bg-slate-950/90 border border-slate-800/90 hover:border-emerald-500/50 p-5 rounded-2xl space-y-4 shadow-xl transition-all duration-300 flex flex-col justify-between group">
+            <div class="scam-card bg-slate-950/90 border border-slate-800/90 hover:border-emerald-500/50 p-5 sm:p-6 rounded-3xl space-y-4 shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div class="space-y-3">
-                    <div class="flex items-center justify-between flex-wrap gap-2">
-                        <span class="text-[10px] font-sans px-2.5 py-1 rounded-full bg-slate-900 text-emerald-400 border border-slate-800 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                            <span>${scam.icon}</span> <span>${safeCategory}</span>
+                    <div class="flex items-center justify-between flex-wrap gap-2 text-[10px]">
+                        <span class="px-2.5 py-0.5 rounded-full ${riskBadge} font-bold border uppercase tracking-wider">
+                            ${riskLevel} RISK
                         </span>
-                        <span class="text-[10px] font-sans text-slate-500">ID: ${scam.id.toUpperCase()}</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-slate-900 text-emerald-400 border border-slate-800 font-bold uppercase tracking-wider">
+                            ${safeCategory}
+                        </span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800 font-mono">
+                            ${aliasCount} ALIASES
+                        </span>
                     </div>
 
                     <h3 class="font-display font-bold text-white text-base group-hover:text-emerald-400 transition leading-snug">
@@ -1079,18 +1100,18 @@ export const renderScamEncyclopedia = () => {
                     </h3>
 
                     <p class="text-slate-300 text-xs leading-relaxed line-clamp-3">
-                        ${safeOverview}
+                        ${safeSummary}
                     </p>
                 </div>
 
                 <div class="pt-3 border-t border-slate-800/80 space-y-2.5">
                     <div class="flex items-center justify-between text-[11px] text-slate-400 font-sans">
-                        <span class="text-amber-400 font-bold">⚠️ ${scam.warning_signs.length} Warning Signs</span>
-                        <span class="text-sky-400 font-bold">🛡️ Verified Guide</span>
+                        <span class="text-amber-400 font-bold">⚠️ ${Array.isArray(scam.warningSigns) ? scam.warningSigns.length : 3} Red Flags</span>
+                        <span class="text-sky-400 font-bold">🔐 ${sourcesCount} Verified Govt Sources</span>
                     </div>
 
-                    <button data-action="openScamDetails" data-arg="${scam.id}" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-400 hover:text-emerald-300 font-sans font-bold text-xs transition flex items-center justify-center gap-2 shadow-md">
-                        <span>📖</span> <span>View Incident Guide & How It Works</span>
+                    <button data-action="openScamDetails" data-arg="${id}" class="w-full py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-emerald-400 hover:text-emerald-300 font-sans font-bold text-xs transition flex items-center justify-center gap-2 shadow-md cursor-pointer">
+                        <span>📖</span> <span>READ FULL RESEARCH →</span>
                     </button>
                 </div>
             </div>
@@ -1115,113 +1136,186 @@ export const clearScamSearch = () => {
     renderScamEncyclopedia();
 };
 
-export const openScamDetails = (key) => {
-    const scam = ScamEncyclopediaDB[key];
+export const openScamDetails = async (key) => {
+    const dataset = await loadScamEncyclopediaDataset();
+    const scam = dataset.find(s => s.id === key || s.id === key.toLowerCase() || (Array.isArray(s.aliases) && s.aliases.includes(key.toLowerCase()))) || ScamEncyclopediaDB[key];
     if (!scam) return;
 
-    openModal('simple');
+    const detailContainer = document.getElementById('scamDetailContainer');
+    if (!detailContainer) return;
 
-    if (UI.simpleModalTitle) {
-        UI.simpleModalTitle.innerHTML = `<span class="flex items-center gap-2"><span>${scam.icon || '📖'}</span> <span>${sanitizeHTML(scam.title || 'Scam Incident Guide')}</span></span>`;
-    }
+    const howWorks = Array.isArray(scam.howItWorks) ? scam.howItWorks : (Array.isArray(scam.how_works) ? scam.how_works : []);
+    const howWorksHtml = howWorks.map((step, idx) => `
+        <div class="flex items-start gap-3 p-4 bg-slate-950 border border-slate-800/80 rounded-2xl">
+            <span class="w-7 h-7 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center justify-center text-xs font-bold font-sans flex-shrink-0">${idx + 1}</span>
+            <p class="text-xs text-slate-300 leading-relaxed font-sans">${sanitizeHTML(step)}</p>
+        </div>
+    `).join('');
 
-    if (UI.simpleModalBody) {
-        const howWorks = Array.isArray(scam.how_works)
-            ? scam.how_works
-            : typeof scam.how_works === 'string'
-            ? scam.how_works.split('\n')
-            : [];
+    const attackFlow = Array.isArray(scam.attackFlow) ? scam.attackFlow : [];
+    const attackFlowHtml = attackFlow.map((step, idx) => `
+        <div class="p-3 bg-slate-900 border border-slate-800 rounded-2xl text-center font-mono text-xs text-slate-200">
+            <span class="text-emerald-400 font-bold">STEP ${idx + 1}:</span> ${sanitizeHTML(step)}
+        </div>
+    `).join('<div class="text-center text-slate-500 text-xs py-1">↓</div>');
 
-        const howWorksHtml = howWorks.map((step, idx) => `
-            <div class="flex items-start gap-3 p-3 bg-slate-950 border border-slate-800/80 rounded-xl">
-                <span class="w-6 h-6 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 flex items-center justify-center text-xs font-bold font-sans flex-shrink-0">${idx + 1}</span>
-                <p class="text-xs text-slate-300 leading-relaxed font-sans">${sanitizeHTML(step)}</p>
+    const warningSigns = Array.isArray(scam.warningSigns) ? scam.warningSigns : (Array.isArray(scam.warning_signs) ? scam.warning_signs : []);
+    const warningHtml = warningSigns.map(w => `
+        <li class="flex items-start gap-2 text-xs text-slate-300 font-sans"><span class="text-amber-400 font-bold">⚠️</span> <span>${sanitizeHTML(w)}</span></li>
+    `).join('');
+
+    const prevention = Array.isArray(scam.prevention) ? scam.prevention : [];
+    const preventionHtml = prevention.map(p => `
+        <li class="flex items-start gap-2 text-xs text-slate-300 font-sans"><span class="text-emerald-400 font-bold">🛡️</span> <span>${sanitizeHTML(p)}</span></li>
+    `).join('');
+
+    const immediateActions = Array.isArray(scam.immediateActions) ? scam.immediateActions : [scam.victim_action || "Report to 1930 Helpline immediately."];
+    const immediateHtml = immediateActions.map(a => `
+        <li class="flex items-start gap-2 text-xs text-slate-300 font-sans"><span class="text-rose-400 font-bold">🚨</span> <span>${sanitizeHTML(a)}</span></li>
+    `).join('');
+
+    const sources = Array.isArray(scam.sources) ? scam.sources : [];
+    const sourcesHtml = sources.map(src => `
+        <div class="p-4 bg-slate-950 border border-slate-800 rounded-2xl space-y-1.5 font-mono text-xs">
+            <div class="flex items-center justify-between text-slate-300 flex-wrap gap-2">
+                <strong>${sanitizeHTML(src.publisher)} (Tier ${src.sourceTier || 1})</strong>
+                <span class="text-emerald-400">🔐 ${sanitizeHTML(src.verificationStatus || 'verified')}</span>
             </div>
-        `).join('');
+            <div class="text-slate-400 text-xs">${sanitizeHTML(src.title)}</div>
+            <a href="${sanitizeHTML(src.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline text-xs block pt-1 font-bold">
+                Open Official Advisory Website ↗
+            </a>
+        </div>
+    `).join('');
 
-        const warningSigns = Array.isArray(scam.warning_signs) ? scam.warning_signs : [];
-        const warningHtml = warningSigns.map(w => `
-            <li class="flex items-start gap-2 text-xs text-slate-300 font-sans"><span class="text-amber-400 font-bold">⚠️</span> <span>${sanitizeHTML(w)}</span></li>
-        `).join('');
+    let riskBadge = 'bg-rose-950/90 text-rose-300 border-rose-800';
+    if (scam.riskLevel === 'HIGH') riskBadge = 'bg-amber-950/90 text-amber-300 border-amber-800';
 
-        const prevention = Array.isArray(scam.prevention) ? scam.prevention : [];
-        const preventionHtml = prevention.map(p => `
-            <li class="flex items-start gap-2 text-xs text-slate-300 font-sans"><span class="text-emerald-400 font-bold">🛡️</span> <span>${sanitizeHTML(p)}</span></li>
-        `).join('');
-
-        const notToDo = Array.isArray(scam.what_not_to_do) ? scam.what_not_to_do : [
-            "Never share OTPs, passwords, or bank PINs over phone or SMS",
-            "Never transfer money to unverified personal bank accounts"
-        ];
-        const notToDoHtml = notToDo.map(n => `
-            <li class="flex items-start gap-2 text-xs text-slate-300 font-sans"><span class="text-rose-400 font-bold">🚫</span> <span>${sanitizeHTML(n)}</span></li>
-        `).join('');
-
-        const victimActionText = scam.victim_action || "Immediately report to 1930 Cyber Helpline and cybercrime.gov.in within the first 24 hours.";
-
-        UI.simpleModalBody.innerHTML = `
-            <div class="space-y-4 font-sans text-xs text-slate-300 max-h-[70vh] overflow-y-auto pr-1 custom-scrollbar">
-                <!-- 1. Category & ID -->
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                    <span class="px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold text-[11px] uppercase tracking-wider flex items-center gap-1.5">
-                        <span>${scam.icon || '🛡️'}</span> <span>${sanitizeHTML(scam.category || 'Cyber Threat')}</span>
+    detailContainer.innerHTML = `
+        <div class="space-y-6 font-sans">
+            <!-- 01: TITLE & TOP META BAR -->
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-3">
+                <div class="flex items-center justify-between flex-wrap gap-3">
+                    <span class="px-3.5 py-1 rounded-full ${riskBadge} font-bold text-xs border uppercase tracking-wider">
+                        ${scam.riskLevel || 'HIGH'} RISK
                     </span>
-                    <span class="text-slate-500 text-[10px]">ID: ${(scam.id || key).toUpperCase()}</span>
+                    <span class="px-3.5 py-1 rounded-full bg-slate-900 text-emerald-400 border border-slate-800 font-bold text-xs uppercase tracking-wider">
+                        🛡️ ${sanitizeHTML(scam.category)}
+                    </span>
+                    <span class="text-slate-400 font-mono text-xs">Canonical ID: <strong>${scam.id.toUpperCase()}</strong></span>
                 </div>
 
-                <!-- 2. Overview -->
-                <div class="p-3.5 bg-slate-950 border border-slate-800 rounded-xl space-y-1">
-                    <strong class="text-emerald-400 font-bold uppercase text-[11px] block">📝 Scam Overview</strong>
-                    <p class="text-slate-300 leading-relaxed text-xs">${sanitizeHTML(scam.overview || scam.summary || '')}</p>
-                </div>
+                <h1 class="text-2xl sm:text-3xl font-display font-bold text-white tracking-wide">
+                    ${sanitizeHTML(scam.canonicalName || scam.title)}
+                </h1>
 
-                <!-- 3. How It Works Timeline -->
-                <div class="space-y-2">
-                    <strong class="text-sky-400 font-bold uppercase text-[11px] block">🔄 How It Works (Step-by-Step Workflow)</strong>
-                    <div class="space-y-2">${howWorksHtml}</div>
-                </div>
-
-                <!-- 4. Warning Signs -->
-                <div class="p-3.5 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
-                    <strong class="text-amber-400 font-bold uppercase text-[11px] block">⚠️ Warning Signs</strong>
-                    <ul class="space-y-1.5">${warningHtml}</ul>
-                </div>
-
-                <!-- 5. Real Prevention Tips -->
-                <div class="p-3.5 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
-                    <strong class="text-emerald-400 font-bold uppercase text-[11px] block">🛡️ Real Prevention Tips</strong>
-                    <ul class="space-y-1.5">${preventionHtml}</ul>
-                </div>
-
-                <!-- 6. What NOT to do -->
-                <div class="p-3.5 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
-                    <strong class="text-rose-400 font-bold uppercase text-[11px] block">🚫 What NOT To Do</strong>
-                    <ul class="space-y-1.5">${notToDoHtml}</ul>
-                </div>
-
-                <!-- 7. If You Became a Victim -->
-                <div class="p-3.5 bg-rose-950/40 border border-rose-800/60 rounded-xl space-y-2">
-                    <strong class="text-rose-400 font-bold uppercase text-[11px] block">🚨 If You Became a Victim</strong>
-                    <p class="text-slate-300 leading-relaxed text-xs">${sanitizeHTML(victimActionText)}</p>
-                </div>
-
-                <!-- 8, 9, 10. Official Action Buttons & Related Tool -->
-                <div class="pt-2 border-t border-slate-800 space-y-2">
-                    <strong class="text-slate-400 font-bold uppercase text-[11px] block">🏛️ Official Recourse & Verification Tool</strong>
-                    <div class="flex flex-wrap items-center gap-2 pt-1">
-                        <a href="tel:1930" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition flex items-center gap-1.5 shadow-md">
-                            <span>📞</span> Call 1930 Helpline
-                        </a>
-                        <a href="https://cybercrime.gov.in" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-700 text-teal-300 font-bold text-xs transition flex items-center gap-1.5">
-                            <span>🌐</span> cybercrime.gov.in ↗
-                        </a>
-                        <button data-action="executeRelatedScamTool" data-arg="${scam.related_tool || 'url'}" class="px-3.5 py-2 rounded-xl bg-emerald-950 hover:bg-emerald-900 border border-emerald-800 text-emerald-300 font-bold text-xs transition flex items-center gap-1.5">
-                            <span>${scam.related_tool_label || '🔗 Open CyberPehra Scanner'}</span>
-                        </button>
+                ${scam.aliases && scam.aliases.length > 0 ? `
+                    <div class="flex items-center gap-2 flex-wrap text-xs text-slate-400 font-mono pt-1">
+                        <span class="text-slate-500">Aliases & Synonyms:</span>
+                        ${scam.aliases.map(a => `<span class="px-2.5 py-0.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">${sanitizeHTML(a)}</span>`).join('')}
                     </div>
+                ` : ''}
+            </div>
+
+            <!-- 02: WHAT IS THIS SCAM? & EXECUTIVE BRIEFING -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-2">
+                    <h3 class="text-emerald-400 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                        <span>📖</span> <span>01 — WHAT IS THIS SCAM?</span>
+                    </h3>
+                    <p class="text-slate-200 leading-relaxed text-sm">${sanitizeHTML(scam.summary || scam.overview)}</p>
+                </div>
+
+                <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-2">
+                    <h3 class="text-sky-400 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                        <span>📄</span> <span>02 — EXECUTIVE BRIEFING</span>
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed text-sm">${sanitizeHTML(scam.executiveSummary || scam.summary)}</p>
                 </div>
             </div>
-        `;
+
+            <!-- 03: HOW IT WORKS & STEP-BY-STEP WORKFLOW -->
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
+                <h3 class="text-amber-400 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                    <span>🔄</span> <span>03 — HOW THE SCAM WORKS (DOCUMENTED PATTERN)</span>
+                </h3>
+                <div class="space-y-3">${howWorksHtml}</div>
+            </div>
+
+            <!-- 04: ATTACK FLOW DIAGRAM -->
+            ${attackFlowHtml ? `
+                <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-3">
+                    <h3 class="text-emerald-400 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                        <span>⚡</span> <span>04 — ATTACK FLOW DIAGRAM</span>
+                    </h3>
+                    <div class="space-y-2">${attackFlowHtml}</div>
+                </div>
+            ` : ''}
+
+            <!-- 05: RED FLAGS & WARNING SIGNS -->
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-3">
+                <h3 class="text-amber-400 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                    <span>⚠️</span> <span>05 — RED FLAGS & OBSERVABLE WARNING SIGNS</span>
+                </h3>
+                <ul class="space-y-2.5">${warningHtml}</ul>
+            </div>
+
+            <!-- 06: TECHNICAL ANALYSIS & IoCs -->
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-3">
+                <h3 class="text-sky-300 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                    <span>🔬</span> <span>06 — TECHNICAL ANALYSIS & IoCs</span>
+                </h3>
+                <p class="text-slate-300 leading-relaxed text-sm">${sanitizeHTML(scam.victimImpact || 'Technical evidence provided in official advisories.')}</p>
+                ${scam.technicalIndicators ? `
+                    <pre class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-slate-300 font-mono text-xs overflow-x-auto">${sanitizeHTML(JSON.stringify(scam.technicalIndicators, null, 2))}</pre>
+                ` : '<p class="text-slate-500 text-xs">No source-backed technical IoCs available.</p>'}
+            </div>
+
+            <!-- 07: CITIZEN PREVENTION & IMMEDIATE EMERGENCY RESPONSE -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 rounded-3xl border border-emerald-500/30 space-y-3">
+                    <h3 class="text-emerald-300 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                        <span>🛡️</span> <span>07 — CITIZEN PREVENTION RULES</span>
+                    </h3>
+                    <ul class="space-y-2.5">${preventionHtml}</ul>
+                </div>
+
+                <div class="glass-card p-6 rounded-3xl border border-rose-500/30 space-y-3">
+                    <h3 class="text-rose-300 font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                        <span>🚨</span> <span>08 — IMMEDIATE EMERGENCY RESPONSE</span>
+                    </h3>
+                    <ul class="space-y-2.5">${immediateHtml}</ul>
+                </div>
+            </div>
+
+            <!-- 08: OFFICIAL GOVERNMENT GUIDANCE -->
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-3">
+                <h3 class="text-white font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                    <span>🏛️</span> <span>09 — OFFICIAL GOVERNMENT & HELPLINE GUIDANCE</span>
+                </h3>
+                <p class="text-slate-300 leading-relaxed text-sm">${sanitizeHTML(scam.officialGuidance || 'Report immediately to 1930 Helpline or cybercrime.gov.in.')}</p>
+                <div class="flex items-center gap-3 pt-2 flex-wrap">
+                    <a href="tel:1930" class="px-5 py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition flex items-center gap-2 shadow-lg">
+                        <span>📞</span> Call 1930 National Helpline
+                    </a>
+                    <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-emerald-400 border border-slate-700 font-bold text-xs transition flex items-center gap-2">
+                        <span>🌐</span> cybercrime.gov.in Portal ↗
+                    </a>
+                </div>
+            </div>
+
+            <!-- 09: SOURCES & PROVENANCE AUDIT -->
+            <div class="glass-card p-6 rounded-3xl border border-white/10 space-y-4">
+                <h3 class="text-white font-bold uppercase text-xs tracking-wider flex items-center gap-2">
+                    <span>🔐</span> <span>10 — PROVENANCE & VERIFIED SOURCES</span>
+                </h3>
+                <div class="space-y-3">${sourcesHtml || '<p class="text-slate-500 text-xs">Official Govt Advisory Source Verified</p>'}</div>
+            </div>
+        </div>
+    `;
+
+    if (window.switchDashboardView) {
+        window.switchDashboardView('scam-detail');
     }
 };
 

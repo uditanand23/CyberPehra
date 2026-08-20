@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cyberpehra-v3';
+const CACHE_NAME = 'cyberpehra-v4';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -20,6 +20,7 @@ const APP_SHELL = [
   '/js/language.js',
   '/js/utils.js',
   '/js/indiaMap.js',
+  '/india_state_real_data.json',
   '/india_cyber_data.json',
   '/india_states.geojson'
 ];

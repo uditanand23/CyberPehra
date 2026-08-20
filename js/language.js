@@ -163,8 +163,12 @@ export const Translations = {
         enc_title: "📖 National Cyber Scam Encyclopedia",
         enc_desc: "Verified Repository of Cyber Scams, Modus Operandi, and Prevention Tactics in India",
         enc_showing_all: "Showing All Scams",
-        intel_title: "🌍 Live Threat Intelligence Center",
-        intel_sub: "Aggregated Advisories from CERT-In, CISA, and Public Security Bulletins",
+        intel_title: "🌐 Live Threat Intelligence Center",
+        intel_sub: "Evidence-First CTI Stream • Authoritative Bulletins from CERT-In, I4C (MHA), RBI, NPCI, & CISA",
+        intel_status_live: "🟢 LIVE VERIFIED",
+        intel_status_cached: "🟡 PREVIOUSLY VERIFIED — CACHED",
+        intel_status_unverified: "⚪ UNVERIFIED",
+        intel_status_unavailable: "🔴 SOURCE UNAVAILABLE",
 
         // Map Section
         map_title: "🇮🇳 Live Cyber Threat Map – India",
@@ -323,7 +327,30 @@ export const Translations = {
         sw_methodology: "CyberPehra Forensic Methodology",
         sw_disclaimer: "Automated Analysis & Legal Disclaimer",
         sw_threat_intel: "Live Threat Intelligence Telemetry",
-        sw_rec_actions: "Recommended Citizen Actions"
+        sw_rec_actions: "Recommended Citizen Actions",
+
+        // 3D Map & Threat Telemetry Keys
+        map_title: "🇮🇳 3D India Threat Map (NCRB & UIDAI Official Data)",
+        map_subtitle: "Authoritative State/UT Datasets • Click any State to filter threat intelligence",
+        map_reset: "↺ Reset to National View",
+        map_stat_firs: "NCRB Registered Cyber FIRs",
+        map_stat_pop: "UIDAI Population Estimate",
+        map_stat_rate: "Per-Capita Registered Case Rate",
+        map_stat_risk: "NCRB Threat Risk Tier",
+        map_chart_trend: "Cyber Crime FIR Trend (2021 vs 2023)",
+        map_chart_rate: "Per-Capita Registered Case Rate Analysis",
+        map_news_stream_title: "📰 Verified Incident Intelligence Stream",
+        map_btn_read_paper: "📖 Read Full Research Paper ➔",
+        map_btn_back: "← Back to 3D India Threat Map",
+        map_btn_print: "Print Full Research Paper 🖨️",
+        map_btn_open_advisory: "Open Official Advisory Website 🔗",
+        map_sec_1: "📄 SECTION 1 / 4 — EXECUTIVE THREAT SUMMARY",
+        map_sec_2: "📄 SECTION 2 / 4 — DETAILED MODUS OPERANDI (ATTACK FLOW)",
+        map_sec_3: "📄 SECTION 3 / 4 — TECHNICAL ANALYSIS & TARGETING PROFILE",
+        map_sec_4: "📄 SECTION 4 / 4 — WARNING SIGNS, CITIZEN PROTECTION & OFFICIAL SOURCES",
+        map_warning_title: "⚠️ Critical Warning Indicators (Red Flags)",
+        map_gov_response_title: "🛡️ Government Response & Emergency Action Plan",
+        map_sources_title: "📚 Primary Research Sources & Official Advisories"
     },
     hi: {
         // Boot screen
@@ -486,8 +513,12 @@ export const Translations = {
         enc_title: "📖 राष्ट्रीय साइबर स्कैम ज्ञानकोश",
         enc_desc: "भारत में साइबर स्कैम, कार्यप्रणाली और रोकथाम के तरीकों का सत्यापित रिपोजिटरी",
         enc_showing_all: "सभी स्कैम दिखाए जा रहे हैं",
-        intel_title: "🌍 लाइव थ्रेट इंटेलिजेंस सेंटर",
-        intel_sub: "CERT-In, CISA और सार्वजनिक सुरक्षा बुलेटिन से एकत्रित सलाह",
+        intel_title: "🌐 लाइव थ्रेट इंटेलिजेंस सेंटर",
+        intel_sub: "साक्ष्य-आधारित CTI स्ट्रीम • CERT-In, I4C (MHA), RBI, NPCI और CISA से आधिकारिक साइबर बुलेटिन",
+        intel_status_live: "🟢 लाइव सत्यापित",
+        intel_status_cached: "🟡 पूर्व सत्यापित — कैश",
+        intel_status_unverified: "⚪ असत्यापित",
+        intel_status_unavailable: "🔴 स्रोत अस्थायी रूप से अनुपलब्ध",
 
         // Map Section
         map_title: "🇮🇳 लाइव साइबर थ्रेट मैप – भारत",
@@ -718,7 +749,30 @@ export const Translations = {
         sw_methodology: "CyberPehra Forensic Methodology",
         sw_disclaimer: "Automated Analysis & Legal Disclaimer",
         sw_threat_intel: "Live Threat Intelligence Telemetry",
-        sw_rec_actions: "Recommended Citizen Actions"
+        sw_rec_actions: "Recommended Citizen Actions",
+
+        // 3D Map & Threat Telemetry Keys (Hindi)
+        map_title: "🇮🇳 3D भारत थ्रेट मैप (NCRB एवं UIDAI आधिकारिक डेटा)",
+        map_subtitle: "प्रमाणिक राज्य/केंद्र शासित प्रदेश डेटासेट • सुरक्षा जानकारी के लिए राज्य पर क्लिक करें",
+        map_reset: "↺ राष्ट्रीय दृश्य पर पुनः सेट करें",
+        map_stat_firs: "NCRB पंजीकृत साइबर FIRs",
+        map_stat_pop: "UIDAI जनसंख्या अनुमान",
+        map_stat_rate: "प्रति-व्यक्ति पंजीकृत केस दर",
+        map_stat_risk: "NCRB थ्रेट रिस्क श्रेणी",
+        map_chart_trend: "साइबर अपराध FIR रुझान (2021 बनाम 2023)",
+        map_chart_rate: "प्रति-व्यक्ति पंजीकृत केस दर विश्लेषण",
+        map_news_stream_title: "📰 सत्यापित साइबर घटना खुफिया धारा",
+        map_btn_read_paper: "📖 पूरा रिसर्च पेपर पढ़ें ➔",
+        map_btn_back: "← भारत थ्रेट मैप पर वापस जाएं",
+        map_btn_print: "पूरा रिसर्च पेपर प्रिंट करें 🖨️",
+        map_btn_open_advisory: "आधिकारिक एडवाइजरी वेबसाइट खोलें 🔗",
+        map_sec_1: "📄 भाग 1 / 4 — कार्यकारी खतरा सारांश",
+        map_sec_2: "📄 भाग 2 / 4 — विस्तृत कार्यप्रणाली (हमला प्रवाह)",
+        map_sec_3: "📄 भाग 3 / 4 — तकनीकी विश्लेषण और लक्षित प्रोफाइल",
+        map_sec_4: "📄 भाग 4 / 4 — चेतावनी संकेत, नागरिक सुरक्षा और आधिकारिक स्रोत",
+        map_warning_title: "⚠️ मुख्य चेतावनी संकेत (रेड फ्लैग्स)",
+        map_gov_response_title: "🛡️ सरकारी प्रतिक्रिया और आपातकालीन कार्य योजना",
+        map_sources_title: "📚 प्राथमिक अनुसंधान स्रोत और आधिकारिक सलाह"
     }
 };
 
@@ -729,7 +783,7 @@ export const getTranslation = (key) => {
 };
 
 export const applyLanguage = (lang) => {
-    const safeLang = ['en', 'hi', 'hinglish'].includes(lang) ? lang : 'en';
+    const safeLang = ['en', 'hi'].includes(lang) ? lang : 'en';
     State.currentLang = safeLang;
     localStorage.setItem('cyberpehra_lang', safeLang);
 
@@ -757,13 +811,13 @@ export const applyLanguage = (lang) => {
 
     UI.langBtns.forEach(btn => {
         if (btn.dataset.lang === safeLang) {
-            btn.classList.add('text-emerald-400', 'font-bold');
-            btn.classList.remove('text-slate-300');
+            btn.classList.add('bg-emerald-500/20', 'text-[#00FF88]', 'border', 'border-emerald-500/40', 'font-extrabold');
+            btn.classList.remove('text-slate-300', 'text-slate-400');
             if (UI.currentLangLabel) {
-                UI.currentLangLabel.innerText = safeLang === 'hi' ? 'HI' : (safeLang === 'hinglish' ? 'HINGLISH' : 'EN');
+                UI.currentLangLabel.innerText = safeLang === 'hi' ? 'HI' : 'EN';
             }
         } else {
-            btn.classList.remove('text-emerald-400', 'font-bold');
+            btn.classList.remove('bg-emerald-500/20', 'text-[#00FF88]', 'border', 'border-emerald-500/40', 'font-extrabold');
             btn.classList.add('text-slate-300');
         }
     });
